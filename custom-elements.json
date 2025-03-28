@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/lit-game.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "LitGame",
+          "members": [
+            {
+              "kind": "field",
+              "name": "header",
+              "type": {
+                "text": "string"
+              },
+              "default": "'My app'",
+              "attribute": "header"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "header",
+              "type": {
+                "text": "string"
+              },
+              "default": "'My app'",
+              "fieldName": "header"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "lit-game",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LitGame",
+          "declaration": {
+            "name": "LitGame",
+            "module": "src/lit-game.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "lit-game",
+          "declaration": {
+            "name": "LitGame",
+            "module": "src/lit-game.ts"
+          }
+        }
+      ]
+    }
+  ]
+}
