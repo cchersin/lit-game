@@ -10,7 +10,7 @@ import { it } from "date-fns/locale";
 @customElement('game-chat')
 export class GameChat extends LitElement {
   
-  @property({ type: String }) user = '';
+  @property({ type: String }) user = localStorage.userName ? localStorage.userName : ''; 
   @property({ type: Array }) messages: Array<{ user: string, text: string, timestamp: Timestamp, timestampFormatted: string }> = [];
   @property({ type: String }) messageText: string = '';
 
@@ -48,11 +48,6 @@ export class GameChat extends LitElement {
   constructor() {
     super();
     this.loadMessages();
-  }
-
-  async onBeforeEnter(location: RouterLocation) {
-    console.log("-----" + location.params.user)
-    this.user = location.params.user as string;
   }
 
   loadMessages() {
