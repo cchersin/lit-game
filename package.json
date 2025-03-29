@@ -10,13 +10,13 @@
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"web-dev-server\""
   },
   "dependencies": {
+    "@vaadin/router": "^2.0.0",
     "date-fns": "^4.1.0",
     "firebase": "^11.5.0",
     "lit": "^3.1.4"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.3",
-    "@types/moment": "^2.11.29",
     "@web/dev-server": "^0.4.6",
     "concurrently": "^8.2.2",
     "tslib": "^2.6.3",

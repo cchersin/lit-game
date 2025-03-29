@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import { Router, RouterLocation } from '@vaadin/router';
 import { db } from './firebase.js';
 import { collection, addDoc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
@@ -47,6 +48,11 @@ export class GameChat extends LitElement {
   constructor() {
     super();
     this.loadMessages();
+  }
+
+  async onBeforeEnter(location: RouterLocation) {
+    console.log("-----" + location.params.user)
+    this.user = location.params.user as string;
   }
 
   loadMessages() {
