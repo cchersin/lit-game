@@ -12,7 +12,7 @@ const routes = [
         path: 'login',
         component: 'user-login',
         action: async () => {
-          await import('./user-login.js');
+          await import('./login.js');
         },
       },
       {
@@ -33,7 +33,7 @@ const routes = [
         path: 'chat',
         component: 'game-chat',
         action: async () => {
-          await import('./game-chat.js');
+          await import('./chat.js');
         },
       }
     ]
