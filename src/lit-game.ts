@@ -1,11 +1,16 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import './player-card.js';
 import './game-card.js';
 import './game-chat.js';
 
 import { auth, db } from './firebase.js';
 import { getAuth, onAuthStateChanged, signInAnonymously, User, updateProfile } from 'firebase/auth';
-import { getFirestore, Firestore, collection, addDoc, setDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+
+import { format, formatDistanceToNow, isToday } from "date-fns";
+import { it } from "date-fns/locale";
+
 
 @customElement('lit-game')
 export class LitGame extends LitElement {
@@ -27,18 +32,18 @@ export class LitGame extends LitElement {
   }
 
   .input-container {
-      display: flex;
-      margin-top: 10px;
-    }
+    display: flex;
+    margin-top: 10px;
+  }
 
-    .input-container input {
-      flex-grow: 1;
-      padding: 5px;
-    }
+  .input-container input {
+    flex-grow: 1;
+    padding: 5px;
+  }
 
-    .input-container button {
-      padding: 5px 10px;
-    }
+  .input-container button {
+    padding: 5px 10px;
+  }
   `;
 
   private user: User | null = null;
@@ -78,17 +83,6 @@ export class LitGame extends LitElement {
       // Handle errors more gracefully!
     }
   }
-
-  /*loadUsers() {
-    const q = query(collection(db, "users"), orderBy("lastOnlineRef"));
-    onSnapshot(q, (querySnapshot) => {
-      this.users = querySnapshot.docs.map(doc => doc.data() as 
-        { name: string, 
-          lastOnlineRef: string });
-      this.requestUpdate();
-    });
-  }*/
-
  
   async loadUsers() {
     const q = query(collection(db, "users"), orderBy("lastOnlineRef"));
@@ -99,9 +93,12 @@ export class LitGame extends LitElement {
           lastOnlineRef: Timestamp 
         };
 
+        const lastOnlineFormatted = formatDistanceToNow(data.lastOnlineRef.toDate(), { addSuffix: true, locale: it })
+
+
         return {
           ...data,
-          lastOnlineFormatted: data.lastOnlineRef.toDate().toLocaleString()
+          lastOnlineFormatted: lastOnlineFormatted
         };
       });
 
@@ -119,6 +116,11 @@ export class LitGame extends LitElement {
     this.displayName = input.value;
   }
 
+  handlePlayerDelete(event: any) {
+     const playerDoc = doc(db, "users", event.detail.name);  
+     deleteDoc(playerDoc);
+  }
+
   render() {
     return html`
       <main class="main" @game-card-click=${this.handleCardClick}>
@@ -130,10 +132,8 @@ export class LitGame extends LitElement {
          <div class="users">
           Players:
           ${this.users.map(user => html`
-            <div>
-              <strong>${user.name} (${user.lastOnlineFormatted})</strong>
-            </div>
-          `)}
+            <player-card name="${user.name}" lastOnline= "${user.lastOnlineFormatted}" @player-delete="${this.handlePlayerDelete}"/>
+           `)}
          </div>
          <game-card name="Zelda" description="Un grande classico"></game-card>
          <game-card name="Pippo" description="L'amico di topolino"></game-card>

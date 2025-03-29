@@ -2,7 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { db } from './firebase.js';
 import { collection, addDoc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
-import { Moment } from 'moment';  
+
+import { format, formatDistanceToNow, isToday } from "date-fns";
+import { it } from "date-fns/locale";
 
 @customElement('game-chat')
 export class GameChat extends LitElement {
@@ -13,7 +15,7 @@ export class GameChat extends LitElement {
 
   static styles = css`
     .chat-container {
-      width: 300px;
+      width: 600px;
       height: 400px;
       border: 1px solid #ccc;
       display: flex;
@@ -62,9 +64,22 @@ export class GameChat extends LitElement {
           timestamp: Timestamp 
         };
 
+        const options: Intl.DateTimeFormatOptions = {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+        };
+
+        const timestampFormatted = isToday(data.timestamp.toDate())
+        ? format(data.timestamp.toDate(), "HH:mm") // solo l'ora se oggi
+        : format(data.timestamp.toDate(), "dd MMMM yyyy, HH:mm", { locale: it }); // data completa se non è oggi
+
+   
         return {
           ...data,
-          timestampFormatted: data.timestamp.toDate().toLocaleString()
+          timestampFormatted: timestampFormatted
         };
       });
 
@@ -99,7 +114,7 @@ export class GameChat extends LitElement {
         <div class="messages">
           ${this.messages.map(message => html`
             <div>
-              <strong>${message.timestampFormatted}${message.user}</strong>: ${message.text}
+              ${message.timestampFormatted} <strong>${message.user}</strong>: ${message.text}
             </div>
           `)}
         </div>
