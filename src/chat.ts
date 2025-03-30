@@ -54,11 +54,6 @@ export class Chat extends LitElement {
   loadMessages() {
     const q = query(collection(db, "messages"), orderBy("timestamp"));
     onSnapshot(q, (querySnapshot) => {
-      /*this.messages = querySnapshot.docs.map(doc => doc.data() as 
-        { user: string, 
-          text: string, 
-          timestamp: Timestamp });*/
-
       this.messages = querySnapshot.docs.map(doc => {
         const data = doc.data() as { 
           user: string, 
@@ -84,8 +79,6 @@ export class Chat extends LitElement {
           timestampFormatted: timestampFormatted
         };
       });
-
-
 
       this.requestUpdate();
     });

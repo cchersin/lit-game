@@ -13,19 +13,57 @@ export class Login extends LitElement {
   @property({ type: String }) displayName = localStorage.userName ? localStorage.userName : ''; 
  
   static styles = css`
+
+  .input-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    padding-top: 100px;
+  }
  
   .input-container {
-    display: flex;
     margin-top: 10px;
+    width: 100%;
+  }
+
+  .input-container2 {
+    margin: auto;
+    width: 80%;
   }
 
   .input-container input {
-    flex-grow: 1;
-    padding: 5px;
+    border-radius: 12px;
+    border: 2px solid black;
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    padding-bottom: 10px;
+    margin: auto;
+    font-family: "gandur-new", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    background-color: red;
+    text-transform: capitalize;
+
+  }
+
+  .input-container input::placeholder {
+    color: darkred;
+    font-weight: 600;
+    text-transform: none;
+  }
+
+  .input-container input:focus {
+    outline: none;
   }
 
   .input-container button {
     padding: 5px 10px;
+    border: 2px solid black;
+    border-radius: 12px;
+    background-color: red;
+    margin: auto;
   }
   `;
 
@@ -78,8 +116,11 @@ export class Login extends LitElement {
   render() {
     return html`
       <div class="login">
+        <p class="input-label">E tu chi saresti???</p>
          <div class="input-container">
-          <input type="text" .value="${this.displayName}" @input="${this.handleInputDisplayName}" placeholder="Login as..." />
+          <div class="input-container2">
+            <input type="text" .value="${this.displayName}" @input="${this.handleInputDisplayName}" maxlength="15" placeholder="Io sono..."/>
+          </div>
           <button @click="${this.signInAnonymously}">Login</button>
          </div>
       </div>
