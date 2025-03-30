@@ -44,12 +44,9 @@ export class Game extends LitElement {
   }
 
   handleJoin(event: any) {
-    /* this.currentGame.players.push(localStorage.userName);
+    this.currentGame.players.push({ name: localStorage.userName, role: 'player'});
     const currentGameDoc = doc(db, "global", "currentGame");
-    if(currentGameDoc.data().players.indexOf(localStorage.userName) === -1) {
-      currentGameDoc.data().players.push({ name: localStorage.userName, role: "players"});
-    }
-    setDoc(currentGameDoc, this.currentGame);*/
+    setDoc(currentGameDoc, this.currentGame);
   }
 
   loadGame() {
