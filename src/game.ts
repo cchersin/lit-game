@@ -9,7 +9,7 @@ import './game-card.js';
 @customElement('game-main')
 export class Game extends LitElement {
   @property({ type: String }) currentCardName = '';
-  @property({ type: Object }) currentGame: { name: String, players: Array<{ name: string, role: string }> } = { name: '', players: [] };
+  @property({ type: Object }) currentGame: { name: String, status: String, players: Array<{ name: string, role: string }> } = { name: '', status: 'completed', players: [] };
   
   static styles = css`
   .card {
@@ -37,16 +37,39 @@ export class Game extends LitElement {
     const currentGameDoc = doc(db, "global", "currentGame");
     setDoc(currentGameDoc, {
       name: gameName,
+      status: 'pending',
       players: [{ name: localStorage.userName, role: "master"}]
     });
 
     localStorage.currentGameName = gameName;
+    localStorage.role = 'master'
   }
 
   handleJoin(event: any) {
-    this.currentGame.players.push({ name: localStorage.userName, role: 'player'});
+    const p = this.currentGame.players.find((player) => player.name === localStorage.userName);
+
+    if (!p) {
+      this.currentGame.players.push({ name: localStorage.userName, role: 'player'});
+      localStorage.role = 'player'
+      const currentGameDoc = doc(db, "global", "currentGame");
+      setDoc(currentGameDoc, this.currentGame);
+    }
+  }
+
+  handleStartGame(event: any) {
+    console.log('handleStartGame');
+    this.currentGame.status = 'started'
     const currentGameDoc = doc(db, "global", "currentGame");
     setDoc(currentGameDoc, this.currentGame);
+  }
+
+  handleStopGame(event: any) {
+     console.log('handleStopGame');
+    this.currentGame.status = 'completed'
+    const currentGameDoc = doc(db, "global", "currentGame");
+    setDoc(currentGameDoc, this.currentGame);
+    localStorage.currentGameName = '';
+    localStorage.role = ''
   }
 
   loadGame() {
@@ -55,6 +78,7 @@ export class Game extends LitElement {
       if (docSnapshot.exists()) {
         this.currentGame = docSnapshot.data() as { 
           name: string,
+          status: string,
           players: Array<{ name: string, role: string }>
         };
    
@@ -75,8 +99,10 @@ export class Game extends LitElement {
          <game-card name="Zelda" description="Un grande classico"></game-card>
          <game-card name="Pippo" description="L'amico di topolino"></game-card>
          <div class="card">Hai scelto la card ${this.currentCardName}</div>  
-         <button @click="${this.handleNewGame}">New game</button>
-         <button @click="${this.handleJoin}">Join</button>
+         ${this.currentGame.status === 'completed' ? html`<button @click="${this.handleNewGame}">New game</button>` : html``}
+         ${this.currentGame.status === 'pending' ? html`<button @click="${this.handleStartGame}">Start game</button>` : html``}
+         ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
+         ${localStorage.role !== 'master' && this.currentGame.status === 'pending' ? html`<button @click="${this.handleJoin}">Join</button>` : html``}
       </main>
     `;
   }
