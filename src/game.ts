@@ -58,18 +58,20 @@ export class Game extends LitElement {
 
   handleStartGame(event: any) {
     console.log('handleStartGame');
-    this.currentGame.status = 'started'
+    this.currentGame.status = 'started';
     const currentGameDoc = doc(db, "global", "currentGame");
     setDoc(currentGameDoc, this.currentGame);
   }
 
   handleStopGame(event: any) {
      console.log('handleStopGame');
-    this.currentGame.status = 'completed'
+    this.currentGame.status = 'completed';
+    this.currentGame.players = [];
     const currentGameDoc = doc(db, "global", "currentGame");
     setDoc(currentGameDoc, this.currentGame);
     localStorage.currentGameName = '';
-    localStorage.role = ''
+    localStorage.role = '';
+    this.requestUpdate();
   }
 
   loadGame() {
@@ -81,28 +83,42 @@ export class Game extends LitElement {
           status: string,
           players: Array<{ name: string, role: string }>
         };
+
+        if (this.currentGame.status === 'completed') {
+          localStorage.role = '';
+        }
    
         this.requestUpdate();
       }
     });
   }
+
+  findMaster() {
+    const master = this.currentGame.players.find(p => p.role == 'master');
+    return master ? master.name : '';
+  }
+
+  findPlayers() {
+    return this.currentGame.players.filter(p => p.role == 'player');
+  } 
   
   render() {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
-        <span>${this.currentGame.name}</span>
-         ${this.currentGame.players.map(player => html`
-            <div>
-              ${player.name} ${player.role}
-            </div>
+        <span>User: ${localStorage.userName}(${localStorage.role})</span>
+         <p>${this.findMaster() !== '' ? this.findMaster() + ' has started the game' : ''}</p>
+         ${this.findPlayers().map(player => html`
+            <p>
+              ${player.name} has joined the game
+            </p>
           `)}
-         <game-card name="Zelda" description="Un grande classico"></game-card>
+         <!--<game-card name="Zelda" description="Un grande classico"></game-card>
          <game-card name="Pippo" description="L'amico di topolino"></game-card>
-         <div class="card">Hai scelto la card ${this.currentCardName}</div>  
+         <div class="card">Hai scelto la card ${this.currentCardName}</div>-->  
          ${this.currentGame.status === 'completed' ? html`<button @click="${this.handleNewGame}">New game</button>` : html``}
-         ${this.currentGame.status === 'pending' ? html`<button @click="${this.handleStartGame}">Start game</button>` : html``}
+         ${localStorage.role === 'master' && this.currentGame.status === 'pending' ? html`<button @click="${this.handleStartGame}">Start game</button>` : html``}
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
-         ${localStorage.role !== 'master' && this.currentGame.status === 'pending' ? html`<button @click="${this.handleJoin}">Join</button>` : html``}
+         ${localStorage.role === '' && this.currentGame.status === 'pending' ? html`<button @click="${this.handleJoin}">Join</button>` : html``}
       </main>
     `;
   }
