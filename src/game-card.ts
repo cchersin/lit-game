@@ -5,6 +5,9 @@ import { property, customElement } from 'lit/decorators.js';
 export class GameCard extends LitElement {
   @property({ type: String }) name = '';
   @property({ type: String }) description = '';
+  @property({ type: String }) color = '';
+  @property({ type: String }) backgroundColor = '';
+  
 
 
   static styles = css`
@@ -25,8 +28,7 @@ export class GameCard extends LitElement {
 
   render() {
     return html`
-    <div class="card" @click=${this.handleClick}>
-      <h2>${this.name}</h2>
+    <div class="card" @click=${this.handleClick} style="background-color: ${this.backgroundColor}; color: ${this.color}">
       <p>${this.description}</p>
     </div>
   `;

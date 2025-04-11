@@ -12,9 +12,21 @@ export class Game extends LitElement {
   @property({ type: Object }) currentGame: { name: String, status: String, players: Array<{ name: string, role: string }> } = { name: '', status: 'completed', players: [] };
   @property({ type: Array }) cards: Array<{ content: string, color: string }> = 
   [
-    { content: 'ciccio pasticcio', color: 'white'}, 
-    { content: 'martina fa la puzzetta', color: 'white'},
-    { content: 'martina è carina?', color: 'black'}
+    { content: 'Martina', color: 'white'}, 
+    { content: 'Inès', color: 'white'},
+    { content: 'Andrea', color: 'white'},
+    { content: 'Montra', color: 'white'}, 
+    { content: 'le critiche di Rossolini', color: 'white'},
+    { content: 'Grado', color: 'white'},
+    { content: 'la sessulità di Martina', color: 'white'}, 
+    { content: 'il divorzio dei miei genitori', color: 'white'},
+    { content: 'il comic sans', color: 'white'},
+    { content: 'Helvetica', color: 'white'}, 
+    { content: 'i poveri che non hanno soldi', color: 'white'},
+    { content: 'i ladri che rubano', color: 'white'},    
+    { content: 'La colazione di Montra oggi consiste in', color: 'black'},
+    { content: 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con', color: 'black'},
+    { content: 'Bevo per dimenticare', color: 'black'}    
   ];
   
   static styles = css`
@@ -109,11 +121,11 @@ export class Game extends LitElement {
   } 
 
   findWhiteCards() {
-    return findCardsByColor('white');
+    return this.findCardsByColor('white');
   } 
 
   findBlackCards() {
-    return findCardsByColor('black');
+    return this.findCardsByColor('black');
   }
 
   findCardsByColor(color: string) {
@@ -122,6 +134,12 @@ export class Game extends LitElement {
 
   withdrawCard(color: string) {
 
+  }
+  
+  oppositeColor(color: string) {
+    if (color === "white")
+      return "black"
+    return "white"
   }
   
   render() {
@@ -135,7 +153,7 @@ export class Game extends LitElement {
             </p>
           `)}
          ${this.cards.map(card => html`
-            <game-card description="${card.content}"></game-card>
+            <game-card description="${card.content}" backgroundColor="${card.color}" color="${this.oppositeColor(card.color)}"></game-card>
           `)}
          <!--<game-card name="Zelda" description="Un grande classico"></game-card>
          <game-card name="Pippo" description="L'amico di topolino"></game-card>
