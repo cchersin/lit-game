@@ -10,6 +10,12 @@ import './game-card.js';
 export class Game extends LitElement {
   @property({ type: String }) currentCardName = '';
   @property({ type: Object }) currentGame: { name: String, status: String, players: Array<{ name: string, role: string }> } = { name: '', status: 'completed', players: [] };
+  @property({ type: Array }) cards: Array<{ content: string, color: string }> = 
+  [
+    { content: 'ciccio pasticcio', color: 'white'}, 
+    { content: 'martina fa la puzzetta', color: 'white'},
+    { content: 'martina è carina?', color: 'black'}
+  ];
   
   static styles = css`
   .card {
@@ -94,13 +100,29 @@ export class Game extends LitElement {
   }
 
   findMaster() {
-    const master = this.currentGame.players.find(p => p.role == 'master');
+    const master = this.currentGame.players.find(p => p.role === 'master');
     return master ? master.name : '';
   }
 
   findPlayers() {
-    return this.currentGame.players.filter(p => p.role == 'player');
+    return this.currentGame.players.filter(p => p.role === 'player');
   } 
+
+  findWhiteCards() {
+    return findCardsByColor('white');
+  } 
+
+  findBlackCards() {
+    return findCardsByColor('black');
+  }
+
+  findCardsByColor(color: string) {
+    return this.cards.filter(c => c.color === color);
+  }
+
+  withdrawCard(color: string) {
+
+  }
   
   render() {
     return html`
@@ -111,6 +133,9 @@ export class Game extends LitElement {
             <p>
               ${player.name} has joined the game
             </p>
+          `)}
+         ${this.cards.map(card => html`
+            <game-card description="${card.content}"></game-card>
           `)}
          <!--<game-card name="Zelda" description="Un grande classico"></game-card>
          <game-card name="Pippo" description="L'amico di topolino"></game-card>
