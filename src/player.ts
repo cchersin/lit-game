@@ -31,5 +31,11 @@ export class Player {
       cards: this.cards.map(c => c.toJSON())
     };
   }
+
+  static fromJSON(json: any) {
+    const p = new Player(json.name, json.role);
+    p.cards = json.cards.map((c: any) => Card.fromJSON(c));
+    return p;
+  }
 }
                                       

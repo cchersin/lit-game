@@ -21,6 +21,10 @@ export class Card {
       color: this.color,
     };
   }
+
+  static fromJSON(json: any) {
+    return new Card(json.content, json.color);
+  }
 }
                                       
                                       

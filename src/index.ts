@@ -19,7 +19,7 @@ const routes = [
         path: 'game',
         component: 'game-main',
         action: async () => {
-          await import('./game.js');
+          await import('./game-main.js');
         },
       },
       {
