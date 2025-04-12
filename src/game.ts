@@ -5,28 +5,36 @@ import { auth, db } from './firebase.js';
 import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, getDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
 import './game-card.js';
+import { Card } from './card.js'
+import { Player } from './player.js';
 
 @customElement('game-main')
 export class Game extends LitElement {
   @property({ type: String }) currentCardName = '';
-  @property({ type: Object }) currentGame: { name: String, status: String, players: Array<{ name: string, role: string }> } = { name: '', status: 'completed', players: [] };
-  @property({ type: Array }) cards: Array<{ content: string, color: string }> = 
+  @property({ type: Object }) currentGame: {  
+                                              name: string, 
+                                              status: string, 
+                                              deck: Array<Card>, 
+                                              players: Array<Player> 
+                                            } = { name: '', status: 'completed', deck: [], players: [] };
+
+  @property({ type: Array }) cards: Array<Card> = 
   [
-    { content: 'Martina', color: 'white'}, 
-    { content: 'Inès', color: 'white'},
-    { content: 'Andrea', color: 'white'},
-    { content: 'Montra', color: 'white'}, 
-    { content: 'le critiche di Rossolini', color: 'white'},
-    { content: 'Grado', color: 'white'},
-    { content: 'la sessulità di Martina', color: 'white'}, 
-    { content: 'il divorzio dei miei genitori', color: 'white'},
-    { content: 'il comic sans', color: 'white'},
-    { content: 'Helvetica', color: 'white'}, 
-    { content: 'i poveri che non hanno soldi', color: 'white'},
-    { content: 'i ladri che rubano', color: 'white'},    
-    { content: 'La colazione di Montra oggi consiste in', color: 'black'},
-    { content: 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con', color: 'black'},
-    { content: 'Bevo per dimenticare', color: 'black'}    
+    new Card('Martina', 'white'), 
+    new Card('Inès', 'white'),
+    new Card('Andrea', 'white'),
+    new Card('Montra', 'white'), 
+    new Card('le critiche di Rossolini', 'white'),
+    new Card('Grado', 'white'),
+    new Card('la sessualità di Martina', 'white'), 
+    new Card('il divorzio dei miei genitori', 'white'),
+    new Card('il comic sans', 'white'),
+    new Card('Helvetica', 'white'), 
+    new Card('i poveri che non hanno soldi', 'white'),
+    new Card('i ladri che rubano', 'white'),    
+    new Card('La colazione di Montra oggi consiste in', 'black'),
+    new Card('Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con', 'black'),
+    new Card('Bevo per dimenticare', 'black') 
   ];
   
   static styles = css`
@@ -52,24 +60,28 @@ export class Game extends LitElement {
       name: gameName
     });*/
 
-    const currentGameDoc = doc(db, "global", "currentGame");
+    const p = new Player(localStorage.userName, 'master');
+     
+    const currentGameDoc = doc(db, 'global', 'currentGame');
     setDoc(currentGameDoc, {
       name: gameName,
+      deck: this.cards.map(c => c.toJSON()),
       status: 'pending',
-      players: [{ name: localStorage.userName, role: "master"}]
+      players: [p.toJSON()]
     });
 
     localStorage.currentGameName = gameName;
-    localStorage.role = 'master'
+    localStorage.role = p.role;
   }
 
   handleJoin(event: any) {
-    const p = this.currentGame.players.find((player) => player.name === localStorage.userName);
+    let p = this.currentGame.players.find((player) => player.name === localStorage.userName);
 
     if (!p) {
-      this.currentGame.players.push({ name: localStorage.userName, role: 'player'});
-      localStorage.role = 'player'
-      const currentGameDoc = doc(db, "global", "currentGame");
+      p = new Player(localStorage.userName, 'player');
+      this.currentGame.players.push(p);
+      localStorage.role = p.role;
+      const currentGameDoc = doc(db, 'global', 'currentGame');
       setDoc(currentGameDoc, this.currentGame);
     }
   }
@@ -77,7 +89,7 @@ export class Game extends LitElement {
   handleStartGame(event: any) {
     console.log('handleStartGame');
     this.currentGame.status = 'started';
-    const currentGameDoc = doc(db, "global", "currentGame");
+    const currentGameDoc = doc(db, 'global', 'currentGame');
     setDoc(currentGameDoc, this.currentGame);
   }
 
@@ -85,7 +97,7 @@ export class Game extends LitElement {
      console.log('handleStopGame');
     this.currentGame.status = 'completed';
     this.currentGame.players = [];
-    const currentGameDoc = doc(db, "global", "currentGame");
+    const currentGameDoc = doc(db, 'global', 'currentGame');
     setDoc(currentGameDoc, this.currentGame);
     localStorage.currentGameName = '';
     localStorage.role = '';
@@ -93,13 +105,14 @@ export class Game extends LitElement {
   }
 
   loadGame() {
-    const docRef = doc(db, "global", "currentGame");
+    const docRef = doc(db, 'global', 'currentGame');
     onSnapshot(docRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         this.currentGame = docSnapshot.data() as { 
           name: string,
           status: string,
-          players: Array<{ name: string, role: string }>
+          deck: Array<Card>,
+          players: Array<Player>
         };
 
         if (this.currentGame.status === 'completed') {
@@ -132,16 +145,6 @@ export class Game extends LitElement {
     return this.cards.filter(c => c.color === color);
   }
 
-  withdrawCard(color: string) {
-
-  }
-  
-  oppositeColor(color: string) {
-    if (color === "white")
-      return "black"
-    return "white"
-  }
-  
   render() {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
@@ -152,8 +155,8 @@ export class Game extends LitElement {
               ${player.name} has joined the game
             </p>
           `)}
-         ${this.cards.map(card => html`
-            <game-card description="${card.content}" backgroundColor="${card.color}" color="${this.oppositeColor(card.color)}"></game-card>
+         ${this.currentGame.deck.map(card => new Card(card.content, card.color)).map(card => html`
+            <game-card description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}"></game-card>
           `)}
          <!--<game-card name="Zelda" description="Un grande classico"></game-card>
          <game-card name="Pippo" description="L'amico di topolino"></game-card>
