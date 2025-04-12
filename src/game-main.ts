@@ -66,8 +66,8 @@ export class GameMain extends LitElement {
     g.whiteDeck = this.whiteCards;
     g.blackDeck = this.blackCards;
     g.status = 'pending';
-     
-     console.log(g.toJSON());
+  
+    console.log(g.toJSON());
 
     const currentGameDoc = doc(db, 'global', 'currentGame');
     setDoc(currentGameDoc, g.toJSON());
@@ -80,6 +80,15 @@ export class GameMain extends LitElement {
     console.log(p.role);
   }
 
+  /*drawCard(deck: Card[]): Card | undefined {
+    if (deck.length === 0) {
+      console.log(`Il mazzo è vuoto.`);
+      return undefined;
+    }
+
+    return deck.shift();
+  }*/
+
   handleJoin(event: any) {
     let p = this.currentGame.players.find((player) => player.name === localStorage.userName);
 
@@ -88,7 +97,10 @@ export class GameMain extends LitElement {
       this.currentGame.players.push(p);
 
       for(let i = 0; i < 3; i++) {
-        p.drawCard(this.currentGame.whiteDeck);
+        const drawnCard = this.currentGame.whiteDeck.shift();
+        if (drawnCard) {
+          p.hand.push(drawnCard);
+        }
       }
 
       localStorage.hand = JSON.stringify(p.hand);
@@ -101,6 +113,15 @@ export class GameMain extends LitElement {
   handleStartGame(event: any) {
     console.log('handleStartGame');
     this.currentGame.status = 'started';
+    console.log('handleStartGame1');
+    const drawnCard = this.currentGame.blackDeck.shift();
+    if (drawnCard) {
+      this.currentGame.blackCard = drawnCard;
+    }
+    console.log('handleStartGame2');
+
+    console.log('-----' + this.currentGame.blackCard);
+
     const currentGameDoc = doc(db, 'global', 'currentGame');
     setDoc(currentGameDoc, this.currentGame.toJSON());
   }
@@ -152,6 +173,8 @@ export class GameMain extends LitElement {
     return this.cards.filter(c => c.color === color);
   }*/
 
+  
+
   render() {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
@@ -162,6 +185,7 @@ export class GameMain extends LitElement {
               ${player.name} has joined the game
             </p>
           `)}
+         <game-card description="${this.currentGame.blackCard?.content}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-card>
          ${JSON.parse(localStorage.hand).map((card: any) => new Card(card.content, card.color)).map((card: any) => html`
             <game-card description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}"></game-card>
           `)}
