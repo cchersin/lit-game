@@ -13,7 +13,7 @@ import { Game } from './game.js';
 export class GameMain extends LitElement {
   @property({ type: String }) currentCardName = '';
   @property({ type: Game }) currentGame = new Game('');
-  @property({ type: Array }) cards: Array<Card> = 
+  @property({ type: Array }) whiteCards: Array<Card> = 
   [
     new Card('Martina', 'white'), 
     new Card('Inès', 'white'),
@@ -27,6 +27,9 @@ export class GameMain extends LitElement {
     new Card('Helvetica', 'white'), 
     new Card('i poveri che non hanno soldi', 'white'),
     new Card('i ladri che rubano', 'white'),    
+  ];
+  @property({ type: Array }) blackCards: Array<Card> = 
+  [
     new Card('La colazione di Montra oggi consiste in', 'black'),
     new Card('Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con', 'black'),
     new Card('Bevo per dimenticare', 'black') 
@@ -60,7 +63,8 @@ export class GameMain extends LitElement {
     const p = new Player(localStorage.userName, 'master');
     const g = new Game(gameName);
     g.players = [p];
-    g.deck = this.cards;
+    g.whiteDeck = this.whiteCards;
+    g.blackDeck = this.blackCards;
     g.status = 'pending';
      
      console.log(g.toJSON());
@@ -82,6 +86,12 @@ export class GameMain extends LitElement {
     if (!p) {
       p = new Player(localStorage.userName, 'player');
       this.currentGame.players.push(p);
+
+      for(let i = 0; i < 3; i++) {
+        p.drawCard(this.currentGame.whiteDeck);
+      }
+
+      localStorage.hand = JSON.stringify(p.hand);
       localStorage.role = p.role;
       const currentGameDoc = doc(db, 'global', 'currentGame');
       setDoc(currentGameDoc, this.currentGame.toJSON());
@@ -130,7 +140,7 @@ export class GameMain extends LitElement {
     return this.currentGame.players.filter(p => p.role === 'player');
   } 
 
-  findWhiteCards() {
+  /*findWhiteCards() {
     return this.findCardsByColor('white');
   } 
 
@@ -140,7 +150,7 @@ export class GameMain extends LitElement {
 
   findCardsByColor(color: string) {
     return this.cards.filter(c => c.color === color);
-  }
+  }*/
 
   render() {
     return html`
@@ -152,7 +162,7 @@ export class GameMain extends LitElement {
               ${player.name} has joined the game
             </p>
           `)}
-         ${this.currentGame.deck.map(card => new Card(card.content, card.color)).map(card => html`
+         ${JSON.parse(localStorage.hand).map((card: any) => new Card(card.content, card.color)).map((card: any) => html`
             <game-card description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}"></game-card>
           `)}
          <!--<game-card name="Zelda" description="Un grande classico"></game-card>

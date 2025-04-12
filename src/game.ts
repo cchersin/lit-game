@@ -4,13 +4,15 @@ import { Player } from './player.js'
 export class Game {
   name: string;
   status: string; 
-  deck: Array<Card>;
+  whiteDeck: Array<Card>;
+  blackDeck: Array<Card>;
   players: Array<Player>; 
   
   constructor(name: string) {
     this.name = name;
     this.status = 'completed';
-    this.deck = [];
+    this.whiteDeck = [];
+    this.blackDeck = [];
     this.players = [];
   }
 
@@ -18,7 +20,8 @@ export class Game {
     return {
       name: this.name,
       status: this.status,
-      deck: this.deck.map(c => c.toJSON()),
+      whiteDeck: this.whiteDeck.map(c => c.toJSON()),
+      blackDeck: this.blackDeck.map(c => c.toJSON()),
       players: this.players.map(c => c.toJSON())
     };
   }
@@ -26,7 +29,8 @@ export class Game {
   static fromJSON(json: any) {
     const g = new Game(json.name);
     g.status = json.status;
-    g.deck = json.deck.map((c: any) => Card.fromJSON(c));
+    g.whiteDeck = json.whiteDeck.map((c: any) => Card.fromJSON(c));
+    g.blackDeck = json.blackDeck.map((c: any) => Card.fromJSON(c));
     g.players = json.players.map((p: any) => Player.fromJSON(p));
     return g;
   }
