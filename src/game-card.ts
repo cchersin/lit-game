@@ -21,17 +21,23 @@ export class GameCard extends LitElement {
     margin: auto;
   }
 
+  .card:first-letter {
+    text-transform: uppercase;
+  }
+
   .black {
     font-size: 37px;
     font-family: "gandur-new", sans-serif;
     font-weight: 300;
     font-style: normal;
     line-height: 42px;
-    rotate: -7deg;
+    rotate: -5deg;
   }
 
   .white {
     font-size: 25px;
+    rotate: 7deg;
+    border: 1px black solid;
   }
 
   .card p {

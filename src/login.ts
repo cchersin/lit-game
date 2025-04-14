@@ -120,7 +120,7 @@ export class Login extends LitElement {
         <p class="input-label">E tu chi saresti???</p>
          <div class="input-container">
           <div class="input-container2">
-            <input type="text" .value="${this.displayName}" @input="${this.handleInputDisplayName}" maxlength="15" placeholder="Io sono..."/>
+            <input type="text" .value="${this.displayName}" @input="${this.handleInputDisplayName}" maxlength="6" placeholder="Io sono..."/>
           </div>
           <button @click="${this.signInAnonymously}">Login</button>
          </div>

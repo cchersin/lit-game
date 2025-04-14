@@ -30,9 +30,9 @@ export class GameMain extends LitElement {
   ];
   @property({ type: Array }) blackCards: Array<Card> = 
   [
-    new Card('La colazione di Montra oggi consiste in', 'black'),
-    new Card('Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con', 'black'),
-    new Card('Bevo per dimenticare', 'black') 
+    new Card('La colazione di Montra oggi consiste in ______ .', 'black'),
+    new Card('Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______ .', 'black'),
+    new Card('Bevo per dimenticare ______ .', 'black') 
   ];
   
   static styles = css`
@@ -40,6 +40,23 @@ export class GameMain extends LitElement {
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
+  }
+
+  .playerWidget {
+    background-color: white;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+  }
+
+  .masterWidget {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
   }
   `;
 
@@ -179,6 +196,14 @@ export class GameMain extends LitElement {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
         <span>User: ${localStorage.userName}(${localStorage.role})</span>
+        <div>
+          <span class="masterWidget">${this.findMaster()}</span>
+          ${this.findPlayers().map(player => html`
+            <span class="playerWidget">
+              ${player.name}
+            </span>
+          `)}
+        </div>
          <p>${this.findMaster() !== '' ? this.findMaster() + ' has started the game' : ''}</p>
          ${this.findPlayers().map(player => html`
             <p>
