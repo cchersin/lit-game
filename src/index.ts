@@ -23,6 +23,13 @@ const routes = [
         },
       },
       {
+        path: 'starting',
+        component: 'starting-page',
+        action: async () => {
+          await import('./starting-page.js');
+        },
+      },      
+      {
         path: 'player-list',
         component: 'player-list',
         action: async () => {

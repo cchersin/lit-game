@@ -97,7 +97,7 @@ export class Login extends LitElement {
         localStorage.sessionId = data.sessionId;
         localStorage.hand = JSON.stringify([]);
 
-        Router.go('/game');
+        Router.go('/starting');
       } else {
         console.warn("No user is currently signed in.");
       }
