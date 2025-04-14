@@ -11,6 +11,19 @@ export class Player {
     this.hand = [];
   }
 
+  /*drawCard(deck: Card[]): void {
+    if (deck.length === 0) {
+      console.log(`${this.name} non può pescare: il mazzo è vuoto.`);
+      return;
+    }
+
+    const drawnCard = deck.shift(); // pesca la prima carta
+    if (drawnCard) {
+      this.hand.push(drawnCard);
+      console.log(`${this.name} ha pescato una carta:`, drawnCard);
+    }
+  }*/
+
   toJSON() {
     return {
       name: this.name,

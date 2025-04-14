@@ -12,9 +12,34 @@ export class GameCard extends LitElement {
 
   static styles = css`
   .card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
+    height: 400px;
+    width: 250px;
+    padding-top: 20px;
+    padding-left: 22px;
+    padding-right: 22px;
+    border-radius: 10px;
+    margin: auto;
+  }
+
+  .black {
+    font-size: 37px;
+    font-family: "gandur-new", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 42px;
+    rotate: -7deg;
+  }
+
+  .white {
+    font-size: 25px;
+  }
+
+  .card p {
+    margin: 0px;
+  }
+
+  .black .point {
+    display: none;
   }
 `;
 
@@ -28,8 +53,8 @@ export class GameCard extends LitElement {
 
   render() {
     return html`
-    <div class="card" @click=${this.handleClick} style="background-color: ${this.backgroundColor}; color: ${this.color}">
-      <p>${this.description}</p>
+    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="background-color: ${this.backgroundColor}; color: ${this.color}">
+      <p>${this.description}<span class="point">.</span></p>
     </div>
   `;
   }
