@@ -85,9 +85,7 @@ export class GameMain extends LitElement {
 
   handleCardClick(event: any) {
     this.currentCardId = event.detail.id;
-    console.log("choosed card: " + this.currentCardId);
-    //event.target.setAttribute("zindex", 1000);
-    this.requestUpdate();
+    //this.requestUpdate();
   }
 
   handleStopGame(event: any) {
@@ -128,19 +126,10 @@ export class GameMain extends LitElement {
     return this.currentGame.players.filter(p => p.role === 'player');
   } 
 
-  /*findWhiteCards() {
-    return this.findCardsByColor('white');
-  } 
-
-  findBlackCards() {
-    return this.findCardsByColor('black');
-  }
-
-  findCardsByColor(color: string) {
-    return this.cards.filter(c => c.color === color);
-  }*/
-
   renderWhiteCards() {
+    if (localStorage.role === 'master') {
+      return html``; 
+    }
     let left = 0;
     let zindex = 11;
    
@@ -158,6 +147,8 @@ export class GameMain extends LitElement {
   render() {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
+        <span>User: ${localStorage.userName}(${localStorage.role}) - ${this.currentGame.status}</span>
+     
         <div class="container-widget">
           <span class="master-widget">${this.findMaster()}</span>
           ${this.findPlayers().map(player => html`
