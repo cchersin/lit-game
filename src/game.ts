@@ -14,7 +14,7 @@ export class Game {
     this.status = 'completed';
     this.whiteDeck = [];
     this.blackDeck = [];
-    this.blackCard = new Card('','');
+    this.blackCard = new Card('0', '','');
     this.players = [];
   }
 

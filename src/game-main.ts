@@ -13,7 +13,7 @@ import { Game } from './game.js';
 
 @customElement('game-main')
 export class GameMain extends LitElement {
-  @property({ type: String }) currentCardName = '';
+  @property({ type: String }) currentCardId = "-1";
   @property({ type: Game }) currentGame = new Game('');
 /*  @property({ type: Array }) whiteCards: Array<Card> = 
   [
@@ -84,9 +84,10 @@ export class GameMain extends LitElement {
   }
 
   handleCardClick(event: any) {
-    this.currentCardName = event.detail.name;
-    console.log (event.target.attributes.zindex);
-    event.target.setAttribute("zindex", 1000);
+    this.currentCardId = event.detail.id;
+    console.log("choosed card: " + this.currentCardId);
+    //event.target.setAttribute("zindex", 1000);
+    this.requestUpdate();
   }
 
   handleStopGame(event: any) {
@@ -145,11 +146,11 @@ export class GameMain extends LitElement {
    
     return html`<div class="container-cards">
          ${JSON.parse(localStorage.hand).map((card: any) => 
-              new Card(card.content, card.color)).map((card: any) => { 
+              new Card(card.id, card.content, card.color)).map((card: any) => { 
                 left += 20;
                 zindex -= 1;
                 return html`
-            <game-card description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}"></game-card>
+            <game-card id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" isselected="${card.id === this.currentCardId}"></game-card>
           `})}
         </div>`;
   }
@@ -170,7 +171,7 @@ export class GameMain extends LitElement {
       
           <!--<game-card name="Zelda" description="Un grande classico"></game-card>
          <game-card name="Pippo" description="L'amico di topolino"></game-card>
-         <div class="card">Hai scelto la card ${this.currentCardName}</div>-->  
+         <div class="card">Hai scelto la card ${this.currentCardId}</div>-->  
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
       </main>
     `;

@@ -3,12 +3,13 @@ import { property, customElement } from 'lit/decorators.js';
 
 @customElement('game-card')
 export class GameCard extends LitElement {
-  @property({ type: String }) name = '';
+  @property({ type: String }) id = '';
   @property({ type: String }) description = '';
   @property({ type: String }) color = '';
   @property({ type: String }) backgroundColor = '';
   @property({ type: String }) left = '';
   @property({ type: String }) zindex = '';
+  @property({ type: String }) isselected = "false";
   
 
 
@@ -57,7 +58,7 @@ export class GameCard extends LitElement {
 
   handleClick() {
     this.dispatchEvent(new CustomEvent('game-card-click', {
-      detail: { name: this.name },
+      detail: { id: this.id },
       bubbles: true,
       composed: true
     }));
@@ -65,7 +66,7 @@ export class GameCard extends LitElement {
 
   render() {
     return html`
-    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="background-color: ${this.backgroundColor}; color: ${this.color}; left: ${this.left}; z-index: ${this.zindex};">
+    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="background-color: ${this.backgroundColor}; color: ${this.color}; left: ${this.left}; z-index: ${this.isselected === "true" ? 1000 : this.zindex};">
       <p>${this.description}<span class="point">.</span></p>
     </div>
   `;

@@ -16,24 +16,24 @@ export class StartingPage extends LitElement {
   @property({ type: Game }) currentGame = new Game('');
   @property({ type: Array }) whiteCards: Array<Card> = 
   [
-    new Card('Martina', 'white'), 
-    new Card('Inès', 'white'),
-    new Card('Andrea', 'white'),
-    new Card('Montra', 'white'), 
-    new Card('le critiche di Rossolini', 'white'),
-    new Card('Grado', 'white'),
-    new Card('la sessualità di Martina', 'white'), 
-    new Card('il divorzio dei miei genitori', 'white'),
-    new Card('il comic sans', 'white'),
-    new Card('Helvetica', 'white'), 
-    new Card('i poveri che non hanno soldi', 'white'),
-    new Card('i ladri che rubano', 'white'),    
+    new Card('1', 'Martina', 'white'), 
+    new Card('2', 'Inès', 'white'),
+    new Card('3', 'Andrea', 'white'),
+    new Card('4', 'Montra', 'white'), 
+    new Card('5', 'le critiche di Rossolini', 'white'),
+    new Card('6', 'Grado', 'white'),
+    new Card('7', 'la sessualità di Martina', 'white'), 
+    new Card('8', 'il divorzio dei miei genitori', 'white'),
+    new Card('9', 'il comic sans', 'white'),
+    new Card('10', 'Helvetica', 'white'), 
+    new Card('11', 'i poveri che non hanno soldi', 'white'),
+    new Card('12', 'i ladri che rubano', 'white'),    
   ];
   @property({ type: Array }) blackCards: Array<Card> = 
   [
-    new Card('La colazione di Montra oggi consiste in ______ .', 'black'),
-    new Card('Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______ .', 'black'),
-    new Card('Bevo per dimenticare ______ .', 'black') 
+    new Card('1', 'La colazione di Montra oggi consiste in ______ .', 'black'),
+    new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______ .', 'black'),
+    new Card('3', 'Bevo per dimenticare ______ .', 'black') 
   ];
   
   static styles = css`
