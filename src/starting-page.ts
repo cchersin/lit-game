@@ -126,7 +126,7 @@ export class StartingPage extends LitElement {
       if (docSnapshot.exists()) {
         this.currentGame = Game.fromJSON(docSnapshot.data());
 
-        if(this.currentGame.status === 'started') {
+        if(this.currentGame.status === 'started' && localStorage.role != '') {
           Router.go('/game');
         }
         if (this.currentGame.status === 'completed') {

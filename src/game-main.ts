@@ -126,8 +126,17 @@ export class GameMain extends LitElement {
     return this.currentGame.players.filter(p => p.role === 'player');
   } 
 
+  renderBlackCard() {
+    if (localStorage.role === '') {
+      return html``; 
+    }
+    let left = 0;
+    let zindex = 11;
+   
+    return html`<game-card description="${this.currentGame.blackCard?.content}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-card>`;
+  }
   renderWhiteCards() {
-    if (localStorage.role === 'master') {
+    if (localStorage.role !== 'player') {
       return html``; 
     }
     let left = 0;
@@ -157,12 +166,8 @@ export class GameMain extends LitElement {
             </span>
           `)}
         </div>
-         <game-card description="${this.currentGame.blackCard?.content}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-card>
-          ${this.renderWhiteCards()}
-      
-          <!--<game-card name="Zelda" description="Un grande classico"></game-card>
-         <game-card name="Pippo" description="L'amico di topolino"></game-card>
-         <div class="card">Hai scelto la card ${this.currentCardId}</div>-->  
+         ${this.renderBlackCard()} 
+         ${this.renderWhiteCards()}
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
       </main>
     `;
