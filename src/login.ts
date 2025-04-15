@@ -28,7 +28,12 @@ export class Login extends LitElement {
 
   .input-container2 {
     margin: auto;
-    width: 80%;
+    width: 79%;
+  }
+
+  .input-container3 {
+    margin: auto;
+    width: 20%;
   }
 
   .input-container input {
@@ -39,13 +44,11 @@ export class Login extends LitElement {
     text-align: center;
     font-size: 50px;
     padding-bottom: 10px;
-    margin: auto;
     font-family: "gandur-new", sans-serif;
     font-weight: 600;
     font-style: normal;
     background-color: red;
     text-transform: capitalize;
-
   }
 
   .input-container input::placeholder {
@@ -63,7 +66,7 @@ export class Login extends LitElement {
     border: 2px solid black;
     border-radius: 12px;
     background-color: red;
-    margin: auto;
+    margin-top: 30px;
   }
   `;
 
@@ -122,7 +125,9 @@ export class Login extends LitElement {
           <div class="input-container2">
             <input type="text" .value="${this.displayName}" @input="${this.handleInputDisplayName}" maxlength="6" placeholder="Io sono..."/>
           </div>
-          <button @click="${this.signInAnonymously}">Login</button>
+          <div class="input-container3">
+            <button @click="${this.signInAnonymously}">Login</button>
+          </div>
          </div>
       </div>
     `;

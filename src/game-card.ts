@@ -7,6 +7,8 @@ export class GameCard extends LitElement {
   @property({ type: String }) description = '';
   @property({ type: String }) color = '';
   @property({ type: String }) backgroundColor = '';
+  @property({ type: String }) left = '';
+  @property({ type: String }) zindex = '';
   
 
 
@@ -18,7 +20,6 @@ export class GameCard extends LitElement {
     padding-left: 22px;
     padding-right: 22px;
     border-radius: 10px;
-    margin: auto;
   }
 
   .card:first-letter {
@@ -32,12 +33,17 @@ export class GameCard extends LitElement {
     font-style: normal;
     line-height: 42px;
     rotate: -5deg;
+    margin: auto;
+    margin-top: 20px;
   }
 
   .white {
     font-size: 25px;
-    rotate: 7deg;
+    rotate: 10deg;
     border: 1px black solid;
+    display: inline-block;
+    position: absolute;
+    margin-top: -200px;
   }
 
   .card p {
@@ -59,7 +65,7 @@ export class GameCard extends LitElement {
 
   render() {
     return html`
-    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="background-color: ${this.backgroundColor}; color: ${this.color}">
+    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="background-color: ${this.backgroundColor}; color: ${this.color}; left: ${this.left}; z-index: ${this.zindex};">
       <p>${this.description}<span class="point">.</span></p>
     </div>
   `;

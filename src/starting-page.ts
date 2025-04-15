@@ -107,8 +107,6 @@ export class StartingPage extends LitElement {
 
     const currentGameDoc = doc(db, 'global', 'currentGame');
     setDoc(currentGameDoc, this.currentGame.toJSON());
-
-    Router.go('/game');
   }
 
   handleStopGame(event: any) {
@@ -128,6 +126,9 @@ export class StartingPage extends LitElement {
       if (docSnapshot.exists()) {
         this.currentGame = Game.fromJSON(docSnapshot.data());
 
+        if(this.currentGame.status === 'started') {
+          Router.go('/game');
+        }
         if (this.currentGame.status === 'completed') {
           localStorage.role = '';
         }
@@ -149,7 +150,7 @@ export class StartingPage extends LitElement {
   render() {
     return html`
       <main class="game">
-        <span>User: ${localStorage.userName}(${localStorage.role})</span>
+        <span>User: ${localStorage.userName}(${localStorage.role}) - ${this.currentGame.status}</span>
          <p>${this.findMaster() !== '' ? this.findMaster() + ' has started the game' : ''}</p>
          ${this.findPlayers().map(player => html`
             <p>

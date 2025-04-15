@@ -4,6 +4,8 @@ import { property, customElement } from 'lit/decorators.js';
 import { auth, db } from './firebase.js';
 import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, getDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
+import { Router } from '@vaadin/router';
+
 import './game-card.js';
 import { Card } from './card.js'
 import { Player } from './player.js';
@@ -42,22 +44,38 @@ export class GameMain extends LitElement {
     border-radius: 5px;
   }
 
-  .playerWidget {
+  .player-widget {
     background-color: white;
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 20px;
+    margin: 20px;
   }
 
-  .masterWidget {
+  .master-widget {
     background-color: black;
     color: white;
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 20px;
+    margin: 20px;
   }
+
+  .container-cards {
+   position: relative;
+  }
+
+  .container-widget {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    max-width: 400px;
+    height: 100%;
+    margin: auto;
   `;
 
   constructor() {
@@ -67,6 +85,8 @@ export class GameMain extends LitElement {
 
   handleCardClick(event: any) {
     this.currentCardName = event.detail.name;
+    console.log (event.target.attributes.zindex);
+    event.target.setAttribute("zindex", 1000);
   }
 
   handleStopGame(event: any) {
@@ -88,6 +108,9 @@ export class GameMain extends LitElement {
 
         if (this.currentGame.status === 'completed') {
           localStorage.role = '';
+        }
+        if (this.currentGame.status !== 'started') {
+          Router.go('/starting');
         }
    
         this.requestUpdate();
@@ -116,24 +139,36 @@ export class GameMain extends LitElement {
     return this.cards.filter(c => c.color === color);
   }*/
 
-  
+  renderWhiteCards() {
+    let left = 0;
+    let zindex = 11;
+   
+    return html`<div class="container-cards">
+         ${JSON.parse(localStorage.hand).map((card: any) => 
+              new Card(card.content, card.color)).map((card: any) => { 
+                left += 20;
+                zindex -= 1;
+                return html`
+            <game-card description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}"></game-card>
+          `})}
+        </div>`;
+  }
 
   render() {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
-        <div>
-          <span class="masterWidget">${this.findMaster()}</span>
+        <div class="container-widget">
+          <span class="master-widget">${this.findMaster()}</span>
           ${this.findPlayers().map(player => html`
-            <span class="playerWidget">
+            <span class="player-widget">
               ${player.name}
             </span>
           `)}
         </div>
          <game-card description="${this.currentGame.blackCard?.content}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-card>
-         ${JSON.parse(localStorage.hand).map((card: any) => new Card(card.content, card.color)).map((card: any) => html`
-            <game-card description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}"></game-card>
-          `)}
-         <!--<game-card name="Zelda" description="Un grande classico"></game-card>
+          ${this.renderWhiteCards()}
+      
+          <!--<game-card name="Zelda" description="Un grande classico"></game-card>
          <game-card name="Pippo" description="L'amico di topolino"></game-card>
          <div class="card">Hai scelto la card ${this.currentCardName}</div>-->  
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
