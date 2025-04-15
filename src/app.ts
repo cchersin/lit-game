@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
+import { Router } from '@vaadin/router';
+
 @customElement('game-app')
 export class App extends LitElement {
   @property({ type: String }) header = 'My game';
@@ -19,6 +21,7 @@ export class App extends LitElement {
 
   constructor() {
     super();
+    // Router.go('/login');
   }
 
   render() {

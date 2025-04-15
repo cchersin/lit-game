@@ -74,6 +74,7 @@ export class Login extends LitElement {
   
   constructor() {
     super();
+    // localStorage.role = ''
   }
 
   async signInAnonymously(): Promise<void> {

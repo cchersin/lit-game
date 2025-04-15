@@ -85,7 +85,6 @@ export class GameMain extends LitElement {
 
   handleCardClick(event: any) {
     this.currentCardId = event.detail.id;
-    //this.requestUpdate();
   }
 
   handleStopGame(event: any) {
@@ -157,7 +156,6 @@ export class GameMain extends LitElement {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
         <span>User: ${localStorage.userName}(${localStorage.role}) - ${this.currentGame.status}</span>
-     
         <div class="container-widget">
           <span class="master-widget">${this.findMaster()}</span>
           ${this.findPlayers().map(player => html`

@@ -101,16 +101,12 @@ export class StartingPage extends LitElement {
     if (drawnCard) {
       this.currentGame.blackCard = drawnCard;
     }
-    console.log('handleStartGame2');
-
-    console.log('-----' + this.currentGame.blackCard);
-
+  
     const currentGameDoc = doc(db, 'global', 'currentGame');
     setDoc(currentGameDoc, this.currentGame.toJSON());
   }
 
   handleStopGame(event: any) {
-     console.log('handleStopGame');
     this.currentGame.status = 'completed';
     this.currentGame.players = [];
     const currentGameDoc = doc(db, 'global', 'currentGame');
