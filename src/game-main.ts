@@ -150,6 +150,16 @@ export class GameMain extends LitElement {
     return JSON.parse(localStorage.hand);
   }
 
+  handleConfirmCard() {
+    let p = this.currentGame.players.find((player) => player.name === localStorage.userName);
+
+    if (p) {
+      p.currentCardId = this.currentCardId;
+      const currentGameDoc = doc(db, 'global', 'currentGame');
+      setDoc(currentGameDoc, this.currentGame.toJSON());
+    }
+  }
+
   renderWhiteCards() {
     if (localStorage.role !== 'player') {
       return html``; 
@@ -176,12 +186,13 @@ export class GameMain extends LitElement {
           <span class="master-widget">${this.findMaster()}</span>
           ${this.findPlayers().map(player => html`
             <span class="player-widget">
-              ${player.name}
+              ${player.name} ${player.currentCardId !== '' ? html`has choosen` : html``}
             </span>
           `)}
         </div>
          ${this.renderBlackCard()} 
          ${this.renderWhiteCards()}
+         ${localStorage.role === 'player' ? html`<button @click="${this.handleConfirmCard}">Confirm</button>` : html``}
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
       </main>
     `;
