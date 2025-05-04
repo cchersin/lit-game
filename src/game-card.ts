@@ -5,6 +5,7 @@ import { property, customElement } from 'lit/decorators.js';
 export class GameCard extends LitElement {
   @property({ type: String }) id = '';
   @property({ type: String }) description = '';
+  @property({ type: String }) value = '';
   @property({ type: String }) color = '';
   @property({ type: String }) backgroundColor = '';
   @property({ type: String }) left = '';
@@ -64,10 +65,18 @@ export class GameCard extends LitElement {
     }));
   }
 
+  getDescription() {
+    if (this.value !== '') {
+      return this.description.replace('______', this.value);
+    }
+
+    return this.description;
+  }
+
   render() {
     return html`
     <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="background-color: ${this.backgroundColor}; color: ${this.color}; left: ${this.left}; z-index: ${this.isselected === "true" ? 1000 : this.zindex};">
-      <p>${this.description}<span class="point">.</span></p>
+      <p>${this.getDescription()}<span class="point">.</span></p>
     </div>
   `;
   }

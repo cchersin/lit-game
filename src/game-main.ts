@@ -85,6 +85,17 @@ export class GameMain extends LitElement {
 
   handleCardClick(event: any) {
     this.currentCardId = event.detail.id;
+    this.requestUpdate();
+  }
+
+  findCardContent(cardId: String) {
+    const card = this.getHand().find((c: any) => c.id === cardId);
+
+    if (card) {
+      return card.content;
+    }
+
+    return '';
   }
 
   handleStopGame(event: any) {
@@ -132,8 +143,13 @@ export class GameMain extends LitElement {
     let left = 0;
     let zindex = 11;
    
-    return html`<game-card description="${this.currentGame.blackCard?.content}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-card>`;
+    return html`<game-card description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-card>`;
   }
+
+  getHand() {
+    return JSON.parse(localStorage.hand);
+  }
+
   renderWhiteCards() {
     if (localStorage.role !== 'player') {
       return html``; 
@@ -142,7 +158,7 @@ export class GameMain extends LitElement {
     let zindex = 11;
    
     return html`<div class="container-cards">
-         ${JSON.parse(localStorage.hand).map((card: any) => 
+         ${this.getHand().map((card: any) => 
               new Card(card.id, card.content, card.color)).map((card: any) => { 
                 left += 20;
                 zindex -= 1;

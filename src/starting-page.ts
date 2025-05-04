@@ -31,9 +31,9 @@ export class StartingPage extends LitElement {
   ];
   @property({ type: Array }) blackCards: Array<Card> = 
   [
-    new Card('1', 'La colazione di Montra oggi consiste in ______ .', 'black'),
-    new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______ .', 'black'),
-    new Card('3', 'Bevo per dimenticare ______ .', 'black') 
+    new Card('1', 'La colazione di Montra oggi consiste in ______.', 'black'),
+    new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______.', 'black'),
+    new Card('3', 'Bevo per dimenticare ______.', 'black') 
   ];
   
   static styles = css`
