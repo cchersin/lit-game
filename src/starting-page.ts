@@ -38,40 +38,22 @@ export class StartingPage extends LitElement {
   }
 
   handleJoin(event: any) {
-    let p = this.currentGame.players.find((player) => player.name === localStorage.userName);
-
-    if (!p) {
-      p = new Player(localStorage.userName, 'player');
-      this.currentGame.players.push(p);
-
-      for(let i = 0; i < 3; i++) {
-        const drawnCard = this.currentGame.whiteDeck.shift();
-        if (drawnCard) {
-          p.hand.push(drawnCard);
-        }
-      }
-
+    var p = this.currentGame.join(localStorage.userName);
+    StoreService.saveGame(this.currentGame);
+ 
+    if (p) {
       localStorage.hand = JSON.stringify(p.hand);
       localStorage.role = p.role;
-      StoreService.saveGame(this.currentGame);
     }
   }
 
   handleStartGame(event: any) {
-    console.log('handleStartGame');
-    this.currentGame.status = 'started';
-    console.log('handleStartGame1');
-    const drawnCard = this.currentGame.blackDeck.shift();
-    if (drawnCard) {
-      this.currentGame.blackCard = drawnCard;
-    }
-  
+    this.currentGame.start();
     StoreService.saveGame(this.currentGame);
   }
 
   handleStopGame(event: any) {
-    this.currentGame.status = 'completed';
-    this.currentGame.players = [];
+    this.currentGame.stop();
     StoreService.saveGame(this.currentGame);
     localStorage.currentGameName = '';
     localStorage.role = '';

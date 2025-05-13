@@ -15,7 +15,7 @@ const whiteCards = [
     new Card('11', 'i poveri che non hanno soldi', 'white'),
     new Card('12', 'i ladri che rubano', 'white'),    
   ];
-  
+
 const blackCards = [
     new Card('1', 'La colazione di Montra oggi consiste in ______.', 'black'),
     new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______.', 'black'),
@@ -42,17 +42,48 @@ export class Game {
     this.turn = 'players';
   }
 
-  init(master: string) {
-    const p = new Player(master, 'master');
+  init(masterName: string) {
+    console.log('init game');
+ 
+    const p = new Player(masterName, 'master');
     this.players = [p];
     this.whiteDeck = whiteCards;
     this.blackDeck = blackCards;
     this.status = 'pending';
   }
+
+  start() {
+    console.log('start game');
+ 
+    this.status = 'started';
+    const drawnCard = this.blackDeck.shift();
+    if (drawnCard) {
+       this.blackCard = drawnCard;
+    }
+  }
  
   stop() {
+    console.log('stop game');
+ 
     this.status = 'completed';
     this.players = [];
+  }
+
+  join(playerName: string) {
+    let p = this.players.find((player) => player.name === playerName);
+
+    if (!p) {
+      p = new Player(playerName, 'player');
+      this.players.push(p);
+
+      for(let i = 0; i < 3; i++) {
+        const drawnCard = this.whiteDeck.shift();
+        if (drawnCard) {
+          p.hand.push(drawnCard);
+        }
+      }
+      return p;
+    }
   }
 
   findMaster() {
