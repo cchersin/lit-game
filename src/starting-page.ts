@@ -1,9 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-//import { auth, db } from './firebase.js';
-//import { getFirestore, Firestore, collection, getDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
-
 import { Router } from '@vaadin/router';
 
 import { Card } from './card.js'
@@ -15,27 +12,6 @@ import { StoreService } from './store-service.js';
 export class StartingPage extends LitElement {
   @property({ type: String }) currentCardName = '';
   @property({ type: Game }) currentGame = new Game('');
-  @property({ type: Array }) whiteCards: Array<Card> = 
-  [
-    new Card('1', 'Martina', 'white'), 
-    new Card('2', 'Inès', 'white'),
-    new Card('3', 'Andrea', 'white'),
-    new Card('4', 'Montra', 'white'), 
-    new Card('5', 'le critiche di Rossolini', 'white'),
-    new Card('6', 'Grado', 'white'),
-    new Card('7', 'la sessualità di Martina', 'white'), 
-    new Card('8', 'il divorzio dei miei genitori', 'white'),
-    new Card('9', 'il comic sans', 'white'),
-    new Card('10', 'Helvetica', 'white'), 
-    new Card('11', 'i poveri che non hanno soldi', 'white'),
-    new Card('12', 'i ladri che rubano', 'white'),    
-  ];
-  @property({ type: Array }) blackCards: Array<Card> = 
-  [
-    new Card('1', 'La colazione di Montra oggi consiste in ______.', 'black'),
-    new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______.', 'black'),
-    new Card('3', 'Bevo per dimenticare ______.', 'black') 
-  ];
   
   static styles = css`
   `;
@@ -51,25 +27,14 @@ export class StartingPage extends LitElement {
       name: gameName
     });*/
 
-    console.log(gameName);
+    const game = new Game(gameName);
 
-    const p = new Player(localStorage.userName, 'master');
-    const g = new Game(gameName);
-    g.players = [p];
-    g.whiteDeck = this.whiteCards;
-    g.blackDeck = this.blackCards;
-    g.status = 'pending';
+    game.init(localStorage.userName);
   
-    console.log(g.toJSON());
-
-    StoreService.saveGame(g);
-
-    
+    StoreService.saveGame(game);
 
     localStorage.currentGameName = gameName;
-    localStorage.role = p.role;
-
-    console.log(p.role);
+    localStorage.role = 'master';
   }
 
   handleJoin(event: any) {

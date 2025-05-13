@@ -1,6 +1,27 @@
 import { Card } from './card.js'
 import { Player } from './player.js'
 
+const whiteCards = [
+    new Card('1', 'Martina', 'white'), 
+    new Card('2', 'Inès', 'white'),
+    new Card('3', 'Andrea', 'white'),
+    new Card('4', 'Montra', 'white'), 
+    new Card('5', 'le critiche di Rossolini', 'white'),
+    new Card('6', 'Grado', 'white'),
+    new Card('7', 'la sessualità di Martina', 'white'), 
+    new Card('8', 'il divorzio dei miei genitori', 'white'),
+    new Card('9', 'il comic sans', 'white'),
+    new Card('10', 'Helvetica', 'white'), 
+    new Card('11', 'i poveri che non hanno soldi', 'white'),
+    new Card('12', 'i ladri che rubano', 'white'),    
+  ];
+  
+const blackCards = [
+    new Card('1', 'La colazione di Montra oggi consiste in ______.', 'black'),
+    new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______.', 'black'),
+    new Card('3', 'Bevo per dimenticare ______.', 'black') 
+  ];
+
 export class Game {
   name: string;
   status: string; 
@@ -15,18 +36,19 @@ export class Game {
     this.status = 'completed';
     this.whiteDeck = [];
     this.blackDeck = [];
-    this.blackCard = new Card('0', '','');
     this.players = [];
+    this.blackCard = new Card('0', '','');
+
     this.turn = 'players';
   }
 
-  /*init(master: string) {
+  init(master: string) {
     const p = new Player(master, 'master');
     this.players = [p];
-    this.whiteDeck = this.whiteCards;
-    this.blackDeck = this.blackCards;
+    this.whiteDeck = whiteCards;
+    this.blackDeck = blackCards;
     this.status = 'pending';
-  }*/
+  }
  
   stop() {
     this.status = 'completed';

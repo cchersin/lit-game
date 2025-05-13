@@ -13,27 +13,6 @@ import { StoreService } from './store-service.js';
 export class GameMain extends LitElement {
   @property({ type: String }) currentCardId = "-1";
   @property({ type: Game }) currentGame = new Game('');
-/*  @property({ type: Array }) whiteCards: Array<Card> = 
-  [
-    new Card('Martina', 'white'), 
-    new Card('Inès', 'white'),
-    new Card('Andrea', 'white'),
-    new Card('Montra', 'white'), 
-    new Card('le critiche di Rossolini', 'white'),
-    new Card('Grado', 'white'),
-    new Card('la sessualità di Martina', 'white'), 
-    new Card('il divorzio dei miei genitori', 'white'),
-    new Card('il comic sans', 'white'),
-    new Card('Helvetica', 'white'), 
-    new Card('i poveri che non hanno soldi', 'white'),
-    new Card('i ladri che rubano', 'white'),    
-  ];
-  @property({ type: Array }) blackCards: Array<Card> = 
-  [
-    new Card('La colazione di Montra oggi consiste in ______ .', 'black'),
-    new Card('Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______ .', 'black'),
-    new Card('Bevo per dimenticare ______ .', 'black') 
-  ]; */
   
   static styles = css`
   .card {
