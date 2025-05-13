@@ -79,7 +79,6 @@ export class GameMain extends LitElement {
     console.log('handleStopGame');
     this.currentGame.stop();
     StoreService.saveGame(this.currentGame);
-    localStorage.role = '';
     this.requestUpdate();
   }
 
@@ -87,9 +86,6 @@ export class GameMain extends LitElement {
     StoreService.onGameUpdate((game) => {
         this.currentGame = game;
 
-        if (this.currentGame.status === 'completed') {
-          localStorage.role = '';
-        }
         if (this.currentGame.status !== 'started') {
           Router.go('/starting');
         }
@@ -106,10 +102,27 @@ export class GameMain extends LitElement {
     return this.currentGame.findPlayers();
   } 
 
+  isMaster() {
+    return this.currentGame.isMaster(localStorage.userName);
+  }
+
+  isPlayer() {
+    return this.currentGame.isPlayer(localStorage.userName);
+  }
+
+  hasRole() {
+    return this.currentGame.getPlayer(localStorage.userName);
+  }
+
+  getRole() {
+    return this.currentGame.getRole(localStorage.userName);
+  }
+
   renderBlackCard() {
-    if (localStorage.role === '') {
+    if (!this.hasRole()) {
       return html``; 
     }
+
     let left = 0;
     let zindex = 11;
    
@@ -117,12 +130,7 @@ export class GameMain extends LitElement {
   }
 
   getHand() {
-    const p = this.currentGame.getPlayer(localStorage.userName);
-    if (p) {
-      return p.hand;
-    }
-   
-    return [];
+    return this.currentGame.getHand(localStorage.userName);
   }
 
   handleConfirmCard() {
@@ -131,7 +139,7 @@ export class GameMain extends LitElement {
   }
 
   renderWhiteCards() {
-    if (localStorage.role === 'master') {
+    if (this.isMaster()) {
       return this.renderWhiteCardsMaster(); 
     }
     return this.renderWhiteCardsPlayers();
@@ -162,7 +170,7 @@ export class GameMain extends LitElement {
   render() {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
-        <span>User: ${localStorage.userName}(${localStorage.role}) - ${this.currentGame.status}</span>
+        <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
         <div class="container-widget">
           <span class="master-widget">${this.findMaster()}</span>
           ${this.findPlayers().map(player => html`
@@ -173,7 +181,7 @@ export class GameMain extends LitElement {
         </div>
          ${this.renderBlackCard()} 
          ${this.renderWhiteCards()}
-         ${localStorage.role === 'player' ? html`<button @click="${this.handleConfirmCard}">Confirm</button>` : html``}
+         ${this.isPlayer() ? html`<button @click="${this.handleConfirmCard}">Confirm</button>` : html``}
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
       </main>
     `;

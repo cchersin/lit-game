@@ -26,18 +26,11 @@ export class StartingPage extends LitElement {
     game.init(localStorage.userName);
   
     StoreService.saveGame(game);
-
-    localStorage.role = 'master';
   }
 
   handleJoin(event: any) {
-    var p = this.currentGame.join(localStorage.userName);
-    StoreService.saveGame(this.currentGame);
- 
-    if (p) {
-      //localStorage.hand = JSON.stringify(p.hand);
-      localStorage.role = p.role;
-    }
+    this.currentGame.join(localStorage.userName);
+    StoreService.saveGame(this.currentGame); 
   }
 
   handleStartGame(event: any) {
@@ -48,7 +41,6 @@ export class StartingPage extends LitElement {
   handleStopGame(event: any) {
     this.currentGame.stop();
     StoreService.saveGame(this.currentGame);
-    localStorage.role = '';
     this.requestUpdate();
   }
 
@@ -56,13 +48,9 @@ export class StartingPage extends LitElement {
     StoreService.onGameUpdate((game) => {
         this.currentGame = game;
 
-        if(this.currentGame.status === 'started' && localStorage.role != '') {
+        if(this.currentGame.status === 'started' && this.hasRole()) {
           Router.go('/game');
-        }
-        if (this.currentGame.status === 'completed') {
-          localStorage.role = '';
-        }
-   
+        } 
         this.requestUpdate();
     });
   }
@@ -75,10 +63,27 @@ export class StartingPage extends LitElement {
     return this.currentGame.findPlayers();
   } 
 
+  isMaster() {
+    return this.currentGame.isMaster(localStorage.userName);
+  }
+
+  isPlayer() {
+    return this.currentGame.isPlayer(localStorage.userName);
+  }
+
+  hasRole() {
+    return this.currentGame.getPlayer(localStorage.userName);
+  }
+
+  getRole() {
+    return this.currentGame.getRole(localStorage.userName);
+  }
+
+
   render() {
     return html`
       <main class="game">
-        <span>User: ${localStorage.userName}(${localStorage.role}) - ${this.currentGame.status}</span>
+        <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
          <p>${this.findMaster() !== '' ? this.findMaster() + ' has started the game' : ''}</p>
          ${this.findPlayers().map(player => html`
             <p>
@@ -86,9 +91,9 @@ export class StartingPage extends LitElement {
             </p>
           `)}
          ${this.currentGame.status === 'completed' ? html`<button @click="${this.handleNewGame}">New game</button>` : html``}
-         ${localStorage.role === 'master' && this.currentGame.status === 'pending' ? html`<button @click="${this.handleStartGame}">Start game</button>` : html``}
+         ${this.isMaster() && this.currentGame.status === 'pending' ? html`<button @click="${this.handleStartGame}">Start game</button>` : html``}
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
-         ${localStorage.role === '' && this.currentGame.status === 'pending' ? html`<button @click="${this.handleJoin}">Join</button>` : html``}
+         ${!this.hasRole() && this.currentGame.status === 'pending' ? html`<button @click="${this.handleJoin}">Join</button>` : html``}
       </main>
     `;
   }

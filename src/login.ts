@@ -74,7 +74,6 @@ export class Login extends LitElement {
   
   constructor() {
     super();
-    // localStorage.role = ''
   }
 
   async signInAnonymously(): Promise<void> {
@@ -99,8 +98,7 @@ export class Login extends LitElement {
 
         localStorage.userName  = data.name;
         localStorage.sessionId = data.sessionId;
-        localStorage.hand = JSON.stringify([]);
-
+     
         Router.go('/starting');
       } else {
         console.warn("No user is currently signed in.");

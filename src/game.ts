@@ -114,7 +114,24 @@ export class Game {
   isPlayer(playerName: string) {
     return this.getPlayer(playerName)?.role === 'player';
   }
- 
+
+  getRole(playerName: string) {
+    const p = this.getPlayer(playerName);
+    if (p) {
+      return p.role;
+    }
+    return '';
+  }
+
+   getHand(playerName: string) {
+    const p = this.getPlayer(playerName);
+    if (p) {
+      return p.hand;
+    }
+   
+    return [];
+  }
+
   toJSON() {
     return {
       name: this.name,
