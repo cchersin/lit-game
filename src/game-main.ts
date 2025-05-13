@@ -1,8 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-import { auth, db } from './firebase.js';
-import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, getDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+//import { auth, db } from './firebase.js';
+//import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, getDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
 import { Router } from '@vaadin/router';
 
@@ -10,6 +10,7 @@ import './game-card.js';
 import { Card } from './card.js'
 import { Player } from './player.js';
 import { Game } from './game.js';
+import { StoreService } from './store-service.js';
 
 @customElement('game-main')
 export class GameMain extends LitElement {
@@ -102,18 +103,15 @@ export class GameMain extends LitElement {
      console.log('handleStopGame');
     this.currentGame.status = 'completed';
     this.currentGame.players = [];
-    const currentGameDoc = doc(db, 'global', 'currentGame');
-    setDoc(currentGameDoc, this.currentGame.toJSON());
+    StoreService.saveGame(this.currentGame);
     localStorage.currentGameName = '';
     localStorage.role = '';
     this.requestUpdate();
   }
 
   loadGame() {
-    const docRef = doc(db, 'global', 'currentGame');
-    onSnapshot(docRef, (docSnapshot) => {
-      if (docSnapshot.exists()) {
-        this.currentGame = Game.fromJSON(docSnapshot.data());
+    StoreService.onGameUpdate((game) => {
+        this.currentGame = game;
 
         if (this.currentGame.status === 'completed') {
           localStorage.role = '';
@@ -123,7 +121,6 @@ export class GameMain extends LitElement {
         }
    
         this.requestUpdate();
-      }
     });
   }
 
@@ -155,15 +152,25 @@ export class GameMain extends LitElement {
 
     if (p) {
       p.currentCardId = this.currentCardId;
-      const currentGameDoc = doc(db, 'global', 'currentGame');
-      setDoc(currentGameDoc, this.currentGame.toJSON());
+      StoreService.saveGame(this.currentGame);
     }
   }
 
   renderWhiteCards() {
-    if (localStorage.role !== 'player') {
+    if (localStorage.role === 'master') {
+      this.renderWhiteCardsMaster(); 
+    }
+    this.renderWhiteCardsPlayers();
+  }
+
+  renderWhiteCardsMaster() {
+    if (this.currentGame.players.find((player) => player.currentCardId === '')) {
       return html``; 
     }
+    return html``; 
+  }
+
+  renderWhiteCardsPlayers() {
     let left = 0;
     let zindex = 11;
    

@@ -8,6 +8,7 @@ export class Game {
   blackDeck: Array<Card>;
   blackCard?: Card;
   players: Array<Player>; 
+  turn: string;
   
   constructor(name: string) {
     this.name = name;
@@ -16,6 +17,7 @@ export class Game {
     this.blackDeck = [];
     this.blackCard = new Card('0', '','');
     this.players = [];
+    this.turn = 'players';
   }
 
   toJSON() {
@@ -25,7 +27,8 @@ export class Game {
       whiteDeck: this.whiteDeck.map(c => c.toJSON()),
       blackDeck: this.blackDeck.map(c => c.toJSON()),
       blackCard: this.blackCard?.toJSON(),
-      players: this.players.map(c => c.toJSON())
+      players: this.players.map(c => c.toJSON()),
+      turn: this.turn
     };
   }
 
@@ -36,6 +39,7 @@ export class Game {
     g.blackDeck = json.blackDeck.map((c: any) => Card.fromJSON(c));
     g.blackCard = Card.fromJSON(json.blackCard);
     g.players = json.players.map((p: any) => Player.fromJSON(p));
+    g.turn = json.turn;
     return g;
   }
 }

@@ -1,14 +1,15 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-import { auth, db } from './firebase.js';
-import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, getDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+//import { auth, db } from './firebase.js';
+//import { getFirestore, Firestore, collection, getDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
 import { Router } from '@vaadin/router';
 
 import { Card } from './card.js'
 import { Player } from './player.js';
 import { Game } from './game.js';
+import { StoreService } from './store-service.js';
 
 @customElement('starting-page')
 export class StartingPage extends LitElement {
@@ -61,10 +62,9 @@ export class StartingPage extends LitElement {
   
     console.log(g.toJSON());
 
-    const currentGameDoc = doc(db, 'global', 'currentGame');
-    setDoc(currentGameDoc, g.toJSON());
+    StoreService.saveGame(g);
 
-     console.log('saved');
+    
 
     localStorage.currentGameName = gameName;
     localStorage.role = p.role;
@@ -88,8 +88,7 @@ export class StartingPage extends LitElement {
 
       localStorage.hand = JSON.stringify(p.hand);
       localStorage.role = p.role;
-      const currentGameDoc = doc(db, 'global', 'currentGame');
-      setDoc(currentGameDoc, this.currentGame.toJSON());
+      StoreService.saveGame(this.currentGame);
     }
   }
 
@@ -102,25 +101,21 @@ export class StartingPage extends LitElement {
       this.currentGame.blackCard = drawnCard;
     }
   
-    const currentGameDoc = doc(db, 'global', 'currentGame');
-    setDoc(currentGameDoc, this.currentGame.toJSON());
+    StoreService.saveGame(this.currentGame);
   }
 
   handleStopGame(event: any) {
     this.currentGame.status = 'completed';
     this.currentGame.players = [];
-    const currentGameDoc = doc(db, 'global', 'currentGame');
-    setDoc(currentGameDoc, this.currentGame.toJSON());
+    StoreService.saveGame(this.currentGame);
     localStorage.currentGameName = '';
     localStorage.role = '';
     this.requestUpdate();
   }
 
   loadGame() {
-    const docRef = doc(db, 'global', 'currentGame');
-    onSnapshot(docRef, (docSnapshot) => {
-      if (docSnapshot.exists()) {
-        this.currentGame = Game.fromJSON(docSnapshot.data());
+    StoreService.onGameUpdate((game) => {
+        this.currentGame = game;
 
         if(this.currentGame.status === 'started' && localStorage.role != '') {
           Router.go('/game');
@@ -130,7 +125,6 @@ export class StartingPage extends LitElement {
         }
    
         this.requestUpdate();
-      }
     });
   }
 
