@@ -8,7 +8,7 @@ import { StoreService } from './store-service.js';
 
 @customElement('starting-page')
 export class StartingPage extends LitElement {
-  @property({ type: Game }) currentGame = new Game('');
+  currentGame = new Game('');
   
   static styles = css`
   `;

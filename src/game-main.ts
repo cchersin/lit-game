@@ -11,8 +11,8 @@ import { StoreService } from './store-service.js';
 
 @customElement('game-main')
 export class GameMain extends LitElement {
-  @property({ type: String }) currentCardId = "-1";
-  @property({ type: Game }) currentGame = new Game('');
+  currentCardId = "-1";
+  currentGame = new Game('');
   
   static styles = css`
   .card {
