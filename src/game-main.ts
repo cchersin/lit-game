@@ -122,19 +122,15 @@ export class GameMain extends LitElement {
   }
 
   handleConfirmCard() {
-    let p = this.currentGame.players.find((player) => player.name === localStorage.userName);
-
-    if (p) {
-      p.currentCardId = this.currentCardId;
-      StoreService.saveGame(this.currentGame);
-    }
+    this.currentGame.confirmCard(localStorage.userName, this.currentCardId);
+    StoreService.saveGame(this.currentGame);
   }
 
   renderWhiteCards() {
     if (localStorage.role === 'master') {
-      this.renderWhiteCardsMaster(); 
+      return this.renderWhiteCardsMaster(); 
     }
-    this.renderWhiteCardsPlayers();
+    return this.renderWhiteCardsPlayers();
   }
 
   renderWhiteCardsMaster() {

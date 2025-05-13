@@ -86,6 +86,14 @@ export class Game {
     }
   }
 
+  confirmCard(playerName: string, cardId: string) {
+    let p = this.players.find((player) => player.name === playerName);
+
+    if (p) {
+      p.currentCardId = cardId;
+    }
+  }
+
   findMaster() {
     const master = this.players.find(p => p.role === 'master');
     return master ? master.name : '';

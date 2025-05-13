@@ -76,12 +76,11 @@ export class StartingPage extends LitElement {
   }
 
   findMaster() {
-    const master = this.currentGame.players.find(p => p.role === 'master');
-    return master ? master.name : '';
+    return this.currentGame.findMaster();
   }
 
   findPlayers() {
-    return this.currentGame.players.filter(p => p.role === 'player');
+    return this.currentGame.findPlayers();
   } 
 
   render() {
