@@ -1,9 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-//import { auth, db } from './firebase.js';
-//import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, getDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
-
 import { Router } from '@vaadin/router';
 
 import './game-card.js';
@@ -100,9 +97,8 @@ export class GameMain extends LitElement {
   }
 
   handleStopGame(event: any) {
-     console.log('handleStopGame');
-    this.currentGame.status = 'completed';
-    this.currentGame.players = [];
+    console.log('handleStopGame');
+    this.currentGame.stop();
     StoreService.saveGame(this.currentGame);
     localStorage.currentGameName = '';
     localStorage.role = '';
@@ -125,12 +121,11 @@ export class GameMain extends LitElement {
   }
 
   findMaster() {
-    const master = this.currentGame.players.find(p => p.role === 'master');
-    return master ? master.name : '';
+    return this.currentGame.findMaster();
   }
 
   findPlayers() {
-    return this.currentGame.players.filter(p => p.role === 'player');
+    return this.currentGame.findPlayers();
   } 
 
   renderBlackCard() {

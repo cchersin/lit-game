@@ -20,6 +20,28 @@ export class Game {
     this.turn = 'players';
   }
 
+  /*init(master: string) {
+    const p = new Player(master, 'master');
+    this.players = [p];
+    this.whiteDeck = this.whiteCards;
+    this.blackDeck = this.blackCards;
+    this.status = 'pending';
+  }*/
+ 
+  stop() {
+    this.status = 'completed';
+    this.players = [];
+  }
+
+  findMaster() {
+    const master = this.players.find(p => p.role === 'master');
+    return master ? master.name : '';
+  }
+
+  findPlayers() {
+    return this.players.filter(p => p.role === 'player');
+  } 
+
   toJSON() {
     return {
       name: this.name,
