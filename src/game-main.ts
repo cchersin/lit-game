@@ -79,7 +79,6 @@ export class GameMain extends LitElement {
     console.log('handleStopGame');
     this.currentGame.stop();
     StoreService.saveGame(this.currentGame);
-    localStorage.currentGameName = '';
     localStorage.role = '';
     this.requestUpdate();
   }
@@ -118,7 +117,12 @@ export class GameMain extends LitElement {
   }
 
   getHand() {
-    return JSON.parse(localStorage.hand);
+    const p = this.currentGame.getPlayer(localStorage.userName);
+    if (p) {
+      return p.hand;
+    }
+   
+    return [];
   }
 
   handleConfirmCard() {

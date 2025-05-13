@@ -3,14 +3,11 @@ import { property, customElement } from 'lit/decorators.js';
 
 import { Router } from '@vaadin/router';
 
-import { Card } from './card.js'
-import { Player } from './player.js';
 import { Game } from './game.js';
 import { StoreService } from './store-service.js';
 
 @customElement('starting-page')
 export class StartingPage extends LitElement {
-  @property({ type: String }) currentCardName = '';
   @property({ type: Game }) currentGame = new Game('');
   
   static styles = css`
@@ -23,17 +20,13 @@ export class StartingPage extends LitElement {
 
   handleNewGame(event: any) {
     const gameName = new Date().toString();
-    /*addDoc(collection(db, "games"), {
-      name: gameName
-    });*/
-
+ 
     const game = new Game(gameName);
 
     game.init(localStorage.userName);
   
     StoreService.saveGame(game);
 
-    localStorage.currentGameName = gameName;
     localStorage.role = 'master';
   }
 
@@ -42,7 +35,7 @@ export class StartingPage extends LitElement {
     StoreService.saveGame(this.currentGame);
  
     if (p) {
-      localStorage.hand = JSON.stringify(p.hand);
+      //localStorage.hand = JSON.stringify(p.hand);
       localStorage.role = p.role;
     }
   }
@@ -55,7 +48,6 @@ export class StartingPage extends LitElement {
   handleStopGame(event: any) {
     this.currentGame.stop();
     StoreService.saveGame(this.currentGame);
-    localStorage.currentGameName = '';
     localStorage.role = '';
     this.requestUpdate();
   }

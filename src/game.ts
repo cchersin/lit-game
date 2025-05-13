@@ -103,6 +103,18 @@ export class Game {
     return this.players.filter(p => p.role === 'player');
   } 
 
+  getPlayer(playerName: string) {
+    return this.players.find((player) => player.name === playerName);
+  }
+
+  isMaster(playerName: string) {
+    return this.getPlayer(playerName)?.role === 'master';
+  }
+
+  isPlayer(playerName: string) {
+    return this.getPlayer(playerName)?.role === 'player';
+  }
+ 
   toJSON() {
     return {
       name: this.name,
