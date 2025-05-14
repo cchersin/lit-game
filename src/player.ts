@@ -13,8 +13,13 @@ export class Player {
     this.currentCardId = '';
   }
 
+  getCard(cardId: string) {
+    return this.hand.find((card) => card.id === cardId);
+  }
+
+
   getCurrentCard() {
-    return this.hand.find((card) => card.id === this.currentCardId);
+    return this.getCard(this.currentCardId);
   }
 
   hasCurrentCard() {

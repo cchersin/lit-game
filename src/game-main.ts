@@ -138,6 +138,10 @@ export class GameMain extends LitElement {
     return this.currentGame.getHand(localStorage.userName);
   }
 
+  getRounds() {
+    return this.currentGame.rounds;
+  }
+
   handleConfirmCard() {
     this.currentGame.confirmCard(localStorage.userName, this.currentCardId);
     StoreService.saveGame(this.currentGame);
@@ -158,6 +162,15 @@ export class GameMain extends LitElement {
         </div>`;
   }
 
+  renderRounds() {
+    return html`<div>
+         ${this.getRounds().map((round: any) => {
+          return html`
+            ${round.winner} ${round.sentence} 
+          `})}
+        </div>`;
+  }
+
   render() {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
@@ -174,6 +187,7 @@ export class GameMain extends LitElement {
          ${this.renderWhiteCards()}
          ${this.hasHand() ? html`<button @click="${this.handleConfirmCard}">Confirm</button>` : html``}
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
+         ${this.renderRounds()} 
       </main>
     `;
   }

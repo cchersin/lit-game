@@ -1,5 +1,6 @@
 import { Card } from './card.js'
 import { Player } from './player.js'
+import { Round } from './round.js'
 
 const whiteCards = [
     new Card('1', 'Martina', 'white'), 
@@ -29,7 +30,7 @@ export class Game {
   blackDeck: Array<Card>;
   blackCard?: Card;
   players: Array<Player>; 
-  turn: string;
+  rounds: Array<Round>;
   
   constructor(name: string) {
     this.name = name;
@@ -38,8 +39,7 @@ export class Game {
     this.blackDeck = [];
     this.players = [];
     this.blackCard = new Card('0', '','');
-
-    this.turn = 'players';
+    this.rounds = [];
   }
 
   init(masterName: string) {
@@ -115,7 +115,13 @@ export class Game {
             }
         }
       } else {
-        const winner = this.findPlayers().filter((player) => player.currentCardId === cardId);
+        const winner = this.findPlayers().find((player) => player.currentCardId === cardId);
+        const winnerCard = p.getCard(cardId);
+
+        const round = new Round(winner ? winner.name : '', 
+                                (this.blackCard ? this.blackCard.content : '') + (winnerCard ? winnerCard.content : ''));
+        this.rounds.push(round);
+
         this.findPlayers().forEach((player) => {
             this.drawHand(player);
         });  
@@ -179,7 +185,7 @@ export class Game {
       blackDeck: this.blackDeck.map(c => c.toJSON()),
       blackCard: this.blackCard?.toJSON(),
       players: this.players.map(c => c.toJSON()),
-      turn: this.turn
+      rounds: this.rounds.map(r => r.toJSON())
     };
   }
 
@@ -190,7 +196,7 @@ export class Game {
     g.blackDeck = json.blackDeck.map((c: any) => Card.fromJSON(c));
     g.blackCard = Card.fromJSON(json.blackCard);
     g.players = json.players.map((p: any) => Player.fromJSON(p));
-    g.turn = json.turn;
+    g.rounds = json.rounds.map((r:any) => Round.fromJSON(r));
     return g;
   }
 }
