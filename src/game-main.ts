@@ -166,7 +166,7 @@ export class GameMain extends LitElement {
     return html`<div>
          ${this.getRounds().map((round: any) => {
           return html`<div>
-            ${round.winner} ${round.sentence} 
+            winner:${round.winnerName} ${round.sentence} 
           </div>`})}
         </div>`;
   }
