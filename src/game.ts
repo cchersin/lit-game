@@ -117,9 +117,11 @@ export class Game {
       } else {
         const winner = this.findPlayers().find((player) => player.currentCardId === cardId);
         const winnerCard = p.getCard(cardId);
+        const winnerCardContent = winnerCard ? winnerCard.content : '';
+        const blackCardContent = this.blackCard ? this.blackCard.content : '';
+        const sentence = blackCardContent.replace('______',winnerCardContent);
 
-        const round = new Round(winner ? winner.name : '', 
-                                (this.blackCard ? this.blackCard.content : '') + (winnerCard ? winnerCard.content : ''));
+        const round = new Round(winner ? winner.name : '', sentence);
         this.rounds.push(round);
 
         this.findPlayers().forEach((player) => {
