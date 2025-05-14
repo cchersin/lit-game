@@ -13,6 +13,14 @@ export class Player {
     this.currentCardId = '';
   }
 
+  getCurrentCard() {
+    return this.hand.find((card) => card.id === this.currentCardId);
+  }
+
+  hasCurrentCard() {
+    return this.currentCardId !== '';
+  }
+
   toJSON() {
     return {
       name: this.name,

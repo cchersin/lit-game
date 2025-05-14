@@ -76,13 +76,17 @@ export class Game {
       p = new Player(playerName, 'player');
       this.players.push(p);
 
-      for(let i = 0; i < 3; i++) {
-        const drawnCard = this.whiteDeck.shift();
-        if (drawnCard) {
-          p.hand.push(drawnCard);
-        }
+      this.drawHand(p);
+    }
+  }
+
+  drawHand(player: Player) {
+    player.currentCardId = '';
+    for(let i = 0; i < 3; i++) {
+      const drawnCard = this.whiteDeck.shift();
+      if (drawnCard) {
+        player.hand.push(drawnCard);
       }
-      return p;
     }
   }
 
@@ -91,11 +95,32 @@ export class Game {
 
     if (p) {
       p.currentCardId = cardId;
+      if (this.isPlayerTurnCompleted()) {
+          const master = this.findMaster();
+
+          if (master) {
+            this.findPlayers().forEach((player) => {
+                const card = player.getCurrentCard();
+                if (card) {
+                  player.hand = [];
+                  master.hand.push(card);
+                }
+            });
+          }
+      }
     }
   }
 
+  isPlayerTurnCompleted() {
+    return !this.findPlayers().find((player) => !player.hasCurrentCard());
+  }
+
   findMaster() {
-    const master = this.players.find(p => p.role === 'master');
+    return this.players.find(p => p.role === 'master');
+  }
+
+  findMasterName() {
+    const master = this.findMaster();
     return master ? master.name : '';
   }
 
@@ -123,7 +148,7 @@ export class Game {
     return '';
   }
 
-   getHand(playerName: string) {
+  getHand(playerName: string) {
     const p = this.getPlayer(playerName);
     if (p) {
       return p.hand;

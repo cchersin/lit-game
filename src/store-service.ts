@@ -1,13 +1,13 @@
-import { auth, db } from './firebase.js';
-import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, getDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+import { db } from './firebase.js';
+import { setDoc, doc, onSnapshot } from 'firebase/firestore';
 import { Game } from './game.js';
 
-type CallbackFunction = (game:Game) => void;
+type CallbackFunction = (game: Game) => void;
 
 export class StoreService {
 	static saveGame(game: Game) {
-		const currentGameDoc = doc(db, 'global', 'currentGame');
-    	setDoc(currentGameDoc, game.toJSON());
+		const docRef = doc(db, 'global', 'currentGame');
+    	setDoc(docRef, game.toJSON());
 
     	console.log('saved');
 	}

@@ -74,6 +74,9 @@ export class Login extends LitElement {
   
   constructor() {
     super();
+    if (this.displayName) {
+      this.signInAnonymously();
+    }
   }
 
   async signInAnonymously(): Promise<void> {

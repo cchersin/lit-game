@@ -86,7 +86,7 @@ export class GameMain extends LitElement {
     StoreService.onGameUpdate((game) => {
         this.currentGame = game;
 
-        if (this.currentGame.status !== 'started') {
+        if (this.currentGame.status !== 'started' || !this.hasRole()) {
           Router.go('/starting');
         }
    
@@ -94,8 +94,8 @@ export class GameMain extends LitElement {
     });
   }
 
-  findMaster() {
-    return this.currentGame.findMaster();
+  findMasterName() {
+    return this.currentGame.findMasterName();
   }
 
   findPlayers() {
@@ -139,20 +139,6 @@ export class GameMain extends LitElement {
   }
 
   renderWhiteCards() {
-    if (this.isMaster()) {
-      return this.renderWhiteCardsMaster(); 
-    }
-    return this.renderWhiteCardsPlayers();
-  }
-
-  renderWhiteCardsMaster() {
-    if (this.currentGame.players.find((player) => player.currentCardId === '')) {
-      return html``; 
-    }
-    return html``; 
-  }
-
-  renderWhiteCardsPlayers() {
     let left = 0;
     let zindex = 11;
    
@@ -172,7 +158,7 @@ export class GameMain extends LitElement {
       <main class="game" @game-card-click=${this.handleCardClick}>
         <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
         <div class="container-widget">
-          <span class="master-widget">${this.findMaster()}</span>
+          <span class="master-widget">${this.findMasterName()}</span>
           ${this.findPlayers().map(player => html`
             <span class="player-widget">
               ${player.name} ${player.currentCardId !== '' ? html`has choosen` : html``}

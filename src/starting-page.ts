@@ -55,8 +55,8 @@ export class StartingPage extends LitElement {
     });
   }
 
-  findMaster() {
-    return this.currentGame.findMaster();
+  findMasterName() {
+    return this.currentGame.findMasterName();
   }
 
   findPlayers() {
@@ -84,7 +84,7 @@ export class StartingPage extends LitElement {
     return html`
       <main class="game">
         <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
-         <p>${this.findMaster() !== '' ? this.findMaster() + ' has started the game' : ''}</p>
+         <p>${this.findMasterName() !== '' ? this.findMasterName() + ' has started the game' : ''}</p>
          ${this.findPlayers().map(player => html`
             <p>
               ${player.name} has joined the game
