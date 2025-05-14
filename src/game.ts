@@ -56,6 +56,10 @@ export class Game {
     console.log('start game');
  
     this.status = 'started';
+    this.drawBlackCard();
+  }
+
+  drawBlackCard() {
     const drawnCard = this.blackDeck.shift();
     if (drawnCard) {
        this.blackCard = drawnCard;
@@ -94,19 +98,29 @@ export class Game {
     let p = this.players.find((player) => player.name === playerName);
 
     if (p) {
-      p.currentCardId = cardId;
-      if (this.isPlayerTurnCompleted()) {
-          const master = this.findMaster();
+      if (p.role == 'player') {
+        p.currentCardId = cardId;
+        if (this.isPlayerTurnCompleted()) {
+            const master = this.findMaster();
 
-          if (master) {
-            this.findPlayers().forEach((player) => {
-                const card = player.getCurrentCard();
-                if (card) {
-                  player.hand = [];
-                  master.hand.push(card);
-                }
-            });
-          }
+            if (master) {
+              master.hand = [];
+              this.findPlayers().forEach((player) => {
+                  const card = player.getCurrentCard();
+                  if (card) {
+                    player.hand = [];
+                    master.hand.push(card);
+                  }
+              });
+            }
+        }
+      } else {
+        const winner = this.findPlayers().filter((player) => player.currentCardId === cardId);
+        this.findPlayers().forEach((player) => {
+            this.drawHand(player);
+        });  
+        this.drawBlackCard(); 
+        p.hand = [];
       }
     }
   }

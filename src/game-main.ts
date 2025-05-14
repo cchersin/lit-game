@@ -114,6 +114,11 @@ export class GameMain extends LitElement {
     return this.currentGame.getPlayer(localStorage.userName);
   }
 
+  hasHand() {
+    const player = this.currentGame.getPlayer(localStorage.userName);
+    return player ? player.hand.length > 0 : false;
+  }
+
   getRole() {
     return this.currentGame.getRole(localStorage.userName);
   }
@@ -167,7 +172,7 @@ export class GameMain extends LitElement {
         </div>
          ${this.renderBlackCard()} 
          ${this.renderWhiteCards()}
-         ${this.isPlayer() ? html`<button @click="${this.handleConfirmCard}">Confirm</button>` : html``}
+         ${this.hasHand() ? html`<button @click="${this.handleConfirmCard}">Confirm</button>` : html``}
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
       </main>
     `;
