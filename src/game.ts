@@ -79,6 +79,15 @@ export class Game {
       return this.rounds.filter(round => round.winnerName === playerName).length;
   }
 
+  getLastRoundWinner(): string {
+    if (this.rounds.length === 0) {
+      return '';
+    }
+  
+    const lastRound = this.rounds[this.rounds.length - 1];
+    return lastRound.winnerName || '';
+  }
+
   getLeaderboard(): Array<{ playerName: string; wins: number }> {
      return this.players
       .filter(player => player.role === 'player')
