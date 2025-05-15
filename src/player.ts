@@ -33,6 +33,20 @@ export class Player {
     return this.currentCardId !== '';
   }
 
+  removeCard(cardId: string) {
+    const cardIndex = this.hand.findIndex((card) => card.id === cardId);
+    if (cardIndex !== -1) {
+      this.hand.splice(cardIndex, 1);
+    }
+  }
+
+  removeCurrentCard() {
+    const card = this.getCurrentCard();
+    if (card) {
+      this.removeCard(card.id);
+    }
+  }
+
   toJSON() {
     return {
       name: this.name,

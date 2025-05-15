@@ -48,8 +48,17 @@ export class Game {
     const p = new Player(masterName, 'master');
     this.players = [p];
     this.whiteDeck = whiteCards;
+    this.shuffleDeck(this.whiteDeck);
+    this.shuffleDeck(this.blackDeck);
     this.blackDeck = blackCards;
     this.status = 'pending';
+  }
+
+  shuffleDeck(deck: Array<Card>): void {
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]]; // Scambia le carte
+    }
   }
 
   start() {
@@ -98,13 +107,28 @@ export class Game {
     }
   }
 
+  leave(playerName: string): void {
+    const playerIndex = this.players.findIndex(player => player.name === playerName);
+    if (playerIndex !== -1) {
+      this.players.splice(playerIndex, 1);
+    }
+
+    if (!this.hasMaster()) {
+      this.stop();
+    }
+  }
+
   drawHand(player: Player) {
     player.currentCardId = '';
     for(let i = 0; i < 3; i++) {
-      const drawnCard = this.whiteDeck.shift();
-      if (drawnCard) {
-        player.hand.push(drawnCard);
-      }
+      this.drawCard(player);
+    }
+  }
+
+  private drawCard(player: Player) {
+    const drawnCard = this.whiteDeck.shift();
+    if (drawnCard) {
+      player.hand.push(drawnCard);
     }
   }
 
@@ -122,7 +146,7 @@ export class Game {
               this.findPlayers().forEach((player) => {
                   const card = player.getCurrentCard();
                   if (card) {
-                    player.hand = [];
+                    player.removeCurrentCard();
                     master.hand.push(card);
                   }
               });
@@ -139,7 +163,7 @@ export class Game {
         this.rounds.push(round);
 
         this.findPlayers().forEach((player) => {
-            this.drawHand(player);
+            this.drawCard(player);
         });  
         this.drawBlackCard(); 
         p.hand = [];
@@ -182,6 +206,10 @@ export class Game {
       return p.role;
     }
     return '';
+  }
+
+  hasMaster(): boolean {
+     return this.players.some(player => player.role === 'master');
   }
 
   getHand(playerName: string) {

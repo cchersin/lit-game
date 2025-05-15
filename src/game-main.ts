@@ -82,6 +82,12 @@ export class GameMain extends LitElement {
     this.requestUpdate();
   }
 
+  handleLeaveGame() {
+    this.currentGame.leave(localStorage.userName);
+    StoreService.saveGame(this.currentGame);
+    Router.go('/'); 
+  }
+
   loadGame() {
     StoreService.onGameUpdate((game) => {
         this.currentGame = game;
@@ -194,6 +200,14 @@ export class GameMain extends LitElement {
     `;
   }
 
+ renderLeaveGame() {
+  return html`
+    <div class="leave-game">
+      <button @click="${this.handleLeaveGame}">Leave Game</button>
+    </div>
+  `;
+  } 
+
   render() {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
@@ -212,6 +226,7 @@ export class GameMain extends LitElement {
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
          ${this.renderRounds()} 
          ${this.renderLeaderboard()}
+         ${this.renderLeaveGame()}
       </main>
     `;
   }
