@@ -17,6 +17,13 @@ export class Player {
     return this.hand.find((card) => card.id === cardId);
   }
 
+  hasCard(cardId: string): boolean {
+     return this.hand.some((card) => card.id === cardId);
+  }
+
+  hasCards(): boolean {
+    return this.hand.length > 0;
+  }
 
   getCurrentCard() {
     return this.getCard(this.currentCardId);

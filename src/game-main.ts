@@ -89,6 +89,10 @@ export class GameMain extends LitElement {
         if (this.currentGame.status !== 'started' || !this.hasRole()) {
           Router.go('/starting');
         }
+
+        if (this.getPlayer()?.hasCards() && !this.getPlayer()?.hasCard(this.currentCardId)) {
+          this.currentCardId = '';
+        }
    
         this.requestUpdate();
     });
@@ -110,8 +114,12 @@ export class GameMain extends LitElement {
     return this.currentGame.isPlayer(localStorage.userName);
   }
 
-  hasRole() {
+  getPlayer() {
     return this.currentGame.getPlayer(localStorage.userName);
+  }
+
+  hasRole() {
+    return this.getPlayer();
   }
 
   hasHand() {
