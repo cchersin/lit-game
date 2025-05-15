@@ -1,10 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { Router, RouterLocation } from '@vaadin/router';
+
 import { db } from './firebase.js';
 import { collection, addDoc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
-import { format, formatDistanceToNow, isToday } from "date-fns";
+import { format, isToday } from "date-fns";
 import { it } from "date-fns/locale";
 
 @customElement('game-chat')

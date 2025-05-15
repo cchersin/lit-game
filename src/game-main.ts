@@ -5,7 +5,6 @@ import { Router } from '@vaadin/router';
 
 import './game-card.js';
 import { Card } from './card.js'
-import { Player } from './player.js';
 import { Game } from './game.js';
 import { StoreService } from './store-service.js';
 
@@ -157,8 +156,15 @@ export class GameMain extends LitElement {
   }
 
   handleConfirmCard() {
+    const areDecksEmpty = this.currentGame.areDecksEmpty();
+
     this.currentGame.confirmCard(localStorage.userName, this.currentCardId);
     StoreService.saveGame(this.currentGame);
+
+    if (areDecksEmpty) {
+      //this.currentGame.stop();
+      //Router.go('/winner');
+    }
   }
 
   renderWhiteCards() {
@@ -183,21 +189,6 @@ export class GameMain extends LitElement {
             winner:${round.winnerName} ${round.sentence} 
           </div>`})}
         </div>`;
-  }
-
-  
-  renderLeaderboard() {
-    const leaderboard = this.currentGame.getLeaderboard();
-    return html`
-      <div class="leaderboard">
-        <h3>Classifica</h3>
-        <ul>
-          ${leaderboard.map(entry => html`
-            <li>${entry.playerName}: ${entry.wins} vittorie</li>
-          `)}
-        </ul>
-      </div>
-    `;
   }
 
  renderLeaveGame() {
@@ -225,7 +216,6 @@ export class GameMain extends LitElement {
          ${this.hasHand() && this.currentCardId !== '' ? html`<button @click="${this.handleConfirmCard}">Confirm</button>` : html``}
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
          ${this.renderRounds()} 
-         ${this.renderLeaderboard()}
          ${this.renderLeaveGame()}
       </main>
     `;

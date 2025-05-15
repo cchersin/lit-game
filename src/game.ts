@@ -48,16 +48,16 @@ export class Game {
     const p = new Player(masterName, 'master');
     this.players = [p];
     this.whiteDeck = whiteCards;
-    this.shuffleDeck(this.whiteDeck);
-    this.shuffleDeck(this.blackDeck);
+    this.shuffle(this.whiteDeck);
+    this.shuffle(this.blackDeck);
     this.blackDeck = blackCards;
     this.status = 'pending';
   }
 
-  shuffleDeck(deck: Array<Card>): void {
+  shuffle(deck: Array<Card>): void {
     for (let i = deck.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]]; // Scambia le carte
+        [deck[i], deck[j]] = [deck[j], deck[i]];
     }
   }
 
@@ -102,7 +102,7 @@ export class Game {
     console.log('stop game');
  
     this.status = 'completed';
-    this.players = [];
+    // this.players = [];
   }
 
   join(playerName: string) {
@@ -228,6 +228,10 @@ export class Game {
     }
    
     return [];
+  }
+
+  areDecksEmpty() {
+    return this.whiteDeck.length === 0 || this.blackDeck.length === 0;
   }
 
   toJSON() {

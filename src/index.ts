@@ -30,6 +30,13 @@ const routes = [
         },
       },      
       {
+        path: 'winner',
+        component: 'winner-page',
+        action: async () => {
+          await import('./winner-page.js');
+        },
+      }, 
+      {
         path: 'player-list',
         component: 'player-list',
         action: async () => {

@@ -2,8 +2,8 @@ import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
 import { auth, db } from './firebase.js';
-import { getAuth, onAuthStateChanged, signInAnonymously, User, updateProfile } from 'firebase/auth';
-import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+import { signInAnonymously, User, updateProfile } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
 
 import { Router } from '@vaadin/router';
 

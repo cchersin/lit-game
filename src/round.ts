@@ -1,4 +1,3 @@
-import { Card } from './card.js'
 
 export class Round {
   winnerName: string;

@@ -1,10 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-import { auth, db } from './firebase.js';
-import { getFirestore, Firestore, collection, addDoc, setDoc, deleteDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+import { db } from './firebase.js';
+import { collection, deleteDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
-import { format, formatDistanceToNow, isToday } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { it } from "date-fns/locale";
 
 import './player-card.js';

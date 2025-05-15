@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 
 import { Router } from '@vaadin/router';
 

@@ -11,7 +11,6 @@ export class GameCard extends LitElement {
   @property({ type: String }) left = '';
   @property({ type: String }) zindex = '';
   @property({ type: String }) isselected = "false";
-  
 
 
   static styles = css`
