@@ -65,6 +65,20 @@ export class Game {
        this.blackCard = drawnCard;
     }
   }
+
+  getPlayerWins(playerName: string): number {
+      return this.rounds.filter(round => round.winnerName === playerName).length;
+  }
+
+  getLeaderboard(): Array<{ playerName: string; wins: number }> {
+     return this.players
+      .filter(player => player.role === 'player')
+      .map(player => ({
+        playerName: player.name,
+        wins: this.getPlayerWins(player.name)
+    }))
+    .sort((a, b) => b.wins - a.wins); 
+  }
  
   stop() {
     console.log('stop game');

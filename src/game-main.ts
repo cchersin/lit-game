@@ -11,7 +11,7 @@ import { StoreService } from './store-service.js';
 
 @customElement('game-main')
 export class GameMain extends LitElement {
-  currentCardId = "-1";
+  currentCardId = '';
   currentGame = new Game('');
   
   static styles = css`
@@ -171,6 +171,21 @@ export class GameMain extends LitElement {
         </div>`;
   }
 
+  
+  renderLeaderboard() {
+    const leaderboard = this.currentGame.getLeaderboard();
+    return html`
+      <div class="leaderboard">
+        <h3>Classifica</h3>
+        <ul>
+          ${leaderboard.map(entry => html`
+            <li>${entry.playerName}: ${entry.wins} vittorie</li>
+          `)}
+        </ul>
+      </div>
+    `;
+  }
+
   render() {
     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
@@ -185,9 +200,10 @@ export class GameMain extends LitElement {
         </div>
          ${this.renderBlackCard()} 
          ${this.renderWhiteCards()}
-         ${this.hasHand() ? html`<button @click="${this.handleConfirmCard}">Confirm</button>` : html``}
+         ${this.hasHand() && this.currentCardId !== '' ? html`<button @click="${this.handleConfirmCard}">Confirm</button>` : html``}
          ${this.currentGame.status === 'started' ? html`<button @click="${this.handleStopGame}">Stop game</button>` : html``}
          ${this.renderRounds()} 
+         ${this.renderLeaderboard()}
       </main>
     `;
   }
