@@ -15,7 +15,7 @@ export class WinnerPage extends LitElement {
 
   constructor() {
     super();
-    this.loadGame();
+   //this.loadGame();
   }
 
   handleNewGame(event: any) {
@@ -38,7 +38,7 @@ export class WinnerPage extends LitElement {
     });
   }
 
-  renderLeaderboard() {
+  /*renderLeaderboard() {
     const leaderboard = this.currentGame.getLeaderboard();
     return html`
       <div class="leaderboard">
@@ -50,14 +50,13 @@ export class WinnerPage extends LitElement {
         </ul>
       </div>
     `;
-  }
+  }*/
 
  
   render() {
     return html`
       <main class="game">
         <span>User: ${localStorage.userName}${this.currentGame.status}</span>
-         ${this.renderLeaderboard()}
          ${this.currentGame.status === 'completed' ? html`<button @click="${this.handleNewGame}">New game</button>` : html``}
       </main>
     `;

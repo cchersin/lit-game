@@ -12,13 +12,13 @@ const whiteCards = [
     new Card('7', 'la sessualità di Martina', 'white'), 
     new Card('8', 'il divorzio dei miei genitori', 'white'),
     new Card('9', 'il comic sans', 'white'),
-    new Card('10', 'Helvetica', 'white'), 
+    new Card('10', 'l\'Helvetica', 'white'), 
     new Card('11', 'i poveri che non hanno soldi', 'white'),
     new Card('12', 'i ladri che rubano', 'white'),    
   ];
 
 const blackCards = [
-    new Card('1', 'La colazione di Montra oggi consiste in ______.', 'black'),
+    new Card('1', 'A colazione oggi Montra ha mangiato ______.', 'black'),
     new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______.', 'black'),
     new Card('3', 'Bevo per dimenticare ______.', 'black') 
   ];
