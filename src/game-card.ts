@@ -28,6 +28,8 @@ export class GameCard extends LitElement {
   }
 
   .black {
+    background-color: red;
+    color: black;
     font-size: 37px;
     font-family: "gandur-new", sans-serif;
     font-weight: 300;
@@ -39,6 +41,8 @@ export class GameCard extends LitElement {
   }
 
   .white {
+    background-color: white;
+    color: black;
     font-size: 25px;
     rotate: 10deg;
     border: 1px black solid;
@@ -66,7 +70,7 @@ export class GameCard extends LitElement {
 
   getDescription() {
     if (this.value !== '') {
-      return this.description.replace('______', this.value);
+      return this.description.replace('______ ', this.value);
     }
 
     return this.description;
@@ -74,7 +78,7 @@ export class GameCard extends LitElement {
 
   render() {
     return html`
-    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="background-color: ${this.backgroundColor}; color: ${this.color}; left: ${this.left}; z-index: ${this.isselected === "true" ? 1000 : this.zindex};">
+    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="left: ${this.left}; z-index: ${this.isselected === "true" ? 1000 : this.zindex};">
       <p>${this.getDescription()}<span class="point">.</span></p>
     </div>
   `;

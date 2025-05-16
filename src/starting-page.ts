@@ -11,6 +11,11 @@ export class StartingPage extends LitElement {
   currentGame = new Game('');
   
   static styles = css`
+  main {
+    background-color: red;
+    height: 100%;
+  }
+
   .information {
     text-align: center;
     font-size: 16px;
@@ -40,7 +45,6 @@ export class StartingPage extends LitElement {
     align-content: center;
     flex-wrap: wrap;
     max-width: 400px;
-    height: 100%;
     margin: auto;
   }
 

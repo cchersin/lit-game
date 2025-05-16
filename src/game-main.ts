@@ -14,6 +14,12 @@ export class GameMain extends LitElement {
   currentGame = new Game('');
   
   static styles = css`
+  main {
+    overflow: hidden;
+    background-color: black;
+    height: 100%;
+  }
+
   .card {
     border: 1px solid #ccc;
     padding: 10px;
@@ -30,8 +36,8 @@ export class GameMain extends LitElement {
   }
 
   .master-widget {
-    background-color: black;
-    color: white;
+    background-color: red;
+    color: black;
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
@@ -50,7 +56,6 @@ export class GameMain extends LitElement {
     align-content: center;
     flex-wrap: wrap;
     max-width: 400px;
-    height: 100%;
     margin: auto;
   }
   
@@ -66,6 +71,7 @@ export class GameMain extends LitElement {
     padding-right: 18px;
     font-weight: bold;
     margin: 10px;
+    margin-top: 30px;
   }
   `;
 

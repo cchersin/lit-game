@@ -18,9 +18,9 @@ const whiteCards = [
   ];
 
 const blackCards = [
-    new Card('1', 'A colazione oggi Montra ha mangiato ______.', 'black'),
-    new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______.', 'black'),
-    new Card('3', 'Bevo per dimenticare ______.', 'black') 
+    new Card('1', 'A colazione oggi Montra ha mangiato ______ .', 'black'),
+    new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______ .', 'black'),
+    new Card('3', 'Bevo per dimenticare ______ .', 'black') 
   ];
 
 export class Game {
@@ -166,7 +166,7 @@ export class Game {
         const winnerCard = p.getCard(cardId);
         const winnerCardContent = winnerCard ? winnerCard.content : '';
         const blackCardContent = this.blackCard ? this.blackCard.content : '';
-        const sentence = blackCardContent.replace('______',winnerCardContent);
+        const sentence = blackCardContent.replace('______ ',winnerCardContent);
 
         const round = new Round(winner ? winner.name : '', sentence);
         this.rounds.push(round);

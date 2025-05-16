@@ -11,6 +11,10 @@ export class WinnerPage extends LitElement {
   currentGame = new Game('');
   
   static styles = css`
+  main {
+    background-color: red;
+    height: 100%;
+  }
   `;
 
   constructor() {
