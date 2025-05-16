@@ -69,8 +69,14 @@ export class GameCard extends LitElement {
   }
 
   getDescription() {
+    const a = this.description.split('______ ');
+
     if (this.value !== '') {
-      return this.description.replace('______ ', this.value);
+      return html`
+        <span>${a[0]}</span>
+        <span style="font-weight: 400; font-family: sans-serif; font-size: 30px; text-decoration: underline">${this.value}</span>
+        <span style="margin-left: -6px">${a[1]}</span>
+      `;
     }
 
     return this.description;

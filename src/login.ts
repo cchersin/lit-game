@@ -13,6 +13,11 @@ export class Login extends LitElement {
   @property({ type: String }) displayName = localStorage.userName ? localStorage.userName : ''; 
  
   static styles = css`
+  .login {
+    overflow: hidden;
+    background-color: red;
+    height: 100%;
+  }
 
   .input-label {
     text-align: center;
