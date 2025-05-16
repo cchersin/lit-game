@@ -1,13 +1,5 @@
-import { Router } from '@vaadin/router';
 
 const routes = [
-  {
-    path: '/',
-    component: 'game-app',
-    action: async () => {
-      await import('./app.js');
-    },
-     children: [
       {
         path: 'login',
         component: 'user-login',
@@ -50,11 +42,6 @@ const routes = [
           await import('./chat.js');
         },
       }
-    ]
-  },
-];
+    ];
 
-const outlet = document.getElementById('outlet');
-export const router = new Router(outlet);
-router.setRoutes(routes);
-Router.go('/login')
+export { routes }

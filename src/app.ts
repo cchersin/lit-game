@@ -1,5 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import { Router } from '@vaadin/router';
+import { routes } from './index.js';
+
+
 
 @customElement('game-app')
 export class App extends LitElement {
@@ -21,6 +25,15 @@ export class App extends LitElement {
     super();
   }
 
+  firstUpdated() {
+    const outlet = this.shadowRoot?.getElementById('outlet');
+    if (outlet) {
+        const router = new Router(outlet);
+        router.setRoutes(routes);
+        Router.go('/login')
+    }
+  }
+
   render() {
     return html`
       <main class="main">
@@ -30,8 +43,9 @@ export class App extends LitElement {
           <a href="/game">Game</a>
           <a href="/player-list">Player list</a>
           <a href="/chat">Chat</a>
+          <a href="/winner">Winner</a>
          </div>
-         <slot class="slot"></slot>
+         <div id="outlet" style="height: 100%"></div>
       </main>
     `;
   }

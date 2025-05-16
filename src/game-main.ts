@@ -67,7 +67,6 @@ export class GameMain extends LitElement {
     font-weight: bold;
     margin: 10px;
   }
-  .
   `;
 
   constructor() {
@@ -109,6 +108,10 @@ export class GameMain extends LitElement {
 
         if (this.currentGame.status !== 'started' || !this.hasRole()) {
           Router.go('/starting');
+        }
+
+        if (this.currentGame.status === 'completed') {
+          Router.go('/winner');
         }
 
         if (this.getPlayer()?.hasCards() && !this.getPlayer()?.hasCard(this.currentCardId)) {
@@ -175,12 +178,12 @@ export class GameMain extends LitElement {
     const areDecksEmpty = this.currentGame.areDecksEmpty();
 
     this.currentGame.confirmCard(localStorage.userName, this.currentCardId);
-    StoreService.saveGame(this.currentGame);
 
     if (areDecksEmpty) {
-      //this.currentGame.stop();
-      //Router.go('/winner');
+      this.currentGame.stop();
     }
+
+    StoreService.saveGame(this.currentGame);
   }
 
   renderWhiteCards() {

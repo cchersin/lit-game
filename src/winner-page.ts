@@ -15,7 +15,7 @@ export class WinnerPage extends LitElement {
 
   constructor() {
     super();
-   //this.loadGame();
+    this.loadGame();
   }
 
   handleNewGame(event: any) {
@@ -32,13 +32,15 @@ export class WinnerPage extends LitElement {
     StoreService.onGameUpdate((game) => {
         this.currentGame = game;
 
-        /* if (this.currentGame.status === 'pending') {
+        if (this.currentGame.status === 'pending') {
           Router.go('/starting');
-        }  */
+        } 
+
+        this.requestUpdate();
     });
   }
 
-  /*renderLeaderboard() {
+  renderLeaderboard() {
     const leaderboard = this.currentGame.getLeaderboard();
     return html`
       <div class="leaderboard">
@@ -50,14 +52,15 @@ export class WinnerPage extends LitElement {
         </ul>
       </div>
     `;
-  }*/
+  }
 
  
   render() {
     return html`
       <main class="game">
         <span>User: ${localStorage.userName}${this.currentGame.status}</span>
-         ${this.currentGame.status === 'completed' ? html`<button @click="${this.handleNewGame}">New game</button>` : html``}
+         <button @click="${this.handleNewGame}">New game</button>
+         ${this.renderLeaderboard()}
       </main>
     `;
   }
