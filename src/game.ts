@@ -93,7 +93,6 @@ export class Game {
 
   getLeaderboard(): Array<{ playerName: string; wins: number }> {
      return this.players
-      .filter(player => player.role === 'player')
       .map(player => ({
         playerName: player.name,
         wins: this.getPlayerWins(player.name)
@@ -146,6 +145,7 @@ export class Game {
   }
 
   playCard(playerName: string, cardId: string) {
+   
     let p = this.players.find((player) => player.name === playerName);
 
     if (p) {
@@ -165,6 +165,8 @@ export class Game {
             }
         }
       } else {
+        const areDecksEmpty = this.areDecksEmpty();
+        
         const winner = this.findPlayers().find((player) => player.currentCardId === cardId);
         const winnerCard = p.getCard(cardId);
         const winnerCardContent = winnerCard ? winnerCard.content : '';
@@ -175,10 +177,11 @@ export class Game {
         const round = new Round(winnerName, sentence);
         this.rounds.push(round);
 
-        this.setMaster(winnerName);
-
-        this.drawBlackCard(); 
-      }
+        if (areDecksEmpty) {
+          this.stop();
+        } else 
+          this.setMaster(winnerName);
+       }
     }
   }
 
@@ -188,6 +191,7 @@ export class Game {
       p.role = 'master';
       p.currentCardId = '';
       this.tableCards = [];
+      this.drawBlackCard(); 
       this.players.filter((player) => player.name !== playerName).forEach((player) => {
         player.role = 'player';
         player.currentCardId = '';
