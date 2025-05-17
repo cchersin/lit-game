@@ -7,6 +7,7 @@ import './game-card.js';
 import { Card } from './card.js'
 import { Game } from './game.js';
 import { StoreService } from './store-service.js';
+import { ht } from 'date-fns/locale';
 
 @customElement('game-main')
 export class GameMain extends LitElement {
@@ -223,21 +224,20 @@ export class GameMain extends LitElement {
 
 
   render() {
-    return html`
+     return html`
       <main class="game" @game-card-click=${this.handleCardClick}>
         <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
         <div class="container-widget">
-          <span class="master-widget">${this.findMasterName()} ${this.currentGame.getPlayerWins(this.findMasterName())}</span>
-          ${this.findPlayers().map(player => html`
-            <span class="player-widget">
+          ${this.currentGame.players.map(player => html`
+            <span class="${player.role}-widget" style="${player.name === localStorage.userName ? 'font-weight: bold;' : ''}">
               ${player.name} ${player.currentCardId !== '' ? html`has choosen` : html``} ${this.currentGame.getPlayerWins(player.name)}
             </span>
           `)}
         </div>
          ${this.renderBlackCard()} 
-         ${this.renderWhiteCards()}
+         ${this.getPlayer()?.currentCardId === '' ? this.renderWhiteCards() : html `<div style="color:white">wait...</div>`}
          <div class="container-widget">
-          ${this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
+          ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}
           <button class="action-button" @click="${this.handleLeaveGame}">Leave</button>
          </div>  
