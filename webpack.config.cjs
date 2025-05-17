@@ -29,5 +29,5 @@ module.exports = {
     static: './dist',
     historyApiFallback: true,
   },
-  mode: 'production',
+  mode: 'development',
 };

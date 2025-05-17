@@ -3,8 +3,8 @@ import { customElement } from 'lit/decorators.js';
 
 import { Router } from '@vaadin/router';
 
-import { Game } from './game.js';
-import { StoreService } from './store-service.js';
+import { Game } from './game';
+import { StoreService } from './store-service';
 
 @customElement('winner-page')
 export class WinnerPage extends LitElement {

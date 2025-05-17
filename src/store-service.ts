@@ -1,6 +1,6 @@
-import { db } from './firebase.js';
+import { db } from './firebase';
 import { setDoc, doc, onSnapshot } from 'firebase/firestore';
-import { Game } from './game.js';
+import { Game } from './game';
 
 type CallbackFunction = (game: Game) => void;
 

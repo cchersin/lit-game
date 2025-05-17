@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-import { auth, db } from './firebase.js';
+import { auth, db } from './firebase';
 import { signInAnonymously, User, updateProfile } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
 

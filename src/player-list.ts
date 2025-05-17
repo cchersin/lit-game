@@ -1,13 +1,13 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-import { db } from './firebase.js';
+import { db } from './firebase';
 import { collection, deleteDoc, doc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
 import { formatDistanceToNow } from "date-fns";
 import { it } from "date-fns/locale";
 
-import './player-card.js';
+import './player-card';
 
 @customElement('player-list')
 export class PlayerList extends LitElement {

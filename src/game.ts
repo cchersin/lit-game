@@ -1,7 +1,6 @@
-import { th } from 'date-fns/locale';
-import { Card } from './card.js'
-import { Player } from './player.js'
-import { Round } from './round.js'
+import { Card } from './card'
+import { Player } from './player'
+import { Round } from './round'
 
 const whiteCards = [
     new Card('1', 'Martina', 'white'), 

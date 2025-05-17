@@ -1,9 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
-import { routes } from './index.js';
-
-
+import { routes } from './index';
 
 @customElement('game-app')
 export class App extends LitElement {

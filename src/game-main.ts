@@ -3,11 +3,10 @@ import { property, customElement } from 'lit/decorators.js';
 
 import { Router } from '@vaadin/router';
 
-import './game-card.js';
-import { Card } from './card.js'
-import { Game } from './game.js';
-import { StoreService } from './store-service.js';
-import { ht } from 'date-fns/locale';
+import './game-card';
+import { Card } from './card'
+import { Game } from './game';
+import { StoreService } from './store-service';
 
 @customElement('game-main')
 export class GameMain extends LitElement {
