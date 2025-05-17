@@ -86,7 +86,8 @@ export class GameMain extends LitElement {
   }
 
   findCardContent(cardId: String) {
-    const card = this.getHand().find((c: any) => c.id === cardId);
+    var cards = this.getRole() === 'player' ? this.getHand() : this.currentGame.tableCards;
+    const card = cards.find((c: any) => c.id === cardId);
 
     if (card) {
       return card.content;
@@ -180,24 +181,27 @@ export class GameMain extends LitElement {
     return this.currentGame.rounds;
   }
 
-  handleConfirmCard() {
-    const areDecksEmpty = this.currentGame.areDecksEmpty();
-
-    this.currentGame.confirmCard(localStorage.userName, this.currentCardId);
-
-    if (areDecksEmpty) {
-      this.currentGame.stop();
-    }
+  handlePlayCard() {
+    this.currentGame.playCard(localStorage.userName, this.currentCardId);
 
     StoreService.saveGame(this.currentGame);
   }
 
   renderWhiteCards() {
+    if (this.getRole() === 'player') {
+      return this.renderCards(this.getHand());
+    } else {
+      return this.renderCards(this.currentGame.tableCards);
+    }
+  }
+
+
+  renderCards(cards: any) {
     let left = -60;
     let zindex = 11;
    
     return html`<div class="container-cards">
-         ${this.getHand().map((card: any) => 
+         ${cards.map((card: any) => 
               new Card(card.id, card.content, card.color)).map((card: any) => { 
                 left += 40;
                 zindex -= 1;
@@ -206,6 +210,7 @@ export class GameMain extends LitElement {
           `})}
         </div>`;
   }
+
 
   renderRounds() {
     return html`<div>
@@ -232,7 +237,7 @@ export class GameMain extends LitElement {
          ${this.renderBlackCard()} 
          ${this.renderWhiteCards()}
          <div class="container-widget">
-          ${this.hasHand() && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handleConfirmCard}">Confirm</button>` : html``}
+          ${this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}
           <button class="action-button" @click="${this.handleLeaveGame}">Leave</button>
          </div>  

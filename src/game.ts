@@ -1,3 +1,4 @@
+import { th } from 'date-fns/locale';
 import { Card } from './card.js'
 import { Player } from './player.js'
 import { Round } from './round.js'
@@ -29,6 +30,7 @@ export class Game {
   whiteDeck: Array<Card>;
   blackDeck: Array<Card>;
   blackCard?: Card;
+  tableCards: Array<Card>;
   players: Array<Player>; 
   rounds: Array<Round>;
   
@@ -39,6 +41,7 @@ export class Game {
     this.blackDeck = [];
     this.players = [];
     this.blackCard = new Card('0', '','');
+    this.tableCards = [];
     this.rounds = [];
   }
 
@@ -129,11 +132,12 @@ export class Game {
 
   drawHand(player: Player) {
     player.currentCardId = '';
-    for(let i = 0; i < 3; i++) {
+    for(let i = player.hand.length; i < 3; i++) {
       this.drawCard(player);
     }
   }
 
+  
   private drawCard(player: Player) {
     const drawnCard = this.whiteDeck.shift();
     if (drawnCard) {
@@ -141,7 +145,7 @@ export class Game {
     }
   }
 
-  confirmCard(playerName: string, cardId: string) {
+  playCard(playerName: string, cardId: string) {
     let p = this.players.find((player) => player.name === playerName);
 
     if (p) {
@@ -151,12 +155,11 @@ export class Game {
             const master = this.findMaster();
 
             if (master) {
-              master.hand = [];
               this.findPlayers().forEach((player) => {
                   const card = player.getCurrentCard();
                   if (card) {
                     player.removeCurrentCard();
-                    master.hand.push(card);
+                    this.tableCards.push(card);
                   }
               });
             }
@@ -167,16 +170,29 @@ export class Game {
         const winnerCardContent = winnerCard ? winnerCard.content : '';
         const blackCardContent = this.blackCard ? this.blackCard.content : '';
         const sentence = blackCardContent.replace('______ ',winnerCardContent);
+        const winnerName = winner ? winner.name : '';
 
-        const round = new Round(winner ? winner.name : '', sentence);
+        const round = new Round(winnerName, sentence);
         this.rounds.push(round);
 
-        this.findPlayers().forEach((player) => {
-            this.drawCard(player);
-        });  
+        this.setMaster(winnerName);
+
         this.drawBlackCard(); 
-        p.hand = [];
       }
+    }
+  }
+
+  setMaster(playerName: string) {
+    const p = this.players.find((player) => player.name === playerName);
+    if (p) {
+      p.role = 'master';
+      p.currentCardId = '';
+      this.tableCards = [];
+      this.players.filter((player) => player.name !== playerName).forEach((player) => {
+        player.role = 'player';
+        player.currentCardId = '';
+        this.drawHand(player);  
+      });
     }
   }
 
@@ -241,6 +257,7 @@ export class Game {
       whiteDeck: this.whiteDeck.map(c => c.toJSON()),
       blackDeck: this.blackDeck.map(c => c.toJSON()),
       blackCard: this.blackCard?.toJSON(),
+      tableCards: this.tableCards.map(c => c.toJSON()),
       players: this.players.map(c => c.toJSON()),
       rounds: this.rounds.map(r => r.toJSON())
     };
@@ -252,6 +269,7 @@ export class Game {
     g.whiteDeck = json.whiteDeck.map((c: any) => Card.fromJSON(c));
     g.blackDeck = json.blackDeck.map((c: any) => Card.fromJSON(c));
     g.blackCard = Card.fromJSON(json.blackCard);
+    g.tableCards = json.tableCards.map((c: any) => Card.fromJSON(c));
     g.players = json.players.map((p: any) => Player.fromJSON(p));
     g.rounds = json.rounds.map((r:any) => Round.fromJSON(r));
     return g;
