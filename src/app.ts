@@ -15,7 +15,6 @@ export class App extends LitElement {
   #outlet {
       height: 100%;
   }
-  
  `;
 
   constructor() {
