@@ -30,17 +30,18 @@ export class App extends LitElement {
     }
   }
 
+  handleLogout() {
+    localStorage.removeItem('userName');
+    localStorage.removeItem('currentGame');
+    Router.go('/login'); 
+  }
+
   render() {
     return html`
       <main class="main">
-         <!-- <div class="topnav">
-          <a href="/">Home</a>
-          <a href="/login">Login</a>
-          <a href="/game">Game</a>
-          <a href="/player-list">Player list</a>
-          <a href="/chat">Chat</a>
-          <a href="/winner">Winner</a>
-         </div> -->
+         <div class="topnav">
+          <a @click="${this.handleLogout}">Logout</a>
+         </div>
          <div id="outlet" style="height: 100%"></div>
       </main>
     `;
