@@ -2,44 +2,51 @@
 const routes = [
       {
         path: 'login',
-        component: 'user-login',
+        component: 'login-page',
         action: async () => {
-          await import('./login');
+          await import('./pages/login-page');
+        },
+      },
+      {
+        path: 'games',
+        component: 'games-page',
+        action: async () => {
+          await import('./pages/games-page');
         },
       },
       {
         path: 'game',
-        component: 'game-main',
+        component: 'game-page',
         action: async () => {
-          await import('./game-main');
+          await import('./pages/game-page');
         },
       },
       {
         path: 'starting',
         component: 'starting-page',
         action: async () => {
-          await import('./starting-page');
+          await import('./pages/starting-page');
         },
       },      
       {
         path: 'winner',
         component: 'winner-page',
         action: async () => {
-          await import('./winner-page');
+          await import('./pages/winner-page');
         },
       }, 
       {
-        path: 'player-list',
-        component: 'player-list',
+        path: 'players',
+        component: 'players-page',
         action: async () => {
-          await import('./player-list');
+          await import('./pages/players-page');
         },
       },
       {
         path: 'chat',
-        component: 'game-chat',
+        component: 'chat-page',
         action: async () => {
-          await import('./chat');
+          await import('./pages/chat-page');
         },
       }
     ];
