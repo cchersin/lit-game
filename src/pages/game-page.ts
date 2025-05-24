@@ -7,7 +7,7 @@ import '../components/card-component';
 import { Card } from '../domain/card'
 import { Game } from '../domain/game';
 import { StoreService } from '../store-service';
-import { Peer } from 'peerjs';
+import { MediaConnection, Peer } from 'peerjs';
 import { state, query } from 'lit/decorators.js';
 
 
@@ -15,11 +15,7 @@ import { state, query } from 'lit/decorators.js';
 export class GamePage extends LitElement {
   currentCardId = '';
   currentGame = new Game('');
-
-  @state()
-  myPeerId = ''
-  @state()
-  receiverId = '';
+  calls : Array<MediaConnection> = []
 
   @query('#remote-audio') remoteAudioEl: any;
   
@@ -89,8 +85,12 @@ export class GamePage extends LitElement {
   constructor() {
     super();
     this.loadGame();
+  }
+
+  firstUpdated() {
     this.setupListen()
   }
+  
 
   handleCardClick(event: any) {
     this.currentCardId = event.detail.id;
@@ -136,6 +136,7 @@ export class GamePage extends LitElement {
         if (this.getPlayer()?.hasCards() && !this.getPlayer()?.hasCard(this.currentCardId)) {
           this.currentCardId = '';
         }
+
    
         this.requestUpdate();
       }
@@ -231,45 +232,58 @@ export class GamePage extends LitElement {
         </div>`;
   }
 
-    async handleCall() {
-        const peer = new Peer();
+  async handleCall() {
+      const peer = new Peer();
 
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      for(const player of this.currentGame.players) {
+        if (player.name !== localStorage.userName) {
+          console.log('Calling player:', player.name, 'with peer ID:', player.peerId);
+          
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-        const call = peer.call(this.receiverId, stream);
-    };
+          const call = peer.call(player.peerId, stream);
 
-    async setupListen() {
-        const peer = new Peer();
+          this.calls.push(call);
+        }
+      }
+  };
 
-        peer.on('open', id => {
-            this.myPeerId = id;
+  async handleCloseCall() {
+      const peer = new Peer();
+
+      for(const call of this.calls) {
+          call.close()
+      }
+      this.calls = [];
+  };
+
+  async setupListen() {
+      const peer = new Peer();
+
+      console.log('Setup listen for peer connection');
+
+      peer.on('open', id => {
+          this.getPlayer()?.setPeerId(id);
+          StoreService.saveGame(this.currentGame);
+          console.log('My Peer ID:', id);
+      });
+
+      peer.on('call', call => {
+        call.answer(); 
+
+        console.log('Call received from:', call.peer);
+
+        call.on('stream', remoteStream => {
+          this.remoteAudioEl.srcObject = remoteStream;
         });
-
-        peer.on('call', call => {
-          call.answer(); // senza inviare audio in ritorno
-
-          call.on('stream', remoteStream => {
-           this.remoteAudioEl.srcObject = remoteStream;
-          });
-        });
-        this.requestUpdate();
-    };
-
-  handleReceiverId(event: Event) {
-    const input = event.target as HTMLInputElement;
- 
-    this.receiverId = input.value;
-  }
-
+      });
+  };
 
 
   render() {
      return html`
       <main class="game" @card-click=${this.handleCardClick}>
         <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
-          <p style="color:white">Il tuo ID: <span>${this.myPeerId}</span></p>
-         <input @input=${this.handleReceiverId} .value="${this.receiverId}" placeholder="ID del ricevente">
          <button class="action-button" @click="${this.handleCall}">Leave</button>
          <audio id="remote-audio" autoplay controls></audio>
 
@@ -287,6 +301,7 @@ export class GamePage extends LitElement {
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}
           <button class="action-button" @click="${this.handleLeaveGame}">Leave</button>
           <button class="action-button" @click="${this.handleCall}">Call</button>
+          <button class="action-button" @click="${this.handleCloseCall}">CloseCall</button>
          </div>  
          ${this.renderRounds()} 
       </main>

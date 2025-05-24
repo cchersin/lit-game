@@ -1,3 +1,4 @@
+import { MediaConnection } from 'peerjs';
 import { Card } from './card'
 
 export class Player {
@@ -5,12 +6,14 @@ export class Player {
   role: string;
   hand: Array<Card>;
   currentCardId: string;
+  peerId: string;
 
   constructor(name: string, role: string) {
     this.name = name;
     this.role = role;
     this.hand = [];
     this.currentCardId = '';
+    this.peerId = '';
   }
 
   getCard(cardId: string) {
@@ -47,12 +50,18 @@ export class Player {
     }
   }
 
+  setPeerId(peerId: string) {
+    this.peerId = peerId;
+  }
+
+  
   toJSON() {
     return {
       name: this.name,
       role: this.role,
       hand: this.hand.map(c => c.toJSON()),
       currentCardId: this.currentCardId,
+      peerId: this.peerId,
     };
   }
 
@@ -60,6 +69,7 @@ export class Player {
     const p = new Player(json.name, json.role);
     p.hand = json.hand.map((c: any) => Card.fromJSON(c));
     p.currentCardId = json.currentCardId;
+    p.peerId = json.peerId || '';
     return p;
   }
 }
