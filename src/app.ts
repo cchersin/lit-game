@@ -36,6 +36,69 @@ export class App extends LitElement {
     Router.go('/login'); 
   }
 
+  /*setupAudio() {
+    const room = "mia-stanza-di-test278572389784789427"; // usa un nome univoco!
+    const socket = new WebSocket("wss://connect.inboxgo.org/inbox");
+
+    const config = {
+      iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+    };
+    const pc = new RTCPeerConnection(config);
+
+    socket.onopen = () => {
+      socket.send(JSON.stringify({ type: "join", room }));
+    };
+
+    socket.onmessage = async (msg) => {
+      const data = JSON.parse(msg.data);
+
+      if (data.type === "offer") {
+        await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+        socket.send(JSON.stringify({ type: "answer", room, answer }));
+      }
+
+      if (data.type === "answer") {
+        await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
+      }
+
+      if (data.type === "candidate") {
+        try {
+          await pc.addIceCandidate(new RTCIceCandidate(data.candidate));
+        } catch (e) {
+          console.error('Errore ICE:', e);
+        }
+      }
+    };
+
+    pc.onicecandidate = (event) => {
+      if (event.candidate) {
+        socket.send(JSON.stringify({ type: "candidate", room, candidate: event.candidate }));
+      }
+    };
+
+    pc.ontrack = (event) => {
+      const audio = new Audio();
+      audio.srcObject = event.streams[0];
+      audio.autoplay = true;
+      document.body.appendChild(audio);
+    };
+
+   this.startStream(socket, pc, room);
+  }
+
+  async startStream(socket: WebSocket, pc: RTCPeerConnection, room: string) {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(track => pc.addTrack(track, stream));
+
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+      socket.send(JSON.stringify({ type: "offer", room, offer }));
+  }*/
+
+   
+ 
   render() {
     return html`
       <main class="main">

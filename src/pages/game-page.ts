@@ -7,11 +7,22 @@ import '../components/card-component';
 import { Card } from '../domain/card'
 import { Game } from '../domain/game';
 import { StoreService } from '../store-service';
+import { Peer } from 'peerjs';
+import { state, query } from 'lit/decorators.js';
+
 
 @customElement('game-page')
 export class GamePage extends LitElement {
   currentCardId = '';
   currentGame = new Game('');
+
+  @state()
+  myPeerId = ''
+  @state()
+  receiverId = '';
+
+  @query('#remote-audio') remoteAudioEl: any;
+  
   
   static styles = css`
   main {
@@ -78,6 +89,7 @@ export class GamePage extends LitElement {
   constructor() {
     super();
     this.loadGame();
+    this.setupListen()
   }
 
   handleCardClick(event: any) {
@@ -219,11 +231,48 @@ export class GamePage extends LitElement {
         </div>`;
   }
 
+    async handleCall() {
+        const peer = new Peer();
+
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+        const call = peer.call(this.receiverId, stream);
+    };
+
+    async setupListen() {
+        const peer = new Peer();
+
+        peer.on('open', id => {
+            this.myPeerId = id;
+        });
+
+        peer.on('call', call => {
+          call.answer(); // senza inviare audio in ritorno
+
+          call.on('stream', remoteStream => {
+           this.remoteAudioEl.srcObject = remoteStream;
+          });
+        });
+        this.requestUpdate();
+    };
+
+  handleReceiverId(event: Event) {
+    const input = event.target as HTMLInputElement;
+ 
+    this.receiverId = input.value;
+  }
+
+
 
   render() {
      return html`
       <main class="game" @card-click=${this.handleCardClick}>
         <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
+          <p style="color:white">Il tuo ID: <span>${this.myPeerId}</span></p>
+         <input @input=${this.handleReceiverId} .value="${this.receiverId}" placeholder="ID del ricevente">
+         <button class="action-button" @click="${this.handleCall}">Leave</button>
+         <audio id="remote-audio" autoplay controls></audio>
+
         <div class="container-widget">
           ${this.currentGame.players.map(player => html`
             <span class="${player.role}-widget" style="${player.name === localStorage.userName ? 'font-weight: bold;' : ''}">
@@ -237,6 +286,7 @@ export class GamePage extends LitElement {
           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}
           <button class="action-button" @click="${this.handleLeaveGame}">Leave</button>
+          <button class="action-button" @click="${this.handleCall}">Call</button>
          </div>  
          ${this.renderRounds()} 
       </main>
