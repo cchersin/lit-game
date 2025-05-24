@@ -110,6 +110,7 @@ export class GamePage extends LitElement {
 
   loadGame() {
     StoreService.onGameUpdate(localStorage.currentGame, (game) => {
+     if (game) {
         this.currentGame = game;
 
         if (this.currentGame.status !== 'started' || !this.hasRole()) {
@@ -125,6 +126,7 @@ export class GamePage extends LitElement {
         }
    
         this.requestUpdate();
+      }
     });
   }
 

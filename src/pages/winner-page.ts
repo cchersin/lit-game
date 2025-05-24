@@ -29,6 +29,7 @@ export class WinnerPage extends LitElement {
 
   loadGame() {
     StoreService.onGameUpdate(localStorage.currentGame, (game) => {
+      if (game) {
         this.currentGame = game;
 
         if (this.currentGame.status === 'pending') {
@@ -36,6 +37,7 @@ export class WinnerPage extends LitElement {
         } 
 
         this.requestUpdate();
+      }
     });
   }
 

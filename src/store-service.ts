@@ -2,14 +2,17 @@ import { db } from './firebase';
 import { setDoc, doc, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { Game } from './domain/game';
 
-type CallbackFunction = (game: Game) => void;
+type CallbackFunction = (game: Game | null) => void;
 
 export class StoreService {
 	static saveGame(game: Game) {
 		const docRef = doc(db, 'games', game.name);
-    	setDoc(docRef, game.toJSON());
-
-    	console.log('saved');
+    	setDoc(docRef, game.toJSON()).then(() => {
+				console.log(`Game ${game.name} saved successfully.`);
+			})
+			.catch((error) => {
+				console.error("Error saving game: ", error);
+			});
 	}
 
 	static onGameUpdate(gameName: string, cb: CallbackFunction) {
@@ -18,10 +21,14 @@ export class StoreService {
     		if (docSnapshot.exists()) {
     			const game = Game.fromJSON(docSnapshot.data());
     			cb(game);
-    		}
+    		} else {	
+				console.warn(`Game ${gameName} does not exist.`);
+				cb(null);
+			}
     	});
 	}
 
+	
 	/*static onGamesUpdate(cb: CallbackFunction) {
 		const docRef = doc(db, 'games', 'currentGame');
     	onSnapshot(docRef, (docSnapshot) => {
