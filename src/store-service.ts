@@ -6,27 +6,14 @@ type CallbackFunction = (game: Game) => void;
 
 export class StoreService {
 	static saveGame(game: Game) {
-		const docRef = doc(db, 'global', 'currentGame');
+		const docRef = doc(db, 'games', game.name);
     	setDoc(docRef, game.toJSON());
-
-		const docRef2 = doc(db, 'games', game.name);
-    	setDoc(docRef2, game.toJSON());
 
     	console.log('saved');
 	}
 
-	static onGameUpdate(cb: CallbackFunction) {
-		const docRef = doc(db, 'global', 'currentGame');
-    	onSnapshot(docRef, (docSnapshot) => {
-    		if (docSnapshot.exists()) {
-    			const game =Game.fromJSON(docSnapshot.data());
-    			cb(game);
-    		}
-    	});
-	}
-
-	static onGamesUpdate(cb: CallbackFunction) {
-		const docRef = doc(db, 'games', 'currentGame');
+	static onGameUpdate(gameName: string, cb: CallbackFunction) {
+		const docRef = doc(db, 'games', gameName);
     	onSnapshot(docRef, (docSnapshot) => {
     		if (docSnapshot.exists()) {
     			const game = Game.fromJSON(docSnapshot.data());
@@ -34,6 +21,16 @@ export class StoreService {
     		}
     	});
 	}
+
+	/*static onGamesUpdate(cb: CallbackFunction) {
+		const docRef = doc(db, 'games', 'currentGame');
+    	onSnapshot(docRef, (docSnapshot) => {
+    		if (docSnapshot.exists()) {
+    			const game = Game.fromJSON(docSnapshot.data());
+    			cb(game);
+    		}
+    	});
+	}*/
 
 	static deleteGame(gameName: string) {
 		const docRef = doc(db, 'games', gameName);

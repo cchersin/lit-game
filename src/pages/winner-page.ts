@@ -28,7 +28,7 @@ export class WinnerPage extends LitElement {
   }
 
   loadGame() {
-    StoreService.onGameUpdate((game) => {
+    StoreService.onGameUpdate(localStorage.currentGame, (game) => {
         this.currentGame = game;
 
         if (this.currentGame.status === 'pending') {

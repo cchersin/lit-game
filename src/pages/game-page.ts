@@ -109,7 +109,7 @@ export class GamePage extends LitElement {
   }
 
   loadGame() {
-    StoreService.onGameUpdate((game) => {
+    StoreService.onGameUpdate(localStorage.currentGame, (game) => {
         this.currentGame = game;
 
         if (this.currentGame.status !== 'started' || !this.hasRole()) {
@@ -166,7 +166,7 @@ export class GamePage extends LitElement {
       return html``; 
     }
    
-    return html`<game-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
+    return html`<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
   }
 
   getHand() {
@@ -202,7 +202,7 @@ export class GamePage extends LitElement {
                 left += 40;
                 zindex -= 1;
                 return html`
-            <game-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" isselected="${card.id === this.currentCardId}"></game-component>
+            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" isselected="${card.id === this.currentCardId}"></game-component>
           `})}
         </div>`;
   }
