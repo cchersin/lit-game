@@ -39,7 +39,12 @@ export class GamePage extends LitElement {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 20px;
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 7px;
+    text-transform: capitalize;
+    font-family: "tablet-gothic", sans-serif;
   }
 
   .master-widget {
@@ -49,14 +54,17 @@ export class GamePage extends LitElement {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 20px;
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 7px;
   }
 
   .container-cards {
    position: relative;
   }
 
-  .container-widget {
+  .outer-container-widget {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,7 +87,24 @@ export class GamePage extends LitElement {
     font-weight: bold;
     margin: 10px;
     margin-top: 30px;
+    font-family: "tablet-gothic", sans-serif;
   }
+
+  .container-widget {    
+  }
+
+  .has-choosen {
+    background-color: red;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    justify-content: center;
+  }
+
+  .has-choosen-container {
+    display: flex;
+    justify-content: center;
+    }
   `;
 
   constructor() {
@@ -276,7 +301,26 @@ export class GamePage extends LitElement {
         call.on('stream', remoteStream => {
           this.remoteAudioEl.srcObject = remoteStream;
         });
+
+        call.on('close', () => {
+          console.log('Call closed:');
+          this.remoteAudioEl.srcObject = null;
+        });
+
+        call.on('error', () => {
+          console.log('error:');
+        });
+       
       });
+
+      peer.on('close', () => {
+          console.log('Peer closed:');
+      });
+
+      peer.on('error', () => {
+          console.log('Peer error:');
+      });
+
   };
 
 
@@ -284,24 +328,28 @@ export class GamePage extends LitElement {
      return html`
       <main class="game" @card-click=${this.handleCardClick}>
         <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
-         <button class="action-button" @click="${this.handleCall}">Leave</button>
-         <audio id="remote-audio" autoplay controls></audio>
+         <audio id="remote-audio" autoplay controls style="display:none"></audio>
 
-        <div class="container-widget">
+        <div class="outer-container-widget">
           ${this.currentGame.players.map(player => html`
-            <span class="${player.role}-widget" style="${player.name === localStorage.userName ? 'font-weight: bold;' : ''}">
-              ${player.name} ${player.currentCardId !== '' ? html`has choosen` : html``} ${this.currentGame.getPlayerWins(player.name)}
-            </span>
+            <div class="container-widget">
+              <div class="${player.role}-widget" style="${player.name === localStorage.userName ? 'font-weight: bold;' : ''}">
+                ${player.name}  ${this.currentGame.getPlayerWins(player.name)}
+              </div>
+              <div class="has-choosen-container">
+                <div class="has-choosen" style="background-color: ${player.currentCardId !== '' ? 'red' : 'black'}"/>
+              </div>
+            </div>
           `)}
         </div>
          ${this.renderBlackCard()} 
          ${this.getPlayer()?.currentCardId === '' ? this.renderWhiteCards() : html `<div style="color:white">wait...</div>`}
-         <div class="container-widget">
+         <div class="outer-container-widget">
           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}
           <button class="action-button" @click="${this.handleLeaveGame}">Leave</button>
-          <button class="action-button" @click="${this.handleCall}">Call</button>
-          <button class="action-button" @click="${this.handleCloseCall}">CloseCall</button>
+          <button class="action-button" @click="${this.handleCall}" style="display:none">Call</button>
+          <button class="action-button" @click="${this.handleCloseCall}" style="display:none">CloseCall</button>
          </div>  
          ${this.renderRounds()} 
       </main>

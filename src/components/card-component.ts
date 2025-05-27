@@ -30,25 +30,27 @@ export class CardComponent extends LitElement {
   .black {
     background-color: red;
     color: black;
-    font-size: 37px;
-    font-family: "gandur-new", sans-serif;
-    font-weight: 300;
+    font-size: 25px;
     font-style: normal;
-    line-height: 42px;
+    line-height: 32px;
     rotate: -5deg;
     margin: auto;
     margin-top: 20px;
+    font-family: "tablet-gothic", sans-serif;
+    font-weight: 300;
   }
 
   .white {
     background-color: white;
     color: black;
-    font-size: 25px;
+    font-size: 30px;
     rotate: 10deg;
     border: 1px black solid;
     display: inline-block;
     position: absolute;
     margin-top: -200px;
+    font-family: "eskapade-fraktur", serif;
+    font-weight: 400;
   }
 
   .card p {
@@ -74,7 +76,7 @@ export class CardComponent extends LitElement {
     if (this.value !== '') {
       return html`
         <span>${a[0]}</span>
-        <span style="font-weight: 400; font-family: sans-serif; font-size: 30px; text-decoration: underline">${this.value}</span>
+        <span style="font-family: 'eskapade-fraktur', serif; font-weight: 400; font-size: 29px;">${this.value}</span>
         <span style="margin-left: -6px">${a[1]}</span>
       `;
     }
