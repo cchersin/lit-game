@@ -9,6 +9,10 @@ import { collection, query, onSnapshot, Timestamp } from 'firebase/firestore';
 
 import { Router } from '@vaadin/router';
 
+import { format, isToday } from "date-fns";
+import { it } from "date-fns/locale";
+
+
 
 @customElement('games-page')
 export class GamesPage extends LitElement {
@@ -39,7 +43,9 @@ export class GamesPage extends LitElement {
   }
 
   handleNewGame(event: any) {
-    const gameName = new Date().toString();
+    const date = new Date();     
+    
+    const gameName = format(date, "dd MMMM yyyy, HH:mm", { locale: it });
  
     const game = new Game(gameName);
 

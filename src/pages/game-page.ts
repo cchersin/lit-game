@@ -64,6 +64,7 @@ export class GamePage extends LitElement {
   }
 
   .container-cards {
+   margin-top: 50px;
    position: relative;
   }
 

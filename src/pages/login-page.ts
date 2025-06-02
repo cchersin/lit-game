@@ -20,7 +20,7 @@ export class LoginPage extends LitElement {
   }
 
   .input-label {
-  font-family: "tablet-gothic", sans-serif;
+    font-family: "tablet-gothic", sans-serif;
     text-align: center;
     font-weight: bold;
     font-size: 18pt;
@@ -33,11 +33,15 @@ export class LoginPage extends LitElement {
   }
 
   .input-container2 {
+    display: flex;
+    justify-content: center;
     margin: auto;
     width: 79%;
   }
 
-  .input-container3 {
+  .button-container {
+    display: flex;
+    justify-content: center; 
     margin: auto;
     width: 20%;
   }
@@ -139,7 +143,7 @@ export class LoginPage extends LitElement {
           <div class="input-container2">
             <input type="text" .value="${this.displayName}" @input="${this.handleInputDisplayName}" maxlength="6" placeholder="scrivi il tuo stupido nome"/>
           </div>
-          <div class="input-container3">
+          <div class="button-container">
             <button @click="${this.signInAnonymously}">Login</button>
           </div>
          </div>

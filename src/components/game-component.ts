@@ -31,9 +31,9 @@ export class GameComponent extends LitElement {
   render() {
     return html`
      <div>
-        ${this.name} Status: ${this.status} Winner: ${this.winner}  
+        ${this.name}
         ${this.status === 'pending' ? html`<button class="action-button" @click="${this.handleJoin}">Join</button>` : html``}
-        ${this.status === 'completed' ? html`<button class="action-button" @click="${this.handleDelete}">Delete</button>` : html``}        
+        ${this.status === 'completed' ? html` Winner: ${this.winner} <button class="action-button" @click="${this.handleDelete}">Delete</button>` : html``}        
       </div>
   `;
   }
