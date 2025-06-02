@@ -22,6 +22,27 @@ export class GamesPage extends LitElement {
     background-color: red;
     height: 100%;
   }
+
+  .action-button {
+    background-color: red;
+    font-size: 18px;
+    border-radius: 20px;
+    z-index: 1000;
+    position: relative;
+    border: 2px solid black;
+    padding: 10px;
+    padding-left: 18px;
+    padding-right: 18px;
+    font-weight: bold;
+    margin: 10px;
+    margin-top: 30px;
+    font-family: "tablet-gothic", sans-serif;
+  }
+
+  .game-component {
+    border: 2px solid black;
+    border-radius: 20px;
+  }
   `;
 
   games: Game[] = [];
@@ -81,13 +102,12 @@ export class GamesPage extends LitElement {
   render() {
     return html`
       <main @game-join=${this.handleGameJoin} @game-delete=${this.handleGameDelete}>
-         <h1>Games</h1>
-         <div><button class="action-button" @click="${this.handleNewGame}">New game</button></div>
          ${this.games.map(game => html`
-            <p>
-              <game-component name="${game.name}" status="${game.status}" winner="${game.getWinner()}"</game-component>
-            </p>
+            <div class="game-component">
+              <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" winner="${game.getWinner()}"</game-component>
+            </div>
           `)}
+           <div><button class="action-button" @click="${this.handleNewGame}">New game</button></div>
       </main>
     `;
   }
