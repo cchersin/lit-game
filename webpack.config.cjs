@@ -2,10 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/app.ts', // punto di ingresso della tua app
+  entry: './src/app.ts',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'docs'),
     clean: true,
   },
   resolve: {
@@ -26,8 +26,9 @@ module.exports = {
     }),
   ],
   devServer: {
-    static: './dist',
+    static: './docs',
     historyApiFallback: true,
+    hot: true,
   },
   mode: 'development',
 };

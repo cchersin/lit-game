@@ -15,7 +15,8 @@
     "@vaadin/router": "^2.0.0",
     "date-fns": "^4.1.0",
     "firebase": "^11.5.0",
-    "lit": "^3.1.4"
+    "lit": "^3.1.4",
+    "peerjs": "^1.5.4"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.3",
