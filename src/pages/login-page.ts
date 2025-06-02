@@ -20,10 +20,11 @@ export class LoginPage extends LitElement {
   }
 
   .input-label {
+  font-family: "tablet-gothic", sans-serif;
     text-align: center;
     font-weight: bold;
-    font-size: 15px;
-    padding-top: 100px;
+    font-size: 18pt;
+    padding-top: 233px;
   }
  
   .input-container {
@@ -44,21 +45,23 @@ export class LoginPage extends LitElement {
   .input-container input {
     border-radius: 12px;
     border: 2px solid black;
-    height: 60px;
-    width: 100%;
+    height: 55px;
+    width: 233px;
     text-align: center;
     font-size: 50px;
     padding-bottom: 10px;
-    font-family: "gandur-new", sans-serif;
-    font-weight: 600;
+    font-family: "eskapade-fraktur", serif;
+    font-weight: 400;
     font-style: normal;
     background-color: red;
     text-transform: capitalize;
   }
 
   .input-container input::placeholder {
-    color: darkred;
-    font-weight: 600;
+    color: #8a1a0c;
+    font-size: 18pt;
+    font-family: "tablet-gothic", sans-serif;
+    font-weight: 300;
     text-transform: none;
   }
 
@@ -71,7 +74,7 @@ export class LoginPage extends LitElement {
     border: 2px solid black;
     border-radius: 12px;
     background-color: red;
-    margin-top: 30px;
+    margin-top: 21px;
   }
   `;
 
@@ -131,10 +134,10 @@ export class LoginPage extends LitElement {
   render() {
     return html`
       <div class="login">
-        <p class="input-label">E tu chi saresti???</p>
+        <p class="input-label">E TU CHI CAZZO SEI?!</p>
          <div class="input-container">
           <div class="input-container2">
-            <input type="text" .value="${this.displayName}" @input="${this.handleInputDisplayName}" maxlength="6" placeholder="Io sono..."/>
+            <input type="text" .value="${this.displayName}" @input="${this.handleInputDisplayName}" maxlength="6" placeholder="scrivi il tuo stupido nome"/>
           </div>
           <div class="input-container3">
             <button @click="${this.signInAnonymously}">Login</button>

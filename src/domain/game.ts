@@ -3,7 +3,7 @@ import { Player } from './player'
 import { Round } from './round'
 
 const whiteCards = [
-    new Card('1', 'Martina', 'white'), 
+    new Card('1', 'venire insultati da Glauco perchè hai dimenticato i crocini di taglio', 'white'), 
     new Card('2', 'Inès', 'white'),
     new Card('3', 'Andrea', 'white'),
     new Card('4', 'Montra', 'white'), 
@@ -14,13 +14,14 @@ const whiteCards = [
     new Card('9', 'il comic sans', 'white'),
     new Card('10', 'l\'Helvetica', 'white'), 
     new Card('11', 'i poveri che non hanno soldi', 'white'),
-    new Card('12', 'i ladri che rubano', 'white'),    
+    new Card('12', 'i ladri che rubano', 'white'),     
+
   ];
 
 const blackCards = [
-    new Card('1', 'A colazione oggi Montra ha mangiato ______ .', 'black'),
+    new Card('1', 'Voglio fare un gioco, hai un minuto per tagliarti la gamba utilizzando ______ .', 'black'),
     new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______ .', 'black'),
-    new Card('3', 'Bevo per dimenticare ______ .', 'black') 
+    new Card('3', 'Bevo per dimenticare ______ .', 'black') ,
   ];
 
 export class Game {

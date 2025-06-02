@@ -23,7 +23,7 @@ export class GamePage extends LitElement {
   static styles = css`
   main {
     overflow: hidden;
-    background-color: black;
+    background-color: #000000;
     height: 100%;
   }
 
@@ -35,29 +35,32 @@ export class GamePage extends LitElement {
 
   .player-widget {
     background-color: white;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
     border-radius: 20px;
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 20px;
+    margin-top: 5px;
     margin-bottom: 7px;
     text-transform: capitalize;
     font-family: "tablet-gothic", sans-serif;
+    font-size: 10pt;
   }
 
   .master-widget {
     background-color: red;
     color: black;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 7px;
+    padding-left: 12px;
+    padding-right: 12px;
     border-radius: 20px;
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 20px;
+    margin-top: 5px;
     margin-bottom: 7px;
+    text-transform: capitalize;
+    font-size: 10pt;
   }
 
   .container-cards {
@@ -99,6 +102,7 @@ export class GamePage extends LitElement {
     height: 10px;
     border-radius: 50%;
     justify-content: center;
+    margin-bottom: 10px;
   }
 
   .has-choosen-container {
@@ -333,7 +337,7 @@ export class GamePage extends LitElement {
         <div class="outer-container-widget">
           ${this.currentGame.players.map(player => html`
             <div class="container-widget">
-              <div class="${player.role}-widget" style="${player.name === localStorage.userName ? 'font-weight: bold;' : ''}">
+              <div class="${player.role}-widget" style="${player.name === localStorage.userName ? 'font-weight: light;' : ''}">
                 ${player.name}  ${this.currentGame.getPlayerWins(player.name)}
               </div>
               <div class="has-choosen-container">

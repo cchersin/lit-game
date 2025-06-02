@@ -15,12 +15,13 @@ export class CardComponent extends LitElement {
 
   static styles = css`
   .card {
-    height: 400px;
-    width: 250px;
-    padding-top: 20px;
-    padding-left: 22px;
-    padding-right: 22px;
-    border-radius: 10px;
+    width: 233px;
+    height: 377px;
+    padding-left: 21px;
+    padding-right: 21px;
+    padding-bottom: 21px;
+    padding-top: 17px;
+    border-radius: 13px;
   }
 
   .card:first-letter {
@@ -28,11 +29,11 @@ export class CardComponent extends LitElement {
   }
 
   .black {
-    background-color: red;
+    background-color: #ff0000;
     color: black;
-    font-size: 25px;
+    font-size: 18pt;
     font-style: normal;
-    line-height: 32px;
+    line-height: 22pt;
     rotate: -5deg;
     margin: auto;
     margin-top: 20px;
@@ -43,7 +44,7 @@ export class CardComponent extends LitElement {
   .white {
     background-color: white;
     color: black;
-    font-size: 30px;
+    font-size: 20.625pt;
     rotate: 10deg;
     border: 1px black solid;
     display: inline-block;
@@ -51,6 +52,7 @@ export class CardComponent extends LitElement {
     margin-top: -200px;
     font-family: "eskapade-fraktur", serif;
     font-weight: 400;
+    line-height: 22pt;
   }
 
   .card p {
@@ -76,7 +78,7 @@ export class CardComponent extends LitElement {
     if (this.value !== '') {
       return html`
         <span>${a[0]}</span>
-        <span style="font-family: 'eskapade-fraktur', serif; font-weight: 400; font-size: 29px;">${this.value}</span>
+        <span style="font-family: 'eskapade-fraktur', serif; font-weight: 400; font-size: 20.625pt; line-height: 22pt;">${this.value}</span>
         <span style="margin-left: -6px">${a[1]}</span>
       `;
     }
