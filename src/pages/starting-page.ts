@@ -24,18 +24,17 @@ export class StartingPage extends LitElement {
   }
 
   .action-button {
-    background-color: red;
-    font-size: 18px;
-    border-radius: 20px;
-    z-index: 1000;
-    position: relative;
+    font-size: 16pt;
+    color: red;
+    font-family: "eskapade-fraktur", sans-serif;
+    padding-top: 5px;
+    padding-bottom: 6px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 15px;
+    background-color: black;
+    margin-top: 15px;
     border: none;
-    padding: 10px;
-    padding-left: 18px;
-    padding-right: 18px;
-    font-weight: bold;
-    margin: auto;
-    border: 2px solid black;
   }
 
   .container-button {

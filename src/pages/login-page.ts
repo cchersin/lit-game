@@ -19,16 +19,19 @@ export class LoginPage extends LitElement {
     height: 100%;
   }
 
+  p.input-label {
+    margin-bottom: 15px;
+  }
+
   .input-label {
     font-family: "tablet-gothic", sans-serif;
     text-align: center;
     font-weight: bold;
-    font-size: 18pt;
-    padding-top: 233px;
+    font-size: 14pt;
+    padding-top: 150px;
   }
  
   .input-container {
-    margin-top: 10px;
     width: 100%;
   }
 
@@ -47,13 +50,13 @@ export class LoginPage extends LitElement {
   }
 
   .input-container input {
-    border-radius: 12px;
-    border: 2px solid black;
+    border-radius: 13px;
+    border: 1px solid black;
     height: 55px;
     width: 233px;
     text-align: center;
-    font-size: 50px;
-    padding-bottom: 10px;
+    font-size: 40pt;
+    /*padding-bottom: 10px;*/
     font-family: "eskapade-fraktur", serif;
     font-weight: 400;
     font-style: normal;
@@ -63,7 +66,7 @@ export class LoginPage extends LitElement {
 
   .input-container input::placeholder {
     color: #8a1a0c;
-    font-size: 18pt;
+    font-size: 14pt;
     font-family: "tablet-gothic", sans-serif;
     font-weight: 300;
     text-transform: none;
@@ -74,11 +77,17 @@ export class LoginPage extends LitElement {
   }
 
   .input-container button {
-    padding: 5px 10px;
-    border: 2px solid black;
-    border-radius: 12px;
-    background-color: red;
-    margin-top: 21px;
+    font-size: 14pt;
+    color: red;
+    font-family: "tablet-gothic", sans-serif;
+    padding-top: 5px;
+    padding-bottom: 6px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 15px;
+    background-color: black;
+    margin-top: 15px;
+    border: none;
   }
   `;
 
@@ -144,7 +153,7 @@ export class LoginPage extends LitElement {
             <input type="text" .value="${this.displayName}" @input="${this.handleInputDisplayName}" maxlength="6" placeholder="scrivi il tuo stupido nome"/>
           </div>
           <div class="button-container">
-            <button @click="${this.signInAnonymously}">Login</button>
+            <button @click="${this.signInAnonymously}">login</button>
           </div>
          </div>
       </div>

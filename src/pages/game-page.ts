@@ -94,9 +94,6 @@ export class GamePage extends LitElement {
     font-family: "tablet-gothic", sans-serif;
   }
 
-  .container-widget {    
-  }
-
   .has-choosen {
     background-color: red;
     width: 10px;

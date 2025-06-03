@@ -24,24 +24,55 @@ export class GamesPage extends LitElement {
   }
 
   .action-button {
-    background-color: red;
-    font-size: 18px;
-    border-radius: 20px;
-    z-index: 1000;
-    position: relative;
-    border: 2px solid black;
-    padding: 10px;
-    padding-left: 18px;
-    padding-right: 18px;
-    font-weight: bold;
-    margin: 10px;
-    margin-top: 30px;
-    font-family: "tablet-gothic", sans-serif;
+    font-size: 16pt;
+    color: red;
+    font-family: "eskapade-fraktur", sans-serif;
+    padding-top: 5px;
+    padding-bottom: 6px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 15px;
+    background-color: black;
+    margin-top: 15px;
+    border: none;
   }
 
   .game-component {
     border: 2px solid black;
     border-radius: 20px;
+  }
+
+  div.button-container {
+    display: flex;
+    align-content: center;
+  }
+
+  .archive-button {
+    background-color: black;
+    height: 70px;
+    width: 70px;
+    border-radius: 35px;
+  }
+
+  .favourites-button {
+    margin-left: 50px;
+    background-color: black;
+    height: 70px;
+    width: 70px;
+    border-radius: 35px;
+  }
+
+  .circles-container {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin-bottom: 50px;
+  }
+
+  .outer-circles-container {
+    position: fixed;
+    bottom: 0;
   }
   `;
 
@@ -107,7 +138,8 @@ export class GamesPage extends LitElement {
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" winner="${game.getWinner()}"</game-component>
             </div>
           `)}
-           <div><button class="action-button" @click="${this.handleNewGame}">New game</button></div>
+           <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">New game</button></div>
+           <div class="outer-circles-container"><div class="circles-container"><div class="archive-button"></div><div class="favourites-button"></div></div></div>
       </main>
     `;
   }

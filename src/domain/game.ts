@@ -19,9 +19,9 @@ const whiteCards = [
   ];
 
 const blackCards = [
-    new Card('1', 'Voglio fare un gioco, hai un minuto per tagliarti la gamba utilizzando ______ .', 'black'),
-    new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______ .', 'black'),
-    new Card('3', 'Bevo per dimenticare ______ .', 'black') ,
+    new Card('1', 'Voglio fare un gioco, hai un minuto per tagliarti la gamba utilizzando ______.', 'black'),
+    new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______.', 'black'),
+    new Card('3', 'Bevo per dimenticare ______.', 'black') ,
   ];
 
 export class Game {
@@ -188,7 +188,7 @@ export class Game {
         const winnerCard = p.getCard(cardId);
         const winnerCardContent = winnerCard ? winnerCard.content : '';
         const blackCardContent = this.blackCard ? this.blackCard.content : '';
-        const sentence = blackCardContent.replace('______ ',winnerCardContent);
+        const sentence = blackCardContent.replace('______',winnerCardContent);
         const winnerName = winner ? winner.name : '';
 
         const round = new Round(winnerName, sentence);

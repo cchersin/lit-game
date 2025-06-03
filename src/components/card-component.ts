@@ -45,7 +45,7 @@ export class CardComponent extends LitElement {
     background-color: white;
     color: black;
     font-size: 20.625pt;
-    rotate: 10deg;
+    rotate: 8deg;
     border: 1px black solid;
     display: inline-block;
     position: absolute;
