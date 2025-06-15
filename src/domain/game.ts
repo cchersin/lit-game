@@ -52,8 +52,8 @@ export class Game {
     this.players = [p];
     this.whiteDeck = whiteCards;
     this.blackDeck = blackCards;
-    /*this.shuffle(this.whiteDeck);
-    this.shuffle(this.blackDeck);*/
+    this.shuffle(this.whiteDeck);
+    this.shuffle(this.blackDeck);
     this.status = 'pending';
   }
 

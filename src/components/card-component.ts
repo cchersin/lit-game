@@ -73,7 +73,7 @@ export class CardComponent extends LitElement {
   }
 
   getDescription() {
-    const a = this.description.split('______ ');
+    const a = this.description.split('______');
 
     if (this.value !== '') {
       return html`

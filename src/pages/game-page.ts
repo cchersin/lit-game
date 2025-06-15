@@ -204,7 +204,7 @@ export class GamePage extends LitElement {
   }
 
   renderBlackCard() {
-    if (!this.hasRole()) {
+    if (!this.hasRole() || (this.isMaster() && this.currentGame.tableCards.length > 0)) {
       return html``; 
     }
    
@@ -227,14 +227,14 @@ export class GamePage extends LitElement {
 
   renderWhiteCards() {
     if (this.getRole() === 'player') {
-      return this.renderCards(this.getHand());
+      return this.renderCards(this.getHand(), false);
     } else {
-      return this.renderCards(this.currentGame.tableCards);
+      return this.renderCards(this.currentGame.tableCards, true);
     }
   }
 
 
-  renderCards(cards: any) {
+  renderCards(cards: any, resolve: boolean) {
     let left = -60;
     let zindex = 11;
    
@@ -243,11 +243,22 @@ export class GamePage extends LitElement {
               new Card(card.id, card.content, card.color)).map((card: any) => { 
                 left += 40;
                 zindex -= 1;
-                return html`
-            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" isselected="${card.id === this.currentCardId}"></game-component>
-          `})}
+                return this.renderCard(card, left, zindex, resolve);
+          })}
         </div>`;
   }
+
+  renderCard(card: Card, left: number, zindex: number, resolve: boolean) {
+    if(resolve) {
+       return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
+    } else {
+      return html`
+            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" isselected="${card.id === this.currentCardId}"></game-component>
+          `;
+    } 
+  }
+
+   
 
 
   renderRounds() {
