@@ -162,6 +162,7 @@ export class Game {
   }
 
   playCard(playerName: string, cardId: string) {
+    console.log(`playCard: playerName=${playerName}, cardId=${cardId}`);
    
     let p = this.players.find((player) => player.name === playerName);
 
@@ -191,6 +192,8 @@ export class Game {
         const sentence = blackCardContent.replace('______',winnerCardContent);
         const winnerName = winner ? winner.name : '';
 
+        console.log(`winner: ${winnerName}, sentence: ${sentence}`);
+
         const round = new Round(winnerName, sentence);
         this.rounds.push(round);
 
@@ -203,6 +206,7 @@ export class Game {
   }
 
   setMaster(playerName: string) {
+    console.log(`setMaster: playerName=${playerName}`);
     const p = this.players.find((player) => player.name === playerName);
     if (p) {
       p.role = 'master';
