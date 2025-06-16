@@ -1,0 +1,17 @@
+FUNZIONAMENTO GIOCO:
+Una persona viene scelta a caso per cominciare (il master). Questa persona pesca una carta nera, contenente un frase da completare. Gli altri giocatori hanno in mano dieci carte bianche (che solo loro possono vedere). Devono selezionare la carta bianca che completa meglio quella nera (quando l'avranno usata la carta verrà rimpiazzata da una nuova). Quando tutti avranno scelto il master potrà leggere tutte le frasi complete (senza sapere chi le ha scritte) e decidere quale è la più divertente. Solo quando ha scelto verrà rivelato il vincitore. La persona che vince riceve un punto e diventa il prossimo master. La carta nera viene scartata e rimpiazzata. Il gioco finisce quando ci si stufa.
+
+FEATURES:
+- mentre il master sceglie i player vedono la stessa cosa 
+- quando il master ha scelto gli altri vedono la scelta, il nuovo master ha il tasto next round
+-classifica di tutti i giochi
+-archivio dei giochi (con preferiti?)
+-voice chat :)
+-schermata di partenza con animazione del logo
+-abilita start game solo se ci sono almeno 3 giocatori (master compreso)
+-quando hai confermato la tua carta devi attendere che gli altri scelgano (inserire pop-up/schermata che dice di attendere)
+
+DONE:
+-autocomplete delle carte 
+-punteggio nel widget
+-cambio master ad ogni turno
