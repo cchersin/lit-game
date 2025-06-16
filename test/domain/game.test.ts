@@ -1,6 +1,4 @@
 import { Game } from '../../src/domain/game';
-import { Player } from '../../src/domain/player';
-import { Card } from '../../src/domain/card';
 
 describe('Game', () => {
   let game: Game;
