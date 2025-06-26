@@ -54,6 +54,21 @@ export class WinnerPage extends LitElement {
       </div>
     `;
   }
+     
+
+  getRounds() {
+    return this.currentGame.rounds;
+  }
+
+  renderRounds() {
+    return html`<div>
+         ${this.getRounds().map((round: any) => {
+          return html`<div>
+            winner:${round.winnerName} ${round.sentence} 
+          </div>`})}
+        </div>`;
+  }
+
 
  
   render() {
@@ -62,6 +77,8 @@ export class WinnerPage extends LitElement {
         <span>User: ${localStorage.userName}${this.currentGame.status}</span>
          <button @click="${this.handleOK}">OK</button>
          ${this.renderLeaderboard()}
+                ${this.renderRounds()} 
+  
       </main>
     `;
   }
