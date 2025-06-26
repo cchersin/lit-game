@@ -186,7 +186,7 @@ export class Game {
         const areDecksEmpty = this.areDecksEmpty();
         
         const winner = this.findPlayers().find((player) => player.currentCardId === cardId);
-        const winnerCard = p.getCard(cardId);
+        const winnerCard = this.getWhiteCard(cardId);
         const winnerCardContent = winnerCard ? winnerCard.content : '';
         const blackCardContent = this.blackCard ? this.blackCard.content : '';
         const sentence = blackCardContent.replace('______',winnerCardContent);
@@ -277,6 +277,13 @@ export class Game {
 
   areDecksEmpty() {
     return this.whiteDeck.length === 0 || this.blackDeck.length === 0;
+  }
+
+  getLastRound(): Round | undefined {
+    if (this.rounds.length === 0) {
+      return undefined;
+    }
+    return this.rounds[this.rounds.length - 1];
   }
 
   toJSON() {

@@ -9,6 +9,7 @@ import { Game } from '../domain/game';
 import { StoreService } from '../store-service';
 import { MediaConnection, Peer } from 'peerjs';
 import { state, query } from 'lit/decorators.js';
+import { set } from 'date-fns';
 
 
 @customElement('game-page')
@@ -271,6 +272,23 @@ export class GamePage extends LitElement {
         </div>`;
   }
 
+  renderLastRound() {
+    const rounds = this.getRounds();
+    if (rounds.length > 0) {
+      const lastRound = rounds[rounds.length - 1];
+      const h = html`<div id="last-round" style="color:white">Last Round Winner: ${lastRound.winnerName} - ${lastRound.sentence}</div>`;
+
+      setTimeout(() => {
+        const lastRoundEl = this.shadowRoot?.getElementById('last-round');
+        if (lastRoundEl) {
+          lastRoundEl.style.display = 'none';
+        }
+      }, 2000);
+
+      return h;
+    } 
+  }
+
   async handleCall() {
       const peer = new Peer();
 
@@ -356,6 +374,7 @@ export class GamePage extends LitElement {
             </div>
           `)}
         </div>
+        ${this.renderLastRound()}
          ${this.renderBlackCard()} 
          ${this.getPlayer()?.currentCardId === '' ? this.renderWhiteCards() : html `<div style="color:white">wait...</div>`}
          <div class="outer-container-widget">
