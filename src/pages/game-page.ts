@@ -126,8 +126,6 @@ export class GamePage extends LitElement {
   }
 
   findCardContent(cardId: String) {
-    /* var cards = this.getRole() === 'player' ? this.getHand() : this.currentGame.tableCards;
-    const card = cards.find((c: any) => c.id === cardId); */
     const card = this.currentGame.getWhiteCard(cardId);
 
     if (card) {
