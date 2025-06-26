@@ -125,8 +125,9 @@ export class GamePage extends LitElement {
   }
 
   findCardContent(cardId: String) {
-    var cards = this.getRole() === 'player' ? this.getHand() : this.currentGame.tableCards;
-    const card = cards.find((c: any) => c.id === cardId);
+    /* var cards = this.getRole() === 'player' ? this.getHand() : this.currentGame.tableCards;
+    const card = cards.find((c: any) => c.id === cardId); */
+    const card = this.currentGame.getWhiteCard(cardId);
 
     if (card) {
       return card.content;
@@ -208,7 +209,7 @@ export class GamePage extends LitElement {
       return html``; 
     }
    
-    return html`<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
+    return html`<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId || this.getPlayer()?.currentCardId || '')}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
   }
 
   getHand() {

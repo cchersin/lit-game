@@ -271,6 +271,10 @@ export class Game {
     return [];
   }
 
+  getWhiteCard(cardId: String) {
+    return whiteCards.find(card => card.id === cardId);
+  }
+
   areDecksEmpty() {
     return this.whiteDeck.length === 0 || this.blackDeck.length === 0;
   }
