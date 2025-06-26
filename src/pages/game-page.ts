@@ -260,17 +260,6 @@ export class GamePage extends LitElement {
     } 
   }
 
-   
-
-
-  renderRounds() {
-    return html`<div>
-         ${this.getRounds().map((round: any) => {
-          return html`<div>
-            winner:${round.winnerName} ${round.sentence} 
-          </div>`})}
-        </div>`;
-  }
 
   renderLastRound() {
     const rounds = this.getRounds();
@@ -297,7 +286,7 @@ export class GamePage extends LitElement {
           if (lastRoundEl) {
             lastRoundEl.style.display = 'none';
           }
-        }, 2000);
+        }, 4000);
 
         return h;
      }
@@ -399,7 +388,6 @@ export class GamePage extends LitElement {
           <button class="action-button" @click="${this.handleCall}" style="display:none">Call</button>
           <button class="action-button" @click="${this.handleCloseCall}" style="display:none">CloseCall</button>
          </div>  
-         ${this.renderRounds()} 
       </main>
     `;
   }
