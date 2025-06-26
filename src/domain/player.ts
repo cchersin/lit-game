@@ -7,6 +7,7 @@ export class Player {
   hand: Array<Card>;
   currentCardId: string;
   peerId: string;
+  lastRoundNotified: number = -1;
 
   constructor(name: string, role: string) {
     this.name = name;
@@ -14,6 +15,7 @@ export class Player {
     this.hand = [];
     this.currentCardId = '';
     this.peerId = '';
+    this.lastRoundNotified = -1;
   }
 
   getCard(cardId: string) {
@@ -62,6 +64,7 @@ export class Player {
       hand: this.hand.map(c => c.toJSON()),
       currentCardId: this.currentCardId,
       peerId: this.peerId,
+      lastRoundNotified: this.lastRoundNotified,
     };
   }
 
@@ -70,6 +73,7 @@ export class Player {
     p.hand = json.hand.map((c: any) => Card.fromJSON(c));
     p.currentCardId = json.currentCardId;
     p.peerId = json.peerId || '';
+    p.lastRoundNotified = json.lastRoundNotified || -1;
     return p;
   }
 }

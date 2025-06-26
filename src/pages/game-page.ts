@@ -274,9 +274,15 @@ export class GamePage extends LitElement {
 
   renderLastRound() {
     const rounds = this.getRounds();
-    if (rounds.length > 0) {
+    if (rounds.length > 0 && this.currentGame?.turn === 'players') {
+
       const lastRound = rounds[rounds.length - 1];
-      const h = html`<div id="last-round" style="color:white">Last Round Winner: ${lastRound.winnerName} - ${lastRound.sentence}</div>`;
+      const h = html`<div id="last-round" style="color:white">Winner: ${lastRound.winnerName} - ${lastRound.sentence}</div>`;
+
+      const lastRoundEl = this.shadowRoot?.getElementById('last-round');
+      if (lastRoundEl) {
+        lastRoundEl.style.display = 'block';
+      }
 
       setTimeout(() => {
         const lastRoundEl = this.shadowRoot?.getElementById('last-round');
@@ -374,7 +380,7 @@ export class GamePage extends LitElement {
             </div>
           `)}
         </div>
-        ${this.renderLastRound()}
+         ${this.renderLastRound()}
          ${this.renderBlackCard()} 
          ${this.getPlayer()?.currentCardId === '' ? this.renderWhiteCards() : html `<div style="color:white">wait...</div>`}
          <div class="outer-container-widget">

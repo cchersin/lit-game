@@ -33,6 +33,7 @@ export class Game {
   tableCards: Array<Card>;
   players: Array<Player>; 
   rounds: Array<Round>;
+  turn: string;
   
   constructor(name: string) {
     this.name = name;
@@ -43,6 +44,7 @@ export class Game {
     this.blackCard = new Card('0', '','');
     this.tableCards = [];
     this.rounds = [];
+    this.turn = 'players';
   }
 
   init(masterName: string) {
@@ -68,6 +70,7 @@ export class Game {
     console.log('start game');
  
     this.status = 'started';
+    this.turn = 'players';
     this.drawBlackCard();
   }
 
@@ -170,6 +173,7 @@ export class Game {
       if (p.role == 'player') {
         p.currentCardId = cardId;
         if (this.isPlayerTurnCompleted()) {
+            this.turn = 'master';
             const master = this.findMaster();
 
             if (master) {
@@ -196,6 +200,8 @@ export class Game {
 
         const round = new Round(winnerName, sentence);
         this.rounds.push(round);
+
+        this.turn = 'players';
 
         if (areDecksEmpty) {
           this.stop();
@@ -295,7 +301,8 @@ export class Game {
       blackCard: this.blackCard?.toJSON(),
       tableCards: this.tableCards.map(c => c.toJSON()),
       players: this.players.map(c => c.toJSON()),
-      rounds: this.rounds.map(r => r.toJSON())
+      rounds: this.rounds.map(r => r.toJSON()),
+      turn: this.turn
     };
   }
 
@@ -308,6 +315,7 @@ export class Game {
     g.tableCards = json.tableCards.map((c: any) => Card.fromJSON(c));
     g.players = json.players.map((p: any) => Player.fromJSON(p));
     g.rounds = json.rounds.map((r:any) => Round.fromJSON(r));
+    g.turn = json.turn;
     return g;
   }
 }
