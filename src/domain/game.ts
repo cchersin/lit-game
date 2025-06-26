@@ -198,7 +198,7 @@ export class Game {
 
         console.log(`winner: ${winnerName}, sentence: ${sentence}`);
 
-        const round = new Round(winnerName, sentence);
+        const round = new Round(playerName, winnerName, sentence);
         this.rounds.push(round);
 
         this.turn = 'players';

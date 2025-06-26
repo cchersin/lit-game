@@ -274,24 +274,33 @@ export class GamePage extends LitElement {
 
   renderLastRound() {
     const rounds = this.getRounds();
-    if (rounds.length > 0 && this.currentGame?.turn === 'players') {
+    const p = this.getPlayer();
+    
+    if (p && rounds.length > 0 
+      && this.currentGame?.turn === 'players' 
+      && p.lastRoundNotified < rounds.length - 1) {
 
+      p.lastRoundNotified = rounds.length - 1;
+    
       const lastRound = rounds[rounds.length - 1];
-      const h = html`<div id="last-round" style="color:white">Winner: ${lastRound.winnerName} - ${lastRound.sentence}</div>`;
 
-      const lastRoundEl = this.shadowRoot?.getElementById('last-round');
-      if (lastRoundEl) {
-        lastRoundEl.style.display = 'block';
-      }
-
-      setTimeout(() => {
+      if (lastRound && lastRound.masterName != p.name) {
+        const h = html`<div id="last-round" style="color:white">Winner: ${lastRound.winnerName} - ${lastRound.sentence}</div>`;
         const lastRoundEl = this.shadowRoot?.getElementById('last-round');
-        if (lastRoundEl) {
-          lastRoundEl.style.display = 'none';
-        }
-      }, 2000);
 
-      return h;
+        if (lastRoundEl) {
+            lastRoundEl.style.display = 'block';
+        }
+        setTimeout(() => {
+          const lastRoundEl = this.shadowRoot?.getElementById('last-round');
+
+          if (lastRoundEl) {
+            lastRoundEl.style.display = 'none';
+          }
+        }, 2000);
+
+        return h;
+     }
     } 
   }
 
