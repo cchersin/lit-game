@@ -225,6 +225,12 @@ export class GamePage extends LitElement {
     StoreService.saveGame(this.currentGame);
   }
 
+  handleNextRound() {
+    this.currentGame.nextRound();
+
+    StoreService.saveGame(this.currentGame);
+  }
+
   renderWhiteCards() {
     if (this.getRole() === 'player') {
       return this.renderCards(this.getHand(), false);
@@ -260,34 +266,13 @@ export class GamePage extends LitElement {
 
 
   renderLastRound() {
-    const rounds = this.getRounds();
-    const p = this.getPlayer();
+    if( this.isPlayer() && this.currentGame.hasMasterChoosenCard()) {
+      const lastRound = this.currentGame.getLastRound();
     
-    if (p && rounds.length > 0 
-      && this.currentGame?.turn === 'players' 
-      && p.lastRoundNotified < rounds.length - 1) {
-
-      p.lastRoundNotified = rounds.length - 1;
-    
-      const lastRound = rounds[rounds.length - 1];
-
-      if (lastRound && lastRound.masterName != p.name) {
-        const h = html`<div id="last-round" style="color:white">Winner: ${lastRound.winnerName} - ${lastRound.sentence}</div>`;
-        const lastRoundEl = this.shadowRoot?.getElementById('last-round');
-
-        if (lastRoundEl) {
-            lastRoundEl.style.display = 'block';
-        }
-        setTimeout(() => {
-          const lastRoundEl = this.shadowRoot?.getElementById('last-round');
-
-          if (lastRoundEl) {
-            lastRoundEl.style.display = 'none';
-          }
-        }, 4000);
-
-        return h;
-     }
+      if (!lastRound) {
+        return html``;
+      }
+      return html`<div id="last-round" style="color:white">Winner: ${lastRound.winnerName} - ${lastRound.sentence}</div>`;
     } 
   }
 
@@ -382,6 +367,7 @@ export class GamePage extends LitElement {
          <div class="outer-container-widget">
           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}
+          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() ? html`<button class="action-button" @click="${this.handleNextRound}">NextRound</button>` : html``}
           <button class="action-button" @click="${this.handleLeaveGame}">Leave</button>
           <button class="action-button" @click="${this.handleCall}" style="display:none">Call</button>
           <button class="action-button" @click="${this.handleCloseCall}" style="display:none">CloseCall</button>

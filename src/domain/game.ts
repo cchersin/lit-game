@@ -168,11 +168,11 @@ export class Game {
     console.log(`playCard: playerName=${playerName}, cardId=${cardId}`);
    
     let p = this.players.find((player) => player.name === playerName);
-
+    
     if (p) {
+      p.currentCardId = cardId;
       if (p.role == 'player') {
-        p.currentCardId = cardId;
-        if (this.isPlayerTurnCompleted()) {
+        if (this.hasAllPlayersChoosenCards()) {
             this.turn = 'master';
             const master = this.findMaster();
 
@@ -187,8 +187,6 @@ export class Game {
             }
         }
       } else {
-        const areDecksEmpty = this.areDecksEmpty();
-        
         const winner = this.findPlayers().find((player) => player.currentCardId === cardId);
         const winnerCard = this.getWhiteCard(cardId);
         const winnerCardContent = winnerCard ? winnerCard.content : '';
@@ -200,14 +198,29 @@ export class Game {
 
         const round = new Round(playerName, winnerName, sentence);
         this.rounds.push(round);
+      }
+    }
+  }
 
+ 
+  nextRound() {
+    console.log('nextRound');
+ 
+    if (this.turn === 'master') {
+      if (this.areDecksEmpty()) {
+        this.stop();
+      } else {
+        const winnerName = this.getLastRoundWinner(); 
+        this.setMaster(winnerName);
         this.turn = 'players';
-
-        if (areDecksEmpty) {
-          this.stop();
-        } else 
-          this.setMaster(winnerName);
-       }
+        this.tableCards = [];
+        this.drawBlackCard(); 
+        this.players.filter((player) => player.name !== winnerName).forEach((player) => {
+          player.role = 'player';
+          player.currentCardId = '';
+          this.drawHand(player);  
+        });
+      }
     }
   }
 
@@ -217,18 +230,16 @@ export class Game {
     if (p) {
       p.role = 'master';
       p.currentCardId = '';
-      this.tableCards = [];
-      this.drawBlackCard(); 
-      this.players.filter((player) => player.name !== playerName).forEach((player) => {
-        player.role = 'player';
-        player.currentCardId = '';
-        this.drawHand(player);  
-      });
     }
   }
 
-  isPlayerTurnCompleted() {
+  hasAllPlayersChoosenCards() {
     return !this.findPlayers().find((player) => !player.hasCurrentCard());
+  }
+  
+  hasMasterChoosenCard() {
+    const master = this.findMaster();
+    return master ? master.hasCurrentCard() : false;
   }
 
   findMaster() {
