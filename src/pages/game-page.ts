@@ -373,11 +373,11 @@ export class GamePage extends LitElement {
          ${this.renderLastRound()}
          ${this.renderBlackCard()} 
          ${this.getPlayer()?.currentCardId === '' ? this.renderWhiteCards() : html ``}
-         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="color:white">Wait</div>` : html ``}
+         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="color:white">Wait master to choose...</div>` : html ``}
          <div class="outer-container-widget">
           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}
-          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() ? html`<button class="action-button" @click="${this.handleNextRound}">NextRound</button>` : html``}
+          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && !this.currentGame.areDecksEmpty() ? html`<button class="action-button" @click="${this.handleNextRound}">NextRound</button>` : html``}
           <button class="action-button" @click="${this.handleLeaveGame}">Leave</button>
           <button class="action-button" @click="${this.handleCall}" style="display:none">Call</button>
           <button class="action-button" @click="${this.handleCloseCall}" style="display:none">CloseCall</button>

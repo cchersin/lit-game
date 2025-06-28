@@ -98,8 +98,12 @@ export class StartingPage extends LitElement {
       } else {
         this.currentGame = game;
 
-        if(this.currentGame.status === 'started' && this.hasRole()) {
+        if (this.currentGame.status === 'started' && this.hasRole()) {
           Router.go('/game');
+        } 
+
+        if (this.currentGame.status === 'completed') {
+          Router.go('/winner');
         } 
         this.requestUpdate();
       }

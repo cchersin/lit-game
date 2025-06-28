@@ -133,7 +133,7 @@ export class GamesPage extends LitElement {
   render() {
     return html`
       <main @game-join=${this.handleGameJoin} @game-delete=${this.handleGameDelete}>
-         ${this.games.map(game => html`
+         ${this.games.filter(game => game.status !== 'completed').map(game => html`
             <div class="game-component">
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" winner="${game.getWinner()}"</game-component>
             </div>
