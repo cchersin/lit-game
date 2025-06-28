@@ -15,6 +15,13 @@ const routes = [
         },
       },
       {
+        path: 'games-archive',
+        component: 'games-archive-page',
+        action: async () => {
+          await import('./pages/games-archive-page');
+        },
+      },
+      {
         path: 'game',
         component: 'game-page',
         action: async () => {

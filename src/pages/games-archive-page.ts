@@ -9,13 +9,11 @@ import { collection, query, onSnapshot, Timestamp } from 'firebase/firestore';
 
 import { Router } from '@vaadin/router';
 
-import { format, isToday } from "date-fns";
-import { it } from "date-fns/locale";
 
 
 
-@customElement('games-page')
-export class GamesPage extends LitElement {
+@customElement('games-archive-page')
+export class GamesAchivePage extends LitElement {
 
   static styles = css`
   main {
@@ -94,49 +92,28 @@ export class GamesPage extends LitElement {
         });
   }
 
-  handleNewGame(event: any) {
-    const date = new Date();     
-    
-    const gameName = format(date, "dd MMMM yyyy, HH:mm", { locale: it });
- 
-    const game = new Game(gameName);
-
-    game.init(localStorage.userName);
-
-    localStorage.currentGame = game.name;
-
-    StoreService.saveGame(game);
-
-    Router.go('/starting');
-  }
-
-  handleGameJoin(event: any) {
+  
+  handleGameDelete(event: any) {
     const game = this.games.find(g => g.name === event.detail.name);
     if (game) {
-      game.join(localStorage.userName);
-
-      localStorage.currentGame = game.name;
-
-      StoreService.saveGame(game); 
-
-      Router.go('/starting');
+      StoreService.deleteGame(game.name);  
     }
-  } 
+  }
 
-  handleGoToArchive (event: any) {
-    Router.go('/games-archive');  
-  }  
+  handleClose(event: any) {
+    Router.go('/games');
+  }
 
   render() {
     return html`
-      <main @game-join=${this.handleGameJoin}>
-         ${this.games.filter(game => game.status !== 'completed').map(game => html`
+      <main @game-delete=${this.handleGameDelete}>
+         ${this.games.filter(game => game.status === 'completed').map(game => html`
             <div class="game-component">
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" winner="${game.getWinner()}"</game-component>
             </div>
           `)}
-           <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">New game</button></div>
-           <div class="outer-circles-container"><div class="circles-container"><div class="archive-button" @click="${this.handleGoToArchive}"></div><div class="favourites-button"></div></div></div>
+          <div class="button-container"><button class="action-button" @click="${this.handleClose}">Close</button></div>
+         
       </main>
     `;
   }
