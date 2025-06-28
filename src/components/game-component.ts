@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import { sharedStyles } from '../shared-styles';
 
 @customElement('game-component')
 export class GameComponent extends LitElement {
@@ -9,8 +10,9 @@ export class GameComponent extends LitElement {
   @property({ type: String }) winner = '';
   
 
-  static styles = css`
-  .game-information {
+  static styles = [
+    sharedStyles, css`
+    .game-information {
     font-family: "tablet-gothic", sans-serif;
     text-align: center;
     font-size: 12pt;
@@ -43,7 +45,7 @@ export class GameComponent extends LitElement {
     display: flex;
     align-content: center;
   }
-`;
+`];
 
   handleJoin() {
     this.dispatchEvent(new CustomEvent('game-join', {

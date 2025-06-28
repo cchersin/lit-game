@@ -8,16 +8,18 @@ import { formatDistanceToNow } from "date-fns";
 import { it } from "date-fns/locale";
 
 import '../components/player-component';
+import { sharedStyles } from '../shared-styles';
 
 @customElement('players-page')
 export class PlayersPage extends LitElement {
   @property({ type: Array }) users: Array<{ name: string, lastOnlineRef: Timestamp, lastOnlineFormatted: string }> = [];
  
-  static styles = css`
-  .users {
+  static styles = [
+    sharedStyles, css`
+    .users {
     border: 1px solid blue;
   }
-  `;
+  `];
 
   constructor() {
     super();

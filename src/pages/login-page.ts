@@ -6,14 +6,16 @@ import { signInAnonymously, User, updateProfile } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
 
 import { Router } from '@vaadin/router';
+import { sharedStyles } from '../shared-styles';
 
 
 @customElement('login-page')
 export class LoginPage extends LitElement {
   @property({ type: String }) displayName = localStorage.userName ? localStorage.userName : ''; 
  
-  static styles = css`
-  .login {
+  static styles = [
+    sharedStyles, css`
+    .login {
     overflow: hidden;
     background-color: red;
     height: 100%;
@@ -89,7 +91,7 @@ export class LoginPage extends LitElement {
     margin-top: 15px;
     border: none;
   }
-  `;
+  `];
 
   private user: User | null = null;
   

@@ -5,17 +5,21 @@ import { Router } from '@vaadin/router';
 
 import { Game } from '../domain/game';
 import { StoreService } from '../store-service';
+import { Utils } from '../utils';
+import { sharedStyles } from '../shared-styles';
+
 
 @customElement('winner-page')
 export class WinnerPage extends LitElement {
   currentGame = new Game('');
   
-  static styles = css`
-  main {
+  static styles = [
+    sharedStyles, css`
+    main {
     background-color: red;
     height: 100%;
   }
-  `;
+  `];
 
   constructor() {
     super();
@@ -64,7 +68,7 @@ export class WinnerPage extends LitElement {
     return html`<div>
          ${this.getRounds().map((round: any) => {
           return html`<div>
-            winner:${round.winnerName} ${round.sentence} 
+            winner:${round.winnerName} ${Utils.buildSentence(round.blackCardContent, round.whiteCardContent)} 
           </div>`})}
         </div>`;
   }

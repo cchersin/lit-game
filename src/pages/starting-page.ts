@@ -5,13 +5,15 @@ import { Router } from '@vaadin/router';
 
 import { Game } from '../domain/game';
 import { StoreService } from '../store-service';
+import { sharedStyles } from '../shared-styles';
 
 @customElement('starting-page')
 export class StartingPage extends LitElement {
   currentGame = new Game('');
   
-  static styles = css`
-  main {
+  static styles = [
+    sharedStyles, css`
+    main {
     background-color: red;
     height: 100%;
   }
@@ -52,7 +54,7 @@ export class StartingPage extends LitElement {
     margin-bottom: 20px;
   }
 
-  `;
+  `];
 
   constructor() {
     super();

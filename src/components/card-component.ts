@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { Utils } from '../utils';
+import { sharedStyles } from '../shared-styles';
 
 @customElement('card-component')
 export class CardComponent extends LitElement {
@@ -14,8 +15,9 @@ export class CardComponent extends LitElement {
   @property({ type: String }) isselected = "false";
 
 
-  static styles = css`
-  .card {
+  static styles = [
+  sharedStyles, css`
+    .card {
     width: 233px;
     height: 377px;
     padding-left: 21px;
@@ -63,7 +65,7 @@ export class CardComponent extends LitElement {
   .black .point {
     display: none;
   }
-`;
+`];
 
   handleClick() {
     this.dispatchEvent(new CustomEvent('card-click', {

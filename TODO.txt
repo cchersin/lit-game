@@ -7,11 +7,7 @@ FEATURES:
 -archivio dei giochi (con preferiti?)
 -voice chat :)
 -schermata di partenza con animazione del logo
--nella pagina principale non mostrare i game completed
--pagina archivio giochi
 -pagina a parte per classifica generale (leaderboard)
--qunado c'è un winner far veder la carta che ha vinto e il nome del vincitore a tutti
--se sono finite le carte non mostrare next round
 
 DONE:
 -autocomplete delle carte 
@@ -20,4 +16,11 @@ DONE:
 -quando il master ha scelto gli altri vedono la scelta, il nuovo master ha il tasto next round
 -quando hai confermato la tua carta devi attendere che gli altri scelgano (inserire pop-up/schermata che dice di attendere)
 -abilita start game solo se ci sono almeno 3 giocatori (master compreso)
+-quando c'è un winner far veder la carta che ha vinto e il nome del vincitore a tutti
+-nella pagina principale non mostrare i game completed
+-pagina archivio giochi
+-se sono finite le carte non mostrare next round
+
+
+
 

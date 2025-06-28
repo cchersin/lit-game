@@ -12,6 +12,8 @@ import { StoreService } from '../store-service';
 import { MediaConnection, Peer } from 'peerjs';
 import { query } from 'lit/decorators.js';
 
+import { sharedStyles } from '../shared-styles';
+
 @customElement('game-page')
 export class GamePage extends LitElement {
   currentCardId = '';
@@ -21,7 +23,8 @@ export class GamePage extends LitElement {
   @query('#remote-audio') remoteAudioEl: any;
   
   
-  static styles = css`
+  static styles = [
+  sharedStyles, css`
   main {
     overflow: hidden;
     background-color: #000000;
@@ -94,7 +97,7 @@ export class GamePage extends LitElement {
     margin-top: 30px;
     font-family: "tablet-gothic", sans-serif;
   }
-
+  
   .has-choosen {
     background-color: red;
     width: 10px;
@@ -108,7 +111,7 @@ export class GamePage extends LitElement {
     display: flex;
     justify-content: center;
     }
-  `;
+  `];
 
   constructor() {
     super();

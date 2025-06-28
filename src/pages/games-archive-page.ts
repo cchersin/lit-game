@@ -8,15 +8,15 @@ import { db } from '../firebase';
 import { collection, query, onSnapshot, Timestamp } from 'firebase/firestore';
 
 import { Router } from '@vaadin/router';
-
-
+import { sharedStyles } from '../shared-styles';
 
 
 @customElement('games-archive-page')
 export class GamesAchivePage extends LitElement {
 
-  static styles = css`
-  main {
+  static styles = [
+    sharedStyles, css`
+    main {
     background-color: red;
     height: 100%;
   }
@@ -72,7 +72,7 @@ export class GamesAchivePage extends LitElement {
     position: fixed;
     bottom: 0;
   }
-  `;
+  `];
 
   games: Game[] = [];
 

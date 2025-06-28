@@ -12,12 +12,17 @@ import { Router } from '@vaadin/router';
 import { format, isToday } from "date-fns";
 import { it } from "date-fns/locale";
 
+import { sharedStyles } from '../shared-styles';
+
+
 
 
 @customElement('games-page')
 export class GamesPage extends LitElement {
 
-  static styles = css`
+  static styles = [
+
+  sharedStyles, css`
   main {
     background-color: red;
     height: 100%;
@@ -74,7 +79,7 @@ export class GamesPage extends LitElement {
     position: fixed;
     bottom: 0;
   }
-  `;
+  `];
 
   games: Game[] = [];
 

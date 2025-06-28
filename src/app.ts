@@ -2,20 +2,22 @@ import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
 import { routes } from './index';
+import { sharedStyles } from './shared-styles';
 
 @customElement('game-app')
 export class App extends LitElement {
   @property({ type: String }) header = 'My game';
  
-  static styles = css`
-  .main {
+  static styles = [
+  sharedStyles, css`
+    .main {
     height: 100%;
   }
     
   #outlet {
       height: 100%;
   }
- `;
+ `];
 
   constructor() {
     super();

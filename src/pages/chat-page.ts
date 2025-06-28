@@ -6,6 +6,7 @@ import { collection, addDoc, query, orderBy, onSnapshot, Timestamp } from 'fireb
 
 import { format, isToday } from "date-fns";
 import { it } from "date-fns/locale";
+import { sharedStyles } from '../shared-styles';
 
 @customElement('chat-page')
 export class ChatPage extends LitElement {
@@ -14,8 +15,9 @@ export class ChatPage extends LitElement {
   @property({ type: Array }) messages: Array<{ user: string, text: string, timestamp: Timestamp, timestampFormatted: string }> = [];
   @property({ type: String }) messageText: string = '';
 
-  static styles = css`
-    .chat-container {
+  static styles = [
+    sharedStyles, css`
+      .chat-container {
       width: 600px;
       height: 400px;
       border: 1px solid #ccc;
@@ -43,7 +45,7 @@ export class ChatPage extends LitElement {
     .input-container button {
       padding: 5px 10px;
     }
-  `;
+  `];
 
   constructor() {
     super();
