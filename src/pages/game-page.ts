@@ -8,9 +8,7 @@ import { Card } from '../domain/card'
 import { Game } from '../domain/game';
 import { StoreService } from '../store-service';
 import { MediaConnection, Peer } from 'peerjs';
-import { state, query } from 'lit/decorators.js';
-import { set } from 'date-fns';
-
+import { query } from 'lit/decorators.js';
 
 @customElement('game-page')
 export class GamePage extends LitElement {

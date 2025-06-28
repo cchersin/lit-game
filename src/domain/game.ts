@@ -24,6 +24,8 @@ const blackCards = [
     new Card('3', 'Bevo per dimenticare ______.', 'black') ,
   ];
 
+const minNumPlayers = 2; // Minimum players to start the game
+
 export class Game {
   name: string;
   status: string; 
@@ -64,6 +66,10 @@ export class Game {
         const j = Math.floor(Math.random() * (i + 1));
         [deck[i], deck[j]] = [deck[j], deck[i]];
     }
+  }
+
+  isMinNumPlayersReached(): boolean {
+    return this.players.length >= minNumPlayers;
   }
 
   start() {
@@ -236,7 +242,7 @@ export class Game {
   hasAllPlayersChoosenCards() {
     return !this.findPlayers().find((player) => !player.hasCurrentCard());
   }
-  
+
   hasMasterChoosenCard() {
     const master = this.findMaster();
     return master ? master.hasCurrentCard() : false;
