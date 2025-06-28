@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import { Utils } from '../utils';
 
 @customElement('card-component')
 export class CardComponent extends LitElement {
@@ -72,24 +73,11 @@ export class CardComponent extends LitElement {
     }));
   }
 
-  getDescription() {
-    const a = this.description.split('______');
-
-    if (this.value !== '') {
-      return html`
-        <span>${a[0]}</span>
-        <span style="font-family: 'eskapade-fraktur', serif; font-weight: 400; font-size: 20.625pt; line-height: 22pt;">${this.value}</span>
-        <span style="margin-left: -6px">${a[1]}</span>
-      `;
-    }
-
-    return this.description;
-  }
-
+  
   render() {
     return html`
     <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="left: ${this.left}; z-index: ${this.isselected === "true" ? 1000 : this.zindex};">
-      <p>${this.getDescription()}<span class="point">.</span></p>
+      <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
     </div>
   `;
   }

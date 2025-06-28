@@ -7,6 +7,11 @@ FEATURES:
 -archivio dei giochi (con preferiti?)
 -voice chat :)
 -schermata di partenza con animazione del logo
+-nella pagina principale non mostrare i game completed
+-pagina archivio giochi
+-pagina a parte per classifica generale (leaderboard)
+-qunado c'è un winner far veder la carta che ha vinto e il nome del vincitore a tutti
+-se sono finite le carte non mostrare next round
 
 DONE:
 -autocomplete delle carte 

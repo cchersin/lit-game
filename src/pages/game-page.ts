@@ -6,6 +6,8 @@ import { Router } from '@vaadin/router';
 import '../components/card-component';
 import { Card } from '../domain/card'
 import { Game } from '../domain/game';
+import { Round } from '../domain/round';
+
 import { StoreService } from '../store-service';
 import { MediaConnection, Peer } from 'peerjs';
 import { query } from 'lit/decorators.js';
@@ -202,7 +204,8 @@ export class GamePage extends LitElement {
   }
 
   renderBlackCard() {
-    if (!this.hasRole() || (this.isMaster() && this.currentGame.tableCards.length > 0)) {
+  
+    if (!this.hasRole() || (this.isMaster() && this.currentGame.tableCards.length > 0) || this.currentGame.hasMasterChoosenCard()) {
       return html``; 
     }
    
@@ -264,14 +267,22 @@ export class GamePage extends LitElement {
 
 
   renderLastRound() {
-    if( this.isPlayer() && this.currentGame.hasMasterChoosenCard()) {
+    if(this.currentGame.turn == 'master' && this.currentGame.hasMasterChoosenCard()) {
       const lastRound = this.currentGame.getLastRound();
-    
-      if (!lastRound) {
-        return html``;
+      if (lastRound) {
+        return html`<div>${this.renderLastRoundWinner(lastRound)}${this.renderLastRoundWinningCard(lastRound)}/div>`;
       }
-      return html`<div id="last-round" style="color:white">Winner: ${lastRound.winnerName} - ${lastRound.sentence}</div>`;
     } 
+  }
+
+  renderLastRoundWinner(lastRound: Round) {
+      return html`<div id="last-round" style="color:white">Winner: ${lastRound.winnerName}</div>`;
+  }
+
+  renderLastRoundWinningCard(lastRound: Round) {
+     return html`
+            <card-component id="-1" description="${lastRound.blackCardContent}" value="${lastRound.whiteCardContent}" backgroundColor="black" color="white"></game-component>
+          `;
   }
 
   async handleCall() {
@@ -361,7 +372,8 @@ export class GamePage extends LitElement {
         </div>
          ${this.renderLastRound()}
          ${this.renderBlackCard()} 
-         ${this.getPlayer()?.currentCardId === '' ? this.renderWhiteCards() : html `<div style="color:white">wait...</div>`}
+         ${this.getPlayer()?.currentCardId === '' ? this.renderWhiteCards() : html ``}
+         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="color:white">Wait</div>` : html ``}
          <div class="outer-container-widget">
           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}

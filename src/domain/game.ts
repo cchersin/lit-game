@@ -197,12 +197,11 @@ export class Game {
         const winnerCard = this.getWhiteCard(cardId);
         const winnerCardContent = winnerCard ? winnerCard.content : '';
         const blackCardContent = this.blackCard ? this.blackCard.content : '';
-        const sentence = blackCardContent.replace('______',winnerCardContent);
         const winnerName = winner ? winner.name : '';
 
-        console.log(`winner: ${winnerName}, sentence: ${sentence}`);
+        console.log(`winner: ${winnerName}`);
 
-        const round = new Round(playerName, winnerName, sentence);
+        const round = new Round(playerName, winnerName, blackCardContent, winnerCardContent);
         this.rounds.push(round);
       }
     }
