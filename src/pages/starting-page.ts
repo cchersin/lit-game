@@ -105,7 +105,11 @@ export class StartingPage extends LitElement {
         } 
 
         if (this.currentGame.status === 'completed') {
-          Router.go('/winner');
+          if (localStorage.currentGame != '') {
+            Router.go('/winner');
+          } else {
+            Router.go('/games');
+          }
         } 
         this.requestUpdate();
       }
