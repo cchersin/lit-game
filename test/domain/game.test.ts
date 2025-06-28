@@ -1,3 +1,4 @@
+import { tr } from 'date-fns/locale';
 import { Game } from '../../src/domain/game';
 
 describe('Game', () => {
@@ -12,6 +13,7 @@ describe('Game', () => {
     expect(game.players.length).toBe(1);
     expect(game.players[0].role).toBe('master');
     expect(game.status).toBe('pending');
+    expect(game.turn).toBe('players');
   });
 
 
@@ -23,18 +25,7 @@ describe('Game', () => {
     expect(game.players.length).toBe(2);
   });
 
-  test('player playCard should play a card and move it to tableCards', () => {
-    game.join('Alice');
-    const alice = game.getPlayer('Alice')!;
-    const cardId = alice.hand[0].id;
-    game.playCard('Alice', cardId);
-    expect(alice.currentCardId).toBe(cardId);
-    // Simula che tutti i player abbiano giocato
-    game.findPlayers().forEach(p => p.currentCardId = p.hand[0].id);
-    game.playCard('Alice', cardId);
-    expect(game.tableCards.length).toBeGreaterThanOrEqual(1);
-  });
-
+  
   test('master playCard should set new master after round', () => {
     game.join('Alice');
     game.join('Bob');
@@ -42,16 +33,34 @@ describe('Game', () => {
     const alice = game.getPlayer('Alice')!;
     const aliceCardId = alice.hand[0].id;
     game.playCard(alice.name, aliceCardId);
+
+    expect(game.tableCards.length).toBe(0);
+    expect(game.hasAllPlayersChoosenCards()).toBe(false);
+    
    
     const bob = game.getPlayer('Bob')!;
     const bobCardId = bob.hand[0].id;
     game.playCard(bob.name, bobCardId);
-   
+
+    expect(game.hasAllPlayersChoosenCards()).toBe(true);
+    expect(game.tableCards.length).toBe(2);
+    expect(game.turn).toBe('master');
+
+    expect(game.hasMasterChoosenCard()).toBe(false);
+
     // Il master sceglie la carta di Alice come vincente
     const master = game.findMaster()!;
     game.playCard(master.name, aliceCardId);
 
+    expect(game.hasMasterChoosenCard()).toBe(true);
+
+    expect(game.getLastRoundWinner()).toBe('Alice');
+
+    game.nextRound();
+
     expect(game.findMasterName()).toBe('Alice');
+    expect(game.tableCards.length).toBe(0);
+    expect(game.turn).toBe('players');
   });
 
   test('should return leaderboard', () => {
