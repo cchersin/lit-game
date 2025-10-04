@@ -13,6 +13,7 @@ import { MediaConnection, Peer } from 'peerjs';
 import { query } from 'lit/decorators.js';
 
 import { sharedStyles } from '../shared-styles';
+import { ca } from 'date-fns/locale';
 
 @customElement('game-page')
 export class GamePage extends LitElement {
@@ -118,6 +119,7 @@ export class GamePage extends LitElement {
     this.loadGame();
   }
 
+
   firstUpdated() {
     this.setupListen()
   }
@@ -171,7 +173,94 @@ export class GamePage extends LitElement {
         this.requestUpdate();
       }
     });
+}
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('keydown', this.handleArrowKeys.bind(this));
   }
+
+  disconnectedCallback() {
+    window.removeEventListener('keydown', this.handleArrowKeys.bind(this));
+    super.disconnectedCallback();
+  }
+
+  handleArrowKeys(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowUp':
+        // handle up arrow
+        break;
+      case 'ArrowDown':
+        // handle down arrow
+        break;
+      case 'ArrowLeft':
+        {
+          this.currentCardId = this.getLeftCardId();
+          this.requestUpdate();
+        }
+        break;
+      case 'ArrowRight':
+        {
+          this.currentCardId = this.getRightCardId();
+          this.requestUpdate();
+        }
+        break
+      case 'Enter':
+        this.handlePlayCard();
+        break;
+    }
+  }
+  
+  findCurrentCardIndex() {
+    const hand = this.getPlayerChoosableCards();
+    if (!hand || hand.length === 0) {
+      return -1;
+    }
+    return hand.findIndex(card => card.id === this.currentCardId);
+  }
+
+  getLeftCardIndex() {
+    const hand = this.getPlayerChoosableCards();
+    if (!hand || hand.length === 0) {
+      return -1;
+    }
+    const currentIndex = this.findCurrentCardIndex();
+    if (currentIndex === -1) {
+      return 0;
+    }
+    return (currentIndex - 1 + hand.length) % hand.length;
+  }
+
+  getRightCardIndex() {
+    const hand = this.getPlayerChoosableCards();
+    if (!hand || hand.length === 0) {
+      return -1;
+    }
+    const currentIndex = this.findCurrentCardIndex();
+    if (currentIndex === -1) {
+      return 0;
+    }
+    return (currentIndex + 1) % hand.length;
+  }
+
+  getLeftCardId() {
+    const hand = this.getPlayerChoosableCards();
+    const leftIndex = this.getLeftCardIndex();
+    if (leftIndex === -1) {
+      return '';
+    }
+    return hand[leftIndex].id;
+  }
+
+  getRightCardId() {
+    const hand = this.getPlayerChoosableCards();
+    const rightIndex = this.getRightCardIndex();
+    if (rightIndex === -1) {
+      return '';
+    }
+    return hand[rightIndex].id;
+  } 
+
 
   findMasterName() {
     return this.currentGame.findMasterName();
@@ -212,7 +301,7 @@ export class GamePage extends LitElement {
       return html``; 
     }
    
-    return html`<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId || this.getPlayer()?.currentCardId || '')}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
+    return html`BLACK!!!<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId || this.getPlayer()?.currentCardId || '')}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
   }
 
   getHand() {
@@ -235,11 +324,19 @@ export class GamePage extends LitElement {
     StoreService.saveGame(this.currentGame);
   }
 
-  renderWhiteCards() {
-    if (this.getRole() === 'player') {
-      return this.renderCards(this.getHand(), false);
+  getPlayerChoosableCards() {
+     if (this.getRole() === 'player') {
+      return this.getHand();
     } else {
-      return this.renderCards(this.currentGame.tableCards, true);
+      return this.currentGame.tableCards;
+    }
+  }
+
+  renderChoosableCards() {
+    if (this.getRole() === 'player') {
+      return this.renderCards(this.getPlayerChoosableCards(), false);
+    } else {
+      return this.renderCards(this.getPlayerChoosableCards(), true);
     }
   }
 
@@ -374,8 +471,8 @@ export class GamePage extends LitElement {
           `)}
         </div>
          ${this.renderLastRound()}
-         ${this.renderBlackCard()} 
-         ${this.getPlayer()?.currentCardId === '' ? this.renderWhiteCards() : html ``}
+         ${this.renderBlackCard()}
+         ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}
          ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="color:white">Wait master to choose...</div>` : html ``}
          <div class="outer-container-widget">
           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
