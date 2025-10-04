@@ -3,7 +3,10 @@ import { customElement } from 'lit/decorators.js';
 
 import { Router } from '@vaadin/router';
 
+
+
 import '../components/card-component';
+//import { CardComponent } from '../components/card-component';
 import { Card } from '../domain/card'
 import { Game } from '../domain/game';
 import { Round } from '../domain/round';
@@ -13,7 +16,6 @@ import { MediaConnection, Peer } from 'peerjs';
 import { query } from 'lit/decorators.js';
 
 import { sharedStyles } from '../shared-styles';
-import { ca } from 'date-fns/locale';
 
 @customElement('game-page')
 export class GamePage extends LitElement {
@@ -194,21 +196,30 @@ export class GamePage extends LitElement {
         // handle down arrow
         break;
       case 'ArrowLeft':
-        {
-          this.currentCardId = this.getLeftCardId();
-          this.requestUpdate();
-        }
+          this.swap(() => {
+             this.currentCardId = this.getLeftCardId();
+             this.requestUpdate();
+          });
         break;
       case 'ArrowRight':
-        {
-          this.currentCardId = this.getRightCardId();
-          this.requestUpdate();
-        }
+        this.swap(() => {
+             this.currentCardId = this.getRightCardId();
+             this.requestUpdate();
+          });
         break
       case 'Enter':
         this.handlePlayCard();
         break;
     }
+  }
+
+  swap(cb?: () => void) {
+    let card = this.renderRoot.querySelector(`card-component[id="${this.currentCardId}"]`) as any;
+   
+    if (!card) 
+      return;
+
+    card.swap(cb);
   }
   
   findCurrentCardIndex() {
@@ -301,7 +312,7 @@ export class GamePage extends LitElement {
       return html``; 
     }
    
-    return html`BLACK!!!<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId || this.getPlayer()?.currentCardId || '')}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
+    return html`<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId || this.getPlayer()?.currentCardId || '')}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
   }
 
   getHand() {
@@ -482,7 +493,11 @@ export class GamePage extends LitElement {
           <button class="action-button" @click="${this.handleCall}" style="display:none">Call</button>
           <button class="action-button" @click="${this.handleCloseCall}" style="display:none">CloseCall</button>
          </div>  
-      </main>
+     </main>
     `;
   }
 }
+function cb(): any {
+  throw new Error('Function not implemented.');
+}
+

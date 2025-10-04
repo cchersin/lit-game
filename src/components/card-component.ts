@@ -65,6 +65,30 @@ export class CardComponent extends LitElement {
   .black .point {
     display: none;
   }
+
+  @keyframes swap {
+  50% {
+     transform: translateY(-50%) scale(0.85) rotate(-5deg);
+     animation-timing-function: ease-in;
+  }
+  100% {
+     transform: translateY(-50%) scale(0.85);
+  }
+
+
+/*
+  @keyframes swap {
+    50% {
+      transform: translate(-50%, calc(var(--y) - 250px)) scale(0.85) rotate(-5deg);
+      animation-timing-function: ease-in;
+    }
+    100% {
+      transform: translate(-50%, calc(var(--y) - 15px)) scale(0.85);
+      z-index: -1;
+    }
+  }*/
+
+}
 `];
 
   handleClick() {
@@ -73,6 +97,19 @@ export class CardComponent extends LitElement {
       bubbles: true,
       composed: true
     }));
+  }
+
+  swap(cb?: () => void) {
+    const cardDiv = this.renderRoot.querySelector('.card') as HTMLElement;
+    if (!cardDiv) return;
+ 
+    cardDiv.style.animation = "swap 0.7s forwards";
+
+    setTimeout(() => {
+      cardDiv.style.animation = "";
+      if (cb)
+        cb();
+    }, 700);
   }
 
   
