@@ -31,18 +31,21 @@ export class GameComponent extends LitElement {
 
   .action-button {
     background-color: red;
-    font-size: 18px;
-    border-radius: 20px;
     z-index: 1000;
     position: relative;
-    border: 2px solid black;
-    padding: 10px;
-    padding-left: 18px;
-    padding-right: 18px;
-    font-weight: bold;
-    margin: 10px;
-    margin-top: 30px;
+    border: 1px solid black;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 7px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14pt;
     font-family: "tablet-gothic", sans-serif;
+    border-radius: 18px;
   }
 
   .button-container {
@@ -76,7 +79,7 @@ export class GameComponent extends LitElement {
         ${this.status === 'pending' ? 
           html` <div class="game-information"> ${this.master}, ${this.players} are playing.</div> 
                 <div class="button-container"> 
-                  <button class="action-button" @click="${this.handleJoin}">Join</button> 
+                  <button class="action-button" @click="${this.handleJoin}">join</button> 
                 </div>` 
           : html``}
         ${this.status === 'completed' ? html` Winner: ${this.winner} <div class="button-container"> <button class="action-button" @click="${this.handleDelete}">Delete</button> </div>` : html``}        

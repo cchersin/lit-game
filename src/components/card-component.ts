@@ -86,7 +86,7 @@ export class CardComponent extends LitElement {
      z-index: 0;
   }  
   60% {
-     z-index: +1000;
+     z-index: +1000; 
   }
   100% {
      transform: translateX(90px) translateY(-13px) scale(1);

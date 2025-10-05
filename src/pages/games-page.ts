@@ -29,25 +29,28 @@ export class GamesPage extends LitElement {
   }
 
   .action-button {
-    color: red;
-    font-family: "tablet-gothic", sans-serif;
     text-align: center;
-    font-size: 14pt;
     padding-top: 5px;
-    padding-bottom: 6px;
+    padding-bottom: 7px;
     padding-left: 30px;
     padding-right: 30px;
-    border-radius: 15px;
     background-color: black;
     margin-top: 15px;
     border: none;
     margin-left: auto;
     margin-right: auto;
+    font-size: 14pt;
+    color: red;
+    font-family: "tablet-gothic", sans-serif;
+    border-radius: 18px;
   }
 
   .game-component {
     border: 1px solid black;
     border-radius: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
   }
 
   div.button-container {
@@ -143,7 +146,7 @@ export class GamesPage extends LitElement {
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(",")}" winner="${game.getWinner()}"></game-component>
             </div>
           `)}
-           <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">New game</button></div>
+           <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">new game</button></div>
            <div class="outer-circles-container"><div class="circles-container"><div class="archive-button" @click="${this.handleGoToArchive}"></div><div class="favourites-button"></div></div></div>
       </main>
     `;

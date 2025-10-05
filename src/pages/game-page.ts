@@ -83,22 +83,23 @@ export class GamePage extends LitElement {
     flex-wrap: wrap;
     max-width: 400px;
     margin: auto;
+    /*  position: fixed;
+  bottom: 0; */
   }
   
   .action-button {
     background-color: red;
-    font-size: 18px;
-    border-radius: 20px;
     z-index: 1000;
     position: relative;
     border: none;
-    padding: 10px;
-    padding-left: 18px;
+    padding-top: 5px;
+    padding-bottom: 7px;
     padding-right: 18px;
-    font-weight: bold;
-    margin: 10px;
-    margin-top: 30px;
+    padding-left: 18px;
+    font-size: 14pt;
     font-family: "tablet-gothic", sans-serif;
+    border-radius: 18px;
+    margin-top: 15px;
   }
   
   .has-choosen {
@@ -433,7 +434,7 @@ export class GamePage extends LitElement {
   }
 
   renderLastRoundWinner(lastRound: Round) {
-      return html`<div id="last-round" style="color:white">Winner: ${lastRound.winnerName}</div>`;
+      return html`<div id="last-round" style="font-size: 24px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center;">E il vincitore è... ${lastRound.winnerName}</div>`;
   }
 
   renderLastRoundWinningCard(lastRound: Round) {
@@ -530,14 +531,14 @@ export class GamePage extends LitElement {
          ${this.renderLastRound()}
          ${this.renderBlackCard()}
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}
-         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="color:white">Wait master to choose...</div>` : html ``}
+         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 24px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 8deg;">Congratulazioni, hai scelto la tua carta! (ora aspetta che gli altri scelgano la loro...)</div>` : html ``}
          <div class="outer-container-widget">
-          ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}
-          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && !this.currentGame.areDecksEmpty() ? html`<button class="action-button" @click="${this.handleNextRound}">NextRound</button>` : html``}
-           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
-          <button class="action-button" @click="${this.handleLeaveGame}">Leave</button>
-          <button class="action-button" @click="${this.handleCall}" style="display:none">Call</button>
-          <button class="action-button" @click="${this.handleCloseCall}" style="display:none">CloseCall</button>
+          ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">stop</button>` : html``}
+          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && !this.currentGame.areDecksEmpty() ? html`<button class="action-button" @click="${this.handleNextRound}">next round</button>` : html``}
+           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">confirm</button>` : html``}
+          <button class="action-button" @click="${this.handleLeaveGame}">leave</button>
+          <button class="action-button" @click="${this.handleCall}" style="display:none">call</button>
+          <button class="action-button" @click="${this.handleCloseCall}" style="display:none">close call</button>
          </div>  
      </main>
     `;

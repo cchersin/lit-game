@@ -3,11 +3,35 @@ Una persona viene scelta a caso per cominciare (il master). Questa persona pesca
 
 FEATURES:
 -mentre il master sceglie i player vedono la stessa cosa 
--classifica di tutti i giochi
--archivio dei giochi (con preferiti?)
+-classifica di tutti i giochi vinti
+-archivio dei giochi
+-archivio delle carte preferite
 -voice chat :)
 -schermata di partenza con animazione del logo
--pagina a parte per classifica generale (leaderboard)
+
+TO DO:
+generali:
+    -sfondo che non scrolla
+    -togliere logout
+login-page: 
+    -centrare placeholder
+games-page: 
+    -togliere giochi vuoti
+    -"Is/are playing"
+    -nomi giocatori uppercase
+starting-page: 
+    -bottone leave
+game-page:
+    -z-index alto per widget
+    -rotazione carte swap
+    -sistemare widget in alto
+    -stick to bottom bottoni in basso
+    -far scendere le carte quando si ha consegnato la carta e far apparire scritta
+    -master che sceglie
+    -meccanica carte preferite
+    -togliere bottone confirm
+winner-page:
+    -And the winner is... con turn around e type animation
 
 DONE:
 -autocomplete delle carte 

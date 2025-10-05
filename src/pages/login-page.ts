@@ -83,10 +83,10 @@ export class LoginPage extends LitElement {
     color: red;
     font-family: "tablet-gothic", sans-serif;
     padding-top: 5px;
-    padding-bottom: 6px;
+    padding-bottom: 7px;
     padding-left: 50px;
     padding-right: 50px;
-    border-radius: 15px;
+    border-radius: 18px;
     background-color: black;
     margin-top: 15px;
     border: none;

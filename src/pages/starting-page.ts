@@ -19,21 +19,23 @@ export class StartingPage extends LitElement {
   }
 
   .information {
+    font-family: "tablet-gothic", sans-serif;
+    padding-left: 20px;
+    padding-right: 20px;
     text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 1;
+    font-size: 18px;
+    line-height: 1.2;
   }
 
   .action-button {
-    font-size: 16pt;
+    font-size: 14pt;
     color: red;
-    font-family: "eskapade-fraktur", sans-serif;
+    font-family: "tablet-gothic", sans-serif;
     padding-top: 5px;
-    padding-bottom: 6px;
+    padding-bottom: 7px;
     padding-left: 50px;
     padding-right: 50px;
-    border-radius: 15px;
+    border-radius: 18px;
     background-color: black;
     margin-top: 15px;
     border: none;
@@ -155,10 +157,10 @@ export class StartingPage extends LitElement {
           ${this.isMaster() ? html`<p class="information">${this.currentGame.isMinNumPlayersReached() ? 'Minimum number of players reached. You can start the game!' : 'Waiting for more players to join...'}</p>` : html``}
           </div>
         <div class="container-button">
-         ${this.isMaster() && this.currentGame.status === 'pending' && this.currentGame.isMinNumPlayersReached() ? html`<button class="action-button" @click="${this.handleStartGame}">Start game</button>` : html``}
-         ${this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop game</button>` : html``}       
-         ${!this.hasRole() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleJoin}">Join</button>` : html``}
-         ${!this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleLeave}">Leave</button>` : html``}
+         ${this.isMaster() && this.currentGame.status === 'pending' && this.currentGame.isMinNumPlayersReached() ? html`<button class="action-button" @click="${this.handleStartGame}">start game</button>` : html``}
+         ${this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleStopGame}"stop game</button>` : html``}       
+         ${!this.hasRole() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleJoin}">join</button>` : html``}
+         ${!this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleLeave}">leave</button>` : html``}
          </div>
       </main>
     `;
