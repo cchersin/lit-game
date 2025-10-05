@@ -15,7 +15,7 @@ export class LoginPage extends LitElement {
  
   static styles = [
     sharedStyles, css`
-    .login {
+  .login {
     overflow: hidden;
     background-color: red;
     height: 100%;

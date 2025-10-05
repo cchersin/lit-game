@@ -146,19 +146,19 @@ export class StartingPage extends LitElement {
       <main class="game">
         <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
         <div class="information-container">
-         <p class="information">${this.findMasterName() !== '' ? this.findMasterName() + ' has created a new game' : ''}</p>
+         ${this.findMasterName()==localStorage.userName ? html`<p class="information">${this.findMasterName() !== '' ? 'You have created a new game' : ''}</p>` : html`<p class="information">${this.findMasterName() !== '' ? this.findMasterName() + ' has created a new game' : ''}</p>`}
          ${this.findPlayers().map(player => html`
-            <p class="information">
-              ${player.name} has joined the game
-            </p>
+            ${player.name==localStorage.userName ? html`<p class="information"> You have joined the game.</p>` 
+            : html`<p class="information">${player.name} has joined the game.</p>`}
           `)}
-        </div>
+          ${this.isPlayer() ? html`<p class="information">${this.currentGame.isMinNumPlayersReached() ? 'Minimum number of players reached. Waiting for the master to start...' : 'Waiting for more players to join...'}</p>` : html``}
+          ${this.isMaster() ? html`<p class="information">${this.currentGame.isMinNumPlayersReached() ? 'Minimum number of players reached. You can start the game!' : 'Waiting for more players to join...'}</p>` : html``}
+          </div>
         <div class="container-button">
          ${this.isMaster() && this.currentGame.status === 'pending' && this.currentGame.isMinNumPlayersReached() ? html`<button class="action-button" @click="${this.handleStartGame}">Start game</button>` : html``}
          ${this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop game</button>` : html``}       
          ${!this.hasRole() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleJoin}">Join</button>` : html``}
          ${!this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleLeave}">Leave</button>` : html``}
-     
          </div>
       </main>
     `;

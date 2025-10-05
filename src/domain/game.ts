@@ -26,6 +26,8 @@ const blackCards = [
 
 const minNumPlayers = 2; // Minimum players to start the game
 
+const numberOfCardsInHand = 10; // Number of white cards each player has in hand
+
 export class Game {
   name: string;
   status: string; 
@@ -157,7 +159,7 @@ export class Game {
 
   drawHand(player: Player) {
     player.currentCardId = '';
-    for(let i = player.hand.length; i < 3; i++) {
+    for(let i = player.hand.length; i < numberOfCardsInHand; i++) {
       this.drawCard(player);
     }
   }

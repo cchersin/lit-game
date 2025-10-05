@@ -353,14 +353,14 @@ export class GamePage extends LitElement {
 
 
   renderCards(cards: any, resolve: boolean) {
-    let left = -60;
+    let left = -30;
     let zindex = 11;
    
     return html`<div class="container-cards">
          ${cards.map((card: any) => 
               new Card(card.id, card.content, card.color)).map((card: any) => { 
-                left += 40;
-                zindex -= 1;
+                left += 10;
+                zindex += 1;
                 return this.renderCard(card, left, zindex, resolve);
           })}
         </div>`;

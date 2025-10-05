@@ -74,7 +74,7 @@ export class GameComponent extends LitElement {
      <div>
         <div class="game-information"> ${this.name} </div>
         ${this.status === 'pending' ? 
-          html` <div class="game-information"> ${this.master} ${this.players} are playing.</div> 
+          html` <div class="game-information"> ${this.master}, ${this.players} are playing.</div> 
                 <div class="button-container"> 
                   <button class="action-button" @click="${this.handleJoin}">Join</button> 
                 </div>` 
