@@ -108,6 +108,18 @@ export class CardComponent extends LitElement {
      transform: translateX(-10px);
   }  
 }
+
+@keyframes slide-up {
+30% {
+     opacity: 1;
+  }
+100% {
+     animation-timing-function: ease-in;
+     transform: translateY(-500px);
+     opacity: 0;
+     rotate: -5deg;
+  }  
+}
 `];
 
   handleClick() {

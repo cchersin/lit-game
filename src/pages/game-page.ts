@@ -125,12 +125,6 @@ export class GamePage extends LitElement {
   firstUpdated() {
     this.setupListen()
   }
-  
-
-  handleCardClick(event: any) {
-    this.currentCardId = event.detail.id;
-    this.requestUpdate();
-  }
 
   findCardContent(cardId: String) {
     const card = this.currentGame.getWhiteCard(cardId);
@@ -190,7 +184,16 @@ export class GamePage extends LitElement {
   handleArrowKeys(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowUp':
-        // handle up arrow
+        if (this.getPlayer()?.currentCardId === '' && this.currentCardId !== '') {
+          const containerCards = this.renderRoot.querySelector(".container-cards") as HTMLElement;
+          const frontCard = containerCards.querySelector("card-component:last-child") as any;
+   
+          if (frontCard) { 
+            frontCard.applyAnimation("slide-up", () => {
+              this.handlePlayCard();
+            });
+          }
+        }
         break;
       case 'ArrowDown':
         // handle down arrow
@@ -508,7 +511,7 @@ export class GamePage extends LitElement {
 
   render() {
      return html`
-      <main class="game" @card-click=${this.handleCardClick}>
+      <main class="game">
         <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
          <audio id="remote-audio" autoplay controls style="display:none"></audio>
 
@@ -529,9 +532,9 @@ export class GamePage extends LitElement {
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}
          ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="color:white">Wait master to choose...</div>` : html ``}
          <div class="outer-container-widget">
-          ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">Stop</button>` : html``}
           ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && !this.currentGame.areDecksEmpty() ? html`<button class="action-button" @click="${this.handleNextRound}">NextRound</button>` : html``}
+           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">Confirm</button>` : html``}
           <button class="action-button" @click="${this.handleLeaveGame}">Leave</button>
           <button class="action-button" @click="${this.handleCall}" style="display:none">Call</button>
           <button class="action-button" @click="${this.handleCloseCall}" style="display:none">CloseCall</button>
