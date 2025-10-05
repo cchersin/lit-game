@@ -67,7 +67,7 @@ export class CardComponent extends LitElement {
 
 @keyframes swap {
   50% {
-     transform: translateX(100%) scale(0.85);
+     transform: translateX(310px) scale(0.85);
      animation-timing-function: ease-in;
      z-index: +1000;
   }
@@ -75,24 +75,38 @@ export class CardComponent extends LitElement {
      z-index: 0;
   }
   100% {
-     transform: translateX(-3%) scale(1);
+     transform: translateX(-90px) translateY(13px) scale(1);
      z-index: 0;
   }
 }
 
 @keyframes reverse-swap {
   50% {
-     transform: translateX(130%) scale(0.85);
+     transform: translateX(400px) scale(0.85);
      z-index: 0;
   }  
   60% {
      z-index: +1000;
   }
   100% {
-     transform: translateX(36%) translateY(-10px) scale(1);
+     transform: translateX(90px) translateY(-13px) scale(1);
      animation-timing-function: ease-in;
      z-index: +1000;
   }
+}
+
+@keyframes slide-left {
+  100% {
+     animation-timing-function: ease-in;
+     transform: translateX(+10px);
+  }  
+}
+
+@keyframes slide-right {
+  100% {
+     animation-timing-function: ease-in;
+     transform: translateX(-10px);
+  }  
 }
 `];
 
@@ -104,11 +118,11 @@ export class CardComponent extends LitElement {
     }));
   }
 
-  swap(cb?: () => void) {
+  applyAnimation(animation:String, cb?: () => void) {
     const cardDiv = this.renderRoot.querySelector('.card') as HTMLElement;
     if (!cardDiv) return;
  
-    cardDiv.style.animation = "swap 1s forwards";
+    cardDiv.style.animation = animation + " 1s forwards";
 
     setTimeout(() => {
       cardDiv.style.animation = "";
@@ -117,19 +131,7 @@ export class CardComponent extends LitElement {
     }, 1000);
   }
 
-  reverseSwap(cb?: () => void) {
-    const cardDiv = this.renderRoot.querySelector('.card') as HTMLElement;
-    if (!cardDiv) return;
- 
-    cardDiv.style.animation = "reverse-swap 5s forwards";
 
-    setTimeout(() => {
-      cardDiv.style.animation = "";
-      if (cb)
-        cb();
-    }, 5000);
-  }
-  
   render() {
     return html`
     <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="left: ${this.left}; z-index: ${this.zindex};">

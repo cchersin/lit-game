@@ -232,21 +232,37 @@ export class GamePage extends LitElement {
   }
 
   swap(cb?: () => void) {
-    let card = this.renderRoot.querySelector(`card-component[id="${this.currentCardId}"]`) as any;
+    const containerCards = this.renderRoot.querySelector(".container-cards") as HTMLElement;
    
-    if (!card) 
+    const frontCard = containerCards.querySelector("card-component:last-child") as any;
+   
+    if (!frontCard) 
       return;
 
-    card.swap(cb);
+    containerCards.querySelectorAll(`card-component`).forEach((card, index, array) => {
+      if (card !== frontCard) {
+        (card as any).applyAnimation("slide-left");
+      }
+    });
+
+    frontCard.applyAnimation("swap", cb);
   }
 
   reverseSwap(cb?: () => void) {
-    let card = this.renderRoot.querySelector(`card-component:first-child`) as any;
+    const containerCards = this.renderRoot.querySelector(".container-cards") as HTMLElement;
    
-    if (!card) 
+    const backCard = containerCards.querySelector("card-component:first-child") as any;
+   
+    if (!backCard) 
       return;
 
-    card.reverseSwap(cb);
+    backCard.applyAnimation("reverse-swap", cb);
+
+    containerCards.querySelectorAll(`card-component`).forEach((card, index, array) => {
+      if (card !== backCard) {
+        (card as any).applyAnimation("slide-right");
+      }
+    });
   }
   
   findCurrentCardIndex() {
