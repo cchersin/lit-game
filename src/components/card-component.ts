@@ -12,8 +12,7 @@ export class CardComponent extends LitElement {
   @property({ type: String }) backgroundColor = '';
   @property({ type: String }) left = '';
   @property({ type: String }) zindex = '';
-  @property({ type: String }) isselected = "false";
-
+  
 
   static styles = [
   sharedStyles, css`
@@ -66,15 +65,34 @@ export class CardComponent extends LitElement {
     display: none;
   }
 
-  @keyframes swap {
+@keyframes swap {
   50% {
      transform: translateX(100%) scale(0.85);
      animation-timing-function: ease-in;
+     z-index: +1000;
+  }
+  60% {
+     z-index: 0;
   }
   100% {
-     transform: translateX(-100%) scale(1);
+     transform: translateX(-3%) scale(1);
+     z-index: 0;
   }
+}
 
+@keyframes reverse-swap {
+  50% {
+     transform: translateX(130%) scale(0.85);
+     z-index: 0;
+  }  
+  60% {
+     z-index: +1000;
+  }
+  100% {
+     transform: translateX(36%) translateY(-10px) scale(1);
+     animation-timing-function: ease-in;
+     z-index: +1000;
+  }
 }
 `];
 
@@ -90,19 +108,31 @@ export class CardComponent extends LitElement {
     const cardDiv = this.renderRoot.querySelector('.card') as HTMLElement;
     if (!cardDiv) return;
  
-    cardDiv.style.animation = "swap 0.7s forwards";
+    cardDiv.style.animation = "swap 1s forwards";
 
     setTimeout(() => {
       cardDiv.style.animation = "";
       if (cb)
         cb();
-    }, 700);
+    }, 1000);
   }
 
+  reverseSwap(cb?: () => void) {
+    const cardDiv = this.renderRoot.querySelector('.card') as HTMLElement;
+    if (!cardDiv) return;
+ 
+    cardDiv.style.animation = "reverse-swap 5s forwards";
+
+    setTimeout(() => {
+      cardDiv.style.animation = "";
+      if (cb)
+        cb();
+    }, 5000);
+  }
   
   render() {
     return html`
-    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="left: ${this.left}; z-index: ${this.isselected === "true" ? 1000 : this.zindex};">
+    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="left: ${this.left}; z-index: ${this.zindex};">
       <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
     </div>
   `;

@@ -196,14 +196,16 @@ export class GamePage extends LitElement {
         // handle down arrow
         break;
       case 'ArrowLeft':
-          this.swap(() => {
-             this.currentCardId = this.getLeftCardId();
+          this.reverseSwap(() => {
+             this.moveBackCardToFront();
+             this.currentCardId = this.getFrontCard().id;
              this.requestUpdate();
           });
         break;
       case 'ArrowRight':
         this.swap(() => {
-             this.currentCardId = this.getRightCardId();
+             this.moveCurrentCardToBack();
+             this.currentCardId = this.getFrontCard().id;
              this.requestUpdate();
           });
         break
@@ -213,6 +215,22 @@ export class GamePage extends LitElement {
     }
   }
 
+  getFrontCard() {
+    return this.getPlayerChoosableCards()[this.getPlayerChoosableCards().length - 1];
+  }
+
+  moveCurrentCardToBack() {
+    const frontCard = this.getFrontCard();
+    this.getPlayerChoosableCards().pop();
+    this.getPlayerChoosableCards().unshift(frontCard);
+  }
+
+  moveBackCardToFront() {
+    const backCard = this.getPlayerChoosableCards()[0];
+    this.getPlayerChoosableCards().shift();
+    this.getPlayerChoosableCards().push(backCard);
+  }
+
   swap(cb?: () => void) {
     let card = this.renderRoot.querySelector(`card-component[id="${this.currentCardId}"]`) as any;
    
@@ -220,6 +238,15 @@ export class GamePage extends LitElement {
       return;
 
     card.swap(cb);
+  }
+
+  reverseSwap(cb?: () => void) {
+    let card = this.renderRoot.querySelector(`card-component:first-child`) as any;
+   
+    if (!card) 
+      return;
+
+    card.reverseSwap(cb);
   }
   
   findCurrentCardIndex() {
@@ -371,7 +398,7 @@ export class GamePage extends LitElement {
        return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></card-component>`;
     } else {
       return html`
-            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" isselected="${card.id === this.currentCardId}"></card-component>
+            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}"></card-component>
           `;
     } 
   }
