@@ -312,7 +312,7 @@ export class GamePage extends LitElement {
       return html``; 
     }
    
-    return html`<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId || this.getPlayer()?.currentCardId || '')}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
+    return html`<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId || this.getPlayer()?.currentCardId || '')}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></card-component>`;
   }
 
   getHand() {
@@ -368,10 +368,10 @@ export class GamePage extends LitElement {
 
   renderCard(card: Card, left: number, zindex: number, resolve: boolean) {
     if(resolve) {
-       return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></game-component>`;
+       return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></card-component>`;
     } else {
       return html`
-            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" isselected="${card.id === this.currentCardId}"></game-component>
+            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" isselected="${card.id === this.currentCardId}"></card-component>
           `;
     } 
   }
@@ -392,7 +392,7 @@ export class GamePage extends LitElement {
 
   renderLastRoundWinningCard(lastRound: Round) {
      return html`
-            <card-component id="-1" description="${lastRound.blackCardContent}" value="${lastRound.whiteCardContent}" backgroundColor="black" color="white"></game-component>
+            <card-component id="-1" description="${lastRound.blackCardContent}" value="${lastRound.whiteCardContent}" backgroundColor="black" color="white"></card-component>
           `;
   }
 

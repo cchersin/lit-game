@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { sharedStyles } from '../shared-styles';
+import { Player } from '../domain/player';
 
 @customElement('game-component')
 export class GameComponent extends LitElement {
@@ -8,6 +9,7 @@ export class GameComponent extends LitElement {
   @property({ type: String }) status = '';
   @property({ type: String }) master = '';
   @property({ type: String }) winner = '';
+  @property({ type: String }) players= '';
   
 
   static styles = [
@@ -16,8 +18,11 @@ export class GameComponent extends LitElement {
     font-family: "tablet-gothic", sans-serif;
     text-align: center;
     font-size: 12pt;
-    font-weight: bold;
     line-height: 16pt;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
   
   .game-information:first-letter {
@@ -68,7 +73,12 @@ export class GameComponent extends LitElement {
     return html`
      <div>
         <div class="game-information"> ${this.name} </div>
-        ${this.status === 'pending' ? html` <div class="game-information"> ${this.master} has started a new game </div> <div class="button-container"> <button class="action-button" @click="${this.handleJoin}">Join</button> </div>` : html``}
+        ${this.status === 'pending' ? 
+          html` <div class="game-information"> ${this.master} ${this.players} are playing.</div> 
+                <div class="button-container"> 
+                  <button class="action-button" @click="${this.handleJoin}">Join</button> 
+                </div>` 
+          : html``}
         ${this.status === 'completed' ? html` Winner: ${this.winner} <div class="button-container"> <button class="action-button" @click="${this.handleDelete}">Delete</button> </div>` : html``}        
       </div>
   `;

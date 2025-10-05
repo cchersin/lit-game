@@ -29,9 +29,10 @@ export class GamesPage extends LitElement {
   }
 
   .action-button {
-    font-size: 16pt;
     color: red;
-    font-family: "eskapade-fraktur", sans-serif;
+    font-family: "tablet-gothic", sans-serif;
+    text-align: center;
+    font-size: 14pt;
     padding-top: 5px;
     padding-bottom: 6px;
     padding-left: 30px;
@@ -40,10 +41,12 @@ export class GamesPage extends LitElement {
     background-color: black;
     margin-top: 15px;
     border: none;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .game-component {
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 20px;
   }
 
@@ -134,10 +137,10 @@ export class GamesPage extends LitElement {
 
   render() {
     return html`
-      <main @game-join=${this.handleGameJoin}>
+      <main @game-join="${this.handleGameJoin}">
          ${this.games.filter(game => game.status !== 'completed').map(game => html`
             <div class="game-component">
-              <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" winner="${game.getWinner()}"</game-component>
+              <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(",")}" winner="${game.getWinner()}"></game-component>
             </div>
           `)}
            <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">New game</button></div>

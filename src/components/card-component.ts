@@ -68,25 +68,12 @@ export class CardComponent extends LitElement {
 
   @keyframes swap {
   50% {
-     transform: translateY(-50%) scale(0.85) rotate(-5deg);
+     transform: translateX(100%) scale(0.85);
      animation-timing-function: ease-in;
   }
   100% {
-     transform: translateY(-50%) scale(0.85);
+     transform: translateX(-100%) scale(1);
   }
-
-
-/*
-  @keyframes swap {
-    50% {
-      transform: translate(-50%, calc(var(--y) - 250px)) scale(0.85) rotate(-5deg);
-      animation-timing-function: ease-in;
-    }
-    100% {
-      transform: translate(-50%, calc(var(--y) - 15px)) scale(0.85);
-      z-index: -1;
-    }
-  }*/
 
 }
 `];

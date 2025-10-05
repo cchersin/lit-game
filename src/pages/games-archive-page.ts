@@ -36,7 +36,7 @@ export class GamesAchivePage extends LitElement {
   }
 
   .game-component {
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 20px;
   }
 

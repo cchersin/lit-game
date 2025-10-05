@@ -58,7 +58,7 @@ export class LoginPage extends LitElement {
     width: 233px;
     text-align: center;
     font-size: 40pt;
-    /*padding-bottom: 10px;*/
+    padding-bottom: 10px;
     font-family: "eskapade-fraktur", serif;
     font-weight: 400;
     font-style: normal;
