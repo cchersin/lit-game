@@ -18,32 +18,16 @@ login-page:
 games-page: 
     -togliere giochi vuoti
     -quando stoppi un gioco nella starting page compare ancora agli altri
-    -nomi giocatori uppercase
 starting-page: 
-    -bottone leave
 game-page:
-    -z-index alto per widget
     -rotazione carte swap
     -sistemare widget in alto
-    -stick to bottom bottoni in basso
     -far scendere le carte quando si ha consegnato la carta e far apparire scritta
     -master che sceglie
     -meccanica carte preferite
     -togliere bottone confirm
 winner-page:
     -And the winner is... con turn around e type animation
-
-DONE:
--autocomplete delle carte 
--punteggio nel widget
--cambio master ad ogni turno
--quando il master ha scelto gli altri vedono la scelta, il nuovo master ha il tasto next round
--quando hai confermato la tua carta devi attendere che gli altri scelgano (inserire pop-up/schermata che dice di attendere)
--abilita start game solo se ci sono almeno 3 giocatori (master compreso)
--quando c'è un winner far veder la carta che ha vinto e il nome del vincitore a tutti
--nella pagina principale non mostrare i game completed
--pagina archivio giochi
--se sono finite le carte non mostrare next round
 
 
 

@@ -83,8 +83,22 @@ export class GamePage extends LitElement {
     flex-wrap: wrap;
     max-width: 400px;
     margin: auto;
-    /*  position: fixed;
-  bottom: 0; */
+    position: sticky;
+    z-index: 10000;
+  }
+
+  .outer-container-widget-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    z-index: 10000;
+    position: fixed;
+    bottom: 20px;
   }
   
   .action-button {
@@ -187,13 +201,24 @@ export class GamePage extends LitElement {
       case 'ArrowUp':
         if (this.getPlayer()?.currentCardId === '' && this.currentCardId !== '') {
           const containerCards = this.renderRoot.querySelector(".container-cards") as HTMLElement;
+          const blackContainerCards = this.renderRoot.querySelector(".black-card-container") as HTMLElement;
           const frontCard = containerCards.querySelector("card-component:last-child") as any;
+          const blackCard = blackContainerCards.querySelector("card-component:first-child") as any;
    
           if (frontCard) { 
             frontCard.applyAnimation("slide-up", () => {
               this.handlePlayCard();
             });
           }
+          if (blackCard) { 
+            blackCard.applyAnimation("slide-down", () => {
+            });
+          }
+          containerCards.querySelectorAll(`card-component`).forEach((card, index, array) => {
+            if (card !== frontCard) {
+              (card as any).applyAnimation("slide-more-down");
+            }
+          });
         }
         break;
       case 'ArrowDown':
@@ -359,7 +384,7 @@ export class GamePage extends LitElement {
       return html``; 
     }
    
-    return html`<card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId || this.getPlayer()?.currentCardId || '')}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></card-component>`;
+    return html`<div class="black-card-container"><card-component description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(this.currentCardId || this.getPlayer()?.currentCardId || '')}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></card-component></div>`;
   }
 
   getHand() {
@@ -523,16 +548,16 @@ export class GamePage extends LitElement {
                 ${player.name}  ${this.currentGame.getPlayerWins(player.name)}
               </div>
               <div class="has-choosen-container">
-                <div class="has-choosen" style="background-color: ${player.currentCardId !== '' ? 'red' : 'black'}"/>
+                <div class="has-choosen" style="opacity: ${player.currentCardId !== '' ? '1' : '0'}"/>
               </div>
             </div>
           `)}
         </div>
+         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; weight: light;">(ora aspetta che gli altri</br>scelgano la loro...)</div>` : html ``}
          ${this.renderLastRound()}
          ${this.renderBlackCard()}
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}
-         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 24px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 8deg;">Congratulazioni, hai scelto la tua carta! (ora aspetta che gli altri scelgano la loro...)</div>` : html ``}
-         <div class="outer-container-widget">
+         <div class="outer-container-widget-bottom">
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">stop</button>` : html``}
           ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && !this.currentGame.areDecksEmpty() ? html`<button class="action-button" @click="${this.handleNextRound}">next round</button>` : html``}
           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">confirm</button>` : html``}

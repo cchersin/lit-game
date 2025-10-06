@@ -120,6 +120,20 @@ export class CardComponent extends LitElement {
      rotate: -5deg;
   }  
 }
+
+@keyframes slide-more-down {
+100% {
+     animation-timing-function: ease-in;
+     transform: translateY(+500px);
+  }
+}
+
+@keyframes slide-down {
+100% {
+     animation-timing-function: ease-in;
+     transform: translateY(+300px);
+  }
+}
 `];
 
   handleClick() {
