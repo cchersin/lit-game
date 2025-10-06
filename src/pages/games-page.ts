@@ -32,13 +32,13 @@ export class GamesPage extends LitElement {
     text-align: center;
     padding-top: 5px;
     padding-bottom: 7px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: auto;
+    margin-right: auto;
     background-color: black;
     margin-top: 15px;
     border: none;
-    margin-left: auto;
-    margin-right: auto;
     font-size: 14pt;
     color: red;
     font-family: "tablet-gothic", sans-serif;

@@ -131,7 +131,7 @@ export class CardComponent extends LitElement {
 @keyframes slide-down {
 100% {
      animation-timing-function: ease-in;
-     transform: translateY(+300px);
+     transform: translateY(+230px) translateX(-20px);
   }
 }
 `];

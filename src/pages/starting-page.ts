@@ -33,8 +33,10 @@ export class StartingPage extends LitElement {
     font-family: "tablet-gothic", sans-serif;
     padding-top: 5px;
     padding-bottom: 7px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 18px;
     background-color: black;
     margin-top: 15px;

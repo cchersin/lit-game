@@ -103,13 +103,15 @@ export class GamePage extends LitElement {
   
   .action-button {
     background-color: red;
+    border: 1px solid black;
     z-index: 1000;
     position: relative;
-    border: none;
     padding-top: 5px;
     padding-bottom: 7px;
-    padding-right: 18px;
-    padding-left: 18px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     font-size: 14pt;
     font-family: "tablet-gothic", sans-serif;
     border-radius: 18px;
@@ -202,8 +204,8 @@ export class GamePage extends LitElement {
         if (this.getPlayer()?.currentCardId === '' && this.currentCardId !== '') {
           const containerCards = this.renderRoot.querySelector(".container-cards") as HTMLElement;
           const blackContainerCards = this.renderRoot.querySelector(".black-card-container") as HTMLElement;
-          const frontCard = containerCards.querySelector("card-component:last-child") as any;
-          const blackCard = blackContainerCards.querySelector("card-component:first-child") as any;
+          const frontCard = containerCards?.querySelector("card-component:last-child") as any;
+          const blackCard = blackContainerCards?.querySelector("card-component:first-child") as any;
    
           if (frontCard) { 
             frontCard.applyAnimation("slide-up", () => {
@@ -263,7 +265,7 @@ export class GamePage extends LitElement {
   swap(cb?: () => void) {
     const containerCards = this.renderRoot.querySelector(".container-cards") as HTMLElement;
    
-    const frontCard = containerCards.querySelector("card-component:last-child") as any;
+    const frontCard = containerCards?.querySelector("card-component:last-child") as any;
    
     if (!frontCard) 
       return;
@@ -280,7 +282,7 @@ export class GamePage extends LitElement {
   reverseSwap(cb?: () => void) {
     const containerCards = this.renderRoot.querySelector(".container-cards") as HTMLElement;
    
-    const backCard = containerCards.querySelector("card-component:first-child") as any;
+    const backCard = containerCards?.querySelector("card-component:first-child") as any;
    
     if (!backCard) 
       return;
@@ -553,7 +555,7 @@ export class GamePage extends LitElement {
             </div>
           `)}
         </div>
-         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; weight: light;">(ora aspetta che gli altri</br>scelgano la loro...)</div>` : html ``}
+         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px;">(ora aspetta che gli altri</br>scelgano la loro...)</div>` : html ``}
          ${this.renderLastRound()}
          ${this.renderBlackCard()}
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}

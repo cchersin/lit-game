@@ -13,19 +13,19 @@ TO DO:
 generali:
     -sfondo che non scrolla
     -togliere logout
+    -aggiungere avvisi "sei sicuro di voler lasciare/chiudere il gioco?"
 login-page: 
-    -centrare placeholder
 games-page: 
     -togliere giochi vuoti
     -quando stoppi un gioco nella starting page compare ancora agli altri
 starting-page: 
 game-page:
+    -widget master rosso troppo piccolo
     -rotazione carte swap
     -sistemare widget in alto
-    -far scendere le carte quando si ha consegnato la carta e far apparire scritta
-    -master che sceglie
-    -meccanica carte preferite
-    -togliere bottone confirm
+        -schermata del master che sceglie
+        -meccanica carte preferite
+        -togliere bottone confirm
 winner-page:
     -And the winner is... con turn around e type animation
 

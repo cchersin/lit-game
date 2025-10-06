@@ -72,6 +72,8 @@ export class LoginPage extends LitElement {
     font-family: "tablet-gothic", sans-serif;
     font-weight: 300;
     text-transform: none;
+    top: -10px;
+    position: relative
   }
 
   .input-container input:focus {
