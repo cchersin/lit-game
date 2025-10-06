@@ -17,7 +17,7 @@ login-page:
     -centrare placeholder
 games-page: 
     -togliere giochi vuoti
-    -"Is/are playing"
+    -quando stoppi un gioco nella starting page compare ancora agli altri
     -nomi giocatori uppercase
 starting-page: 
     -bottone leave

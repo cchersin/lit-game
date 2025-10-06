@@ -77,12 +77,12 @@ export class GameComponent extends LitElement {
      <div>
         <div class="game-information"> ${this.name} </div>
         ${this.status === 'pending' ? 
-          html` <div class="game-information"> ${this.master}, ${this.players} are playing.</div> 
+          html` ${this.players.length == 0 ? html`<div class="game-information">${this.master} is playing.</div>` : html`<div class="game-information">${this.master}, ${this.players} are playing</div>`}
                 <div class="button-container"> 
                   <button class="action-button" @click="${this.handleJoin}">join</button> 
                 </div>` 
           : html``}
-        ${this.status === 'completed' ? html` Winner: ${this.winner} <div class="button-container"> <button class="action-button" @click="${this.handleDelete}">Delete</button> </div>` : html``}        
+        ${this.status === 'completed' ? html` Winner: ${this.winner} <div class="button-container"> <button class="action-button" @click="${this.handleDelete}">delete</button> </div>` : html``}        
       </div>
   `;
   }

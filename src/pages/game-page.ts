@@ -535,7 +535,7 @@ export class GamePage extends LitElement {
          <div class="outer-container-widget">
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">stop</button>` : html``}
           ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && !this.currentGame.areDecksEmpty() ? html`<button class="action-button" @click="${this.handleNextRound}">next round</button>` : html``}
-           ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">confirm</button>` : html``}
+          ${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">confirm</button>` : html``}
           <button class="action-button" @click="${this.handleLeaveGame}">leave</button>
           <button class="action-button" @click="${this.handleCall}" style="display:none">call</button>
           <button class="action-button" @click="${this.handleCloseCall}" style="display:none">close call</button>
