@@ -85,6 +85,13 @@ export class GamesPage extends LitElement {
     position: fixed;
     bottom: 0;
   }
+  
+  .logout {
+    text-align: right;
+    padding-top: 10px;
+    padding-right: 15px;
+    font-family: "tablet-gothic", sans-serif;
+    font-size: 12pt;
   `];
 
   games: Game[] = [];
@@ -136,11 +143,20 @@ export class GamesPage extends LitElement {
 
   handleGoToArchive (event: any) {
     Router.go('/games-archive');  
-  }  
+  }
+  
+  handleLogout() {
+    localStorage.removeItem('userName');
+    localStorage.removeItem('currentGame');
+    Router.go('/login'); 
+  }
 
   render() {
     return html`
       <main @game-join="${this.handleGameJoin}">
+       <div class="logout">
+          <a @click="${this.handleLogout}">logout</a>
+         </div>
          ${this.games.filter(game => game.status !== 'completed').map(game => html`
             <div class="game-component">
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(",")}" winner="${game.getWinner()}"></game-component>

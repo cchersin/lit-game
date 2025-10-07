@@ -67,6 +67,7 @@ export class GamePage extends LitElement {
     margin-top: 5px;
     margin-bottom: 7px;
     text-transform: capitalize;
+    font-family: "tablet-gothic", sans-serif;
     font-size: 10pt;
   }
 
@@ -94,7 +95,6 @@ export class GamePage extends LitElement {
     align-items: center;
     align-content: center;
     flex-wrap: wrap;
-    max-width: 400px;
     width: 100%;
     margin: auto;
     z-index: 10000;
@@ -140,13 +140,25 @@ export class GamePage extends LitElement {
     text-align: left; 
     position: fixed; 
     top: 460px; 
-    margin-left: 55%;
+    margin-left: 50%;
     margin-right: 40%;
     z-index: 10;
     overflow: hidden;
     white-space: nowrap;
-    animation: 
-      typing 3.5s steps(40, end);
+    animation: typing 5s steps(40, end);
+    }
+
+    .frase-typewriter {
+    font-size: 20px; 
+    font-weight: lighter;
+    font-family: 'tablet-gothic', sans-serif; 
+    color: red; 
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 25px;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 5s steps(40, end);
     }
 
     @keyframes typing {
@@ -479,7 +491,7 @@ export class GamePage extends LitElement {
   }
 
   renderLastRoundWinner(lastRound: Round) {
-      return html`<div><div id="last-round" style="font-size: 24px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; margin-bottom: 25px;">E il vincitore è...</div><div id="last-round" class="name-typewriter">${lastRound.winnerName}</div></div>`;
+      return html`<div><div id="last-round" class="frase-typewriter">E il vincitore è...</div><div id="last-round" class="name-typewriter">${lastRound.winnerName}</div></div>`;
   }
 
   renderLastRoundWinningCard(lastRound: Round) {

@@ -11,8 +11,6 @@ FEATURES:
 
 TO DO:
 generali:
-    -sfondo che non scrolla
-    -togliere logout
     -aggiungere avvisi "sei sicuro di voler lasciare/chiudere il gioco?"
 login-page: 
 games-page: 
@@ -21,14 +19,10 @@ games-page:
 starting-page: 
 game-page:
     -sistemare animazione swap quando ci sono meno di 10 carte
-    -widget master rosso troppo piccolo
     -rotazione carte swap
     -sistemare widget in alto
     -meccanica carte preferite
     -quando ci sono meno di 10 carte a persona non le distribuisce equamente
+    -sincronizzazione visione del master e dei giocatori quando legge le carte?
 winner-page:
     -And the winner is... con turn around
-
-
-
-

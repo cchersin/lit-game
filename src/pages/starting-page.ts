@@ -54,8 +54,8 @@ export class StartingPage extends LitElement {
   }
 
   .information-container {
-    margin-top: 80px;
-    margin-bottom: 20px;
+    padding-top: 100px;
+    padding-bottom: 20px;
   }
 
   .information:first-letter {
@@ -152,7 +152,6 @@ export class StartingPage extends LitElement {
   render() {
     return html`
       <main class="game">
-        <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
         <div class="information-container">
          ${this.findMasterName()==localStorage.userName ? html`<p class="information">${this.findMasterName() !== '' ? 'You have created a new game.' : ''}</p>` : html`<p class="information">${this.findMasterName() !== '' ? this.findMasterName() + ' has created a new game.' : ''}</p>`}
          ${this.findPlayers().map(player => html`

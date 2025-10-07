@@ -11,12 +11,12 @@ export class App extends LitElement {
   static styles = [
   sharedStyles, css`
     .main {
-    height: 100%;
-  }
-    
-  #outlet {
       height: 100%;
-  }
+    }
+     
+    #outlet {
+        height: 100%;
+    }
  `];
 
   constructor() {
@@ -30,12 +30,6 @@ export class App extends LitElement {
         router.setRoutes(routes);
         Router.go('/login')
     }
-  }
-
-  handleLogout() {
-    localStorage.removeItem('userName');
-    localStorage.removeItem('currentGame');
-    Router.go('/login'); 
   }
 
   /*setupAudio() {
@@ -104,9 +98,6 @@ export class App extends LitElement {
   render() {
     return html`
       <main class="main">
-         <div class="topnav">
-          <a @click="${this.handleLogout}">Logout</a>
-         </div>
          <div id="outlet" style="height: 100%"></div>
       </main>
     `;
