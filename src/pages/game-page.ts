@@ -216,7 +216,7 @@ export class GamePage extends LitElement {
             blackCard.applyAnimation("slide-down", () => {
             });
           }
-          containerCards.querySelectorAll(`card-component`).forEach((card, index, array) => {
+          containerCards?.querySelectorAll(`card-component`).forEach((card, index, array) => {
             if (card !== frontCard) {
               (card as any).applyAnimation("slide-more-down");
             }
@@ -270,7 +270,7 @@ export class GamePage extends LitElement {
     if (!frontCard) 
       return;
 
-    containerCards.querySelectorAll(`card-component`).forEach((card, index, array) => {
+    containerCards?.querySelectorAll(`card-component`).forEach((card, index, array) => {
       if (card !== frontCard) {
         (card as any).applyAnimation("slide-left");
       }
@@ -289,7 +289,7 @@ export class GamePage extends LitElement {
 
     backCard.applyAnimation("reverse-swap", cb);
 
-    containerCards.querySelectorAll(`card-component`).forEach((card, index, array) => {
+    containerCards?.querySelectorAll(`card-component`).forEach((card, index, array) => {
       if (card !== backCard) {
         (card as any).applyAnimation("slide-right");
       }
@@ -418,11 +418,7 @@ export class GamePage extends LitElement {
   }
 
   renderChoosableCards() {
-    if (this.getRole() === 'player') {
-      return this.renderCards(this.getPlayerChoosableCards(), false);
-    } else {
-      return this.renderCards(this.getPlayerChoosableCards(), true);
-    }
+    return this.renderCards(this.getPlayerChoosableCards(), this.getRole() === 'master');
   }
 
 
@@ -435,17 +431,17 @@ export class GamePage extends LitElement {
               new Card(card.id, card.content, card.color)).map((card: any) => { 
                 left += 10;
                 zindex += 1;
-                return this.renderCard(card, left, zindex, resolve);
+                return this.renderCard(card, left, zindex, resolve, true);
           })}
         </div>`;
   }
 
-  renderCard(card: Card, left: number, zindex: number, resolve: boolean) {
+  renderCard(card: Card, left: number, zindex: number, resolve: boolean, choosable: boolean) {
     if(resolve) {
-       return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}"></card-component>`;
+       return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}" left="${left}px" zindex="${zindex}" choosable="${choosable}"></card-component>`;
     } else {
       return html`
-            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}"></card-component>
+            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" choosable="${choosable}"></card-component>
           `;
     } 
   }
@@ -555,7 +551,8 @@ export class GamePage extends LitElement {
             </div>
           `)}
         </div>
-         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px;">(ora aspetta che gli altri</br>scelgano la loro...)</div>` : html ``}
+         ${this.isPlayer() && this.currentGame.turn != 'master' && this.getPlayer()?.currentCardId !== '' ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px;">(ora aspetta che gli altri</br>scelgano la loro...)</div>` : html ``}
+         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px;">(ora aspetta che il master</br>scelga la migliore...)</div>` : html ``}
          ${this.renderLastRound()}
          ${this.renderBlackCard()}
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}

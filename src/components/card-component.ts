@@ -12,6 +12,7 @@ export class CardComponent extends LitElement {
   @property({ type: String }) backgroundColor = '';
   @property({ type: String }) left = '';
   @property({ type: String }) zindex = '';
+  @property({ type: String }) choosable = false;
   
 
   static styles = [
@@ -30,6 +31,10 @@ export class CardComponent extends LitElement {
     text-transform: uppercase;
   }
 
+  .choosable {
+     position: absolute;
+  }
+
   .black {
     background-color: #ff0000;
     color: black;
@@ -37,6 +42,7 @@ export class CardComponent extends LitElement {
     font-style: normal;
     line-height: 22pt;
     rotate: -5deg;
+    border: 1px black solid;
     margin: auto;
     margin-top: 20px;
     font-family: "tablet-gothic", sans-serif;
@@ -50,7 +56,6 @@ export class CardComponent extends LitElement {
     rotate: 8deg;
     border: 1px black solid;
     display: inline-block;
-    position: absolute;
     margin-top: -200px;
     font-family: "eskapade-fraktur", serif;
     font-weight: 400;
@@ -160,7 +165,7 @@ export class CardComponent extends LitElement {
 
   render() {
     return html`
-    <div class="card ${this.backgroundColor}" @click=${this.handleClick} style="left: ${this.left}; z-index: ${this.zindex};">
+    <div class="card ${this.backgroundColor} ${this.choosable ? 'choosable' : ''}" @click=${this.handleClick} style="left: ${this.left}; z-index: ${this.zindex};">
       <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
     </div>
   `;
