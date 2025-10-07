@@ -21,15 +21,13 @@ games-page:
 starting-page: 
 game-page:
     -sistemare animazione swap quando ci sono meno di 10 carte
-    -la scritta "congratulazioni" appare solo quandto tutti i giocatori hanno scelto la carta
     -widget master rosso troppo piccolo
     -rotazione carte swap
     -sistemare widget in alto
-        -schermata del master che sceglie
-        -meccanica carte preferite
-        -togliere bottone confirm
+    -meccanica carte preferite
+    -quando ci sono meno di 10 carte a persona non le distribuisce equamente
 winner-page:
-    -And the winner is... con turn around e type animation
+    -And the winner is... con turn around
 
 
 
