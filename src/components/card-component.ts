@@ -13,6 +13,7 @@ export class CardComponent extends LitElement {
   @property({ type: String }) left = '';
   @property({ type: String }) zindex = '';
   @property({ type: String }) choosable = false;
+  favorite = false;
   
 
   static styles = [
@@ -139,10 +140,67 @@ export class CardComponent extends LitElement {
      transform: translateY(+230px) translateX(-20px);
   }
 }
+
+.favorite-container {
+  /*height: 30px;
+  width: 30px;*/
+  bottom: 20px; 
+  right: 20px; 
+}
+
+.favorite {
+  background-color: black;
+  border: 1px solid black;
+}
+
+.not-favorite {
+  border: 1px solid black;
+}
+
+.star {
+      margin: 50px 0;
+      position: relative;
+      display: block;
+      color: black;
+      width: 0px;
+      height: 0px;
+      border-right: 100px solid transparent;
+      border-bottom: 70px solid black;
+      border-left: 100px solid transparent;
+      transform: rotate(35deg);
+    }
+    .star:before {
+      border-bottom: 80px solid black;
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+      position: absolute;
+      height: 0;
+      width: 0;
+      top: -45px;
+      left: -65px;
+      display: block;
+      content: '';
+      transform: rotate(-35deg);
+    }
+    .star:after {
+      position: absolute;
+      display: block;
+      color: black;
+      top: 3px;
+      left: -105px;
+      width: 0px;
+      height: 0px;
+      border-right: 100px solid transparent;
+      border-bottom: 70px solid black;
+      border-left: 100px solid transparent;
+      transform: rotate(-70deg);
+      content: '';
+    }
 `];
 
-  handleClick() {
-    this.dispatchEvent(new CustomEvent('card-click', {
+  handleClickFavorite() {
+    this.favorite = !this.favorite;
+    this.dispatchEvent(new CustomEvent('card-favorite', {
       detail: { id: this.id },
       bubbles: true,
       composed: true
@@ -162,12 +220,20 @@ export class CardComponent extends LitElement {
     }, 1000);
   }
 
+  hasFavorite() {
+    return this.backgroundColor === 'black' && this.choosable;
+  }
+
+  getFavoriteClass() {
+    return this.favorite ? 'favorite' : 'not-favorite';
+  }
 
   render() {
     return html`
-    <div class="card ${this.backgroundColor} ${this.choosable ? 'choosable' : ''}" @click=${this.handleClick} style="left: ${this.left}; z-index: ${this.zindex};">
+    <div class="card ${this.backgroundColor} ${this.choosable ? 'choosable' : ''}" style="left: ${this.left}; z-index: ${this.zindex};">
       <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
+      ${this.hasFavorite() ? html`<div class="favorite-container"><div class="${this.getFavoriteClass()} star" @click="${this.handleClickFavorite}"></div></div>` : html``}
     </div>
   `;
-  }
+  } 
 }

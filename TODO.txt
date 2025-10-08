@@ -11,10 +11,10 @@ FEATURES:
 
 TO DO:
 generali:
-    -all'inizio dare carte anche al master
     -aggiungere avvisi "sei sicuro di voler lasciare/chiudere il gioco?"
 login-page: 
 games-page: 
+    -sistemare grafica
     -togliere giochi vuoti
     -quando stoppi un gioco nella starting page compare ancora agli altri
 starting-page: 
@@ -24,5 +24,11 @@ game-page:
     -sistemare widget in alto
     -meccanica carte preferite
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
-winner-page:
+    -il favorito è sempre sulla carta in primo piano
+    -non si stoppa automaticamente il gioco
+    -le carte alla fine sono dispari
+    -selezionare la prima carta di default
     -And the winner is... con turn around
+    -sistema colori e bordi della stella
+winner-page:
+    -sistemare grafica
