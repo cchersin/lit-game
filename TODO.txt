@@ -11,6 +11,7 @@ FEATURES:
 
 TO DO:
 generali:
+    -all'inizio dare carte anche al master
     -aggiungere avvisi "sei sicuro di voler lasciare/chiudere il gioco?"
 login-page: 
 games-page: 
@@ -22,7 +23,6 @@ game-page:
     -rotazione carte swap
     -sistemare widget in alto
     -meccanica carte preferite
-    -quando ci sono meno di 10 carte a persona non le distribuisce equamente
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
 winner-page:
     -And the winner is... con turn around

@@ -134,6 +134,7 @@ export class GamePage extends LitElement {
   }
 
   .name-typewriter {
+    text-transform: capitalize;
     font-size: 48px; 
     font-family: 'eskapade-fraktur', serif; 
     color: black; 
@@ -592,7 +593,7 @@ export class GamePage extends LitElement {
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}
          <div class="outer-container-widget-bottom">
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">stop</button>` : html``}
-          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && !this.currentGame.areDecksEmpty() ? html`<button class="action-button" @click="${this.handleNextRound}">next round</button>` : html``}
+          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && this.currentGame.hasNextRound() ? html`<button class="action-button" @click="${this.handleNextRound}">next round</button>` : html``}
           <!--${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">confirm</button>` : html``}-->
           <button class="action-button" @click="${this.handleLeaveGame}">leave</button>
           <button class="action-button" @click="${this.handleCall}" style="display:none">call</button>

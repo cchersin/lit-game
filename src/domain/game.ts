@@ -13,20 +13,51 @@ const whiteCards = [
     new Card('8', 'il divorzio dei miei genitori', 'white'),
     new Card('9', 'il comic sans', 'white'),
     new Card('10', 'l\'Helvetica', 'white'), 
-    new Card('11', 'i poveri che non hanno soldi', 'white'),
-    new Card('12', 'i ladri che rubano', 'white'),     
-
+    /*new Card('11', 'i poveri che non hanno soldi', 'white'),
+    new Card('12', 'i ladri che rubano', 'white'),
+    new Card('13', 'carta da cancellare', 'white'),
+    new Card('14', 'carta da cancellare', 'white'),     
+    new Card('15', 'carta da cancellare', 'white'),     
+    new Card('16', 'carta da cancellare', 'white'),   
+    new Card('17', 'carta da cancellare', 'white'),       
+    new Card('18', 'carta da cancellare', 'white'),
+    new Card('19', 'carta da cancellare', 'white'),     
+    new Card('20', 'carta da cancellare', 'white'),     
+    new Card('21', 'carta da cancellare', 'white'),   
+    new Card('22', 'carta da cancellare', 'white'), 
+    new Card('23', 'carta da cancellare', 'white'),
+    new Card('24', 'carta da cancellare', 'white'),     
+    new Card('25', 'carta da cancellare', 'white'),     
+    new Card('26', 'carta da cancellare', 'white'),   
+    new Card('27', 'carta da cancellare', 'white'),
+    new Card('28', 'carta da cancellare', 'white'),
+    new Card('29', 'carta da cancellare', 'white'),
+    new Card('30', 'carta da cancellare', 'white'),     
+    new Card('31', 'carta da cancellare', 'white'),   
+    new Card('32', 'carta da cancellare', 'white'),
+    new Card('33', 'carta da cancellare', 'white'),
+    new Card('34', 'carta da cancellare', 'white'),*/
   ];
 
 const blackCards = [
     new Card('1', 'Voglio fare un gioco, hai un minuto per tagliarti la gamba utilizzando ______.', 'black'),
     new Card('2', 'Per far andare Cindy più veloce abbiamo deciso di potenziare il suo carretto con ______.', 'black'),
     new Card('3', 'Bevo per dimenticare ______.', 'black') ,
+    new Card('4', 'Carta da cancellare ______.', 'black') ,
+    new Card('5', 'Carta da cancellare ______.', 'black') ,
+    new Card('6', 'Carta da cancellare ______.', 'black') ,
+    new Card('7', 'Carta da cancellare ______.', 'black') ,
+    new Card('8', 'Carta da cancellare ______.', 'black') ,
+    new Card('9', 'Carta da cancellare ______.', 'black') ,
+    new Card('10', 'Carta da cancellare ______.', 'black') ,
+    new Card('11', 'Carta da cancellare ______.', 'black') ,
+    new Card('12', 'Carta da cancellare ______.', 'black') ,
+    new Card('13', 'Carta da cancellare ______.', 'black') ,
   ];
 
 const minNumPlayers = 2; // Minimum players to start the game
 
-const numberOfCardsInHand = 10; // Number of white cards each player has in hand
+const numberOfCardsInHand = 3; // Number of white cards each player has in hand
 
 export class Game {
   name: string;
@@ -142,6 +173,7 @@ export class Game {
       p = new Player(playerName, 'player');
       this.players.push(p);
 
+      p.currentCardId = '';
       this.drawHand(p);
     }
   }
@@ -158,12 +190,10 @@ export class Game {
   }
 
   drawHand(player: Player) {
-    player.currentCardId = '';
     for(let i = player.hand.length; i < numberOfCardsInHand; i++) {
       this.drawCard(player);
     }
   }
-
   
   private drawCard(player: Player) {
     const drawnCard = this.whiteDeck.shift();
@@ -208,13 +238,12 @@ export class Game {
       }
     }
   }
-
  
   nextRound() {
     console.log('nextRound');
  
     if (this.turn === 'master') {
-      if (this.areDecksEmpty()) {
+      if (this.isBlackDeckEmpty()) {
         this.stop();
       } else {
         const winnerName = this.getLastRoundWinner(); 
@@ -222,13 +251,28 @@ export class Game {
         this.turn = 'players';
         this.tableCards = [];
         this.drawBlackCard(); 
+        const isWhiteDeckEmpty = this.isWhiteDeckEmpty();
         this.players.filter((player) => player.name !== winnerName).forEach((player) => {
-          player.role = 'player';
           player.currentCardId = '';
-          this.drawHand(player);  
+          if (!isWhiteDeckEmpty) {
+            this.drawHand(player);
+          }
+          if (player.hand.length === 0) {
+            this.stop();
+            return;
+          }
+          player.role = 'player';
         });
       }
     }
+  }
+
+  existPlayerWhithoutCards() {
+    return this.findPlayers().some((player) => player.hand.length === 0);
+  }
+
+  hasNextRound() {
+    return this.status === 'started' && !this.isBlackDeckEmpty() && (!this.existPlayerWhithoutCards() || !this.isWhiteDeckEmpty());
   }
 
   setMaster(playerName: string) {
@@ -300,7 +344,15 @@ export class Game {
   }
 
   areDecksEmpty() {
-    return this.whiteDeck.length === 0 || this.blackDeck.length === 0;
+    return this.isWhiteDeckEmpty() || this.isBlackDeckEmpty()
+  }
+
+  isWhiteDeckEmpty(): boolean {
+    return this.whiteDeck.length < this.players.length - 1;
+  }
+
+  isBlackDeckEmpty(): boolean {
+    return this.blackDeck.length === 0;
   }
 
   getLastRound(): Round | undefined {

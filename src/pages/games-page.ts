@@ -157,12 +157,12 @@ export class GamesPage extends LitElement {
        <div class="logout">
           <a @click="${this.handleLogout}">logout</a>
          </div>
+         <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">new game</button></div>
          ${this.games.filter(game => game.status !== 'completed').map(game => html`
             <div class="game-component">
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(",")}" winner="${game.getWinner()}"></game-component>
             </div>
           `)}
-           <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">new game</button></div>
            <div class="outer-circles-container"><div class="circles-container"><div class="archive-button" @click="${this.handleGoToArchive}"></div><div class="favourites-button"></div></div></div>
       </main>
     `;
