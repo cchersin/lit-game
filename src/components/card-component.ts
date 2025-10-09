@@ -14,10 +14,10 @@ export class CardComponent extends LitElement {
   @property({ type: String }) zindex = '';
   @property({ type: String }) choosable = false;
   @property({ type: String }) favorite = false;
-   
+
 
   static styles = [
-  sharedStyles, css`
+    sharedStyles, css`
     .card {
     width: 233px;
     height: 377px;
@@ -229,7 +229,7 @@ export class CardComponent extends LitElement {
     }
 `];
 
-  handleClickFavorite(e:any) {
+  handleClickFavorite(e: any) {
     e.stopPropagation(); // blocca la propagazione del click
     this.favorite = !this.favorite;
     this.dispatchEvent(new CustomEvent('card-favorite', {
@@ -240,10 +240,10 @@ export class CardComponent extends LitElement {
     this.requestUpdate();
   }
 
-  applyAnimation(animation:String, cb?: () => void) {
+  applyAnimation(animation: String, cb?: () => void) {
     const cardDiv = this.renderRoot.querySelector('.card') as HTMLElement;
     if (!cardDiv) return;
- 
+
     cardDiv.style.animation = animation + " 1s forwards";
 
     setTimeout(() => {
@@ -268,5 +268,5 @@ export class CardComponent extends LitElement {
       ${this.hasFavorite() ? html`<div class="favorite-container">${this.favorite}<div class="${this.getFavoriteClass()}" @click="${this.handleClickFavorite}"></div></div>` : html``}
     </div>
   `;
-  } 
+  }
 }
