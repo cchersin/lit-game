@@ -13,8 +13,8 @@ export class CardComponent extends LitElement {
   @property({ type: String }) left = '';
   @property({ type: String }) zindex = '';
   @property({ type: String }) choosable = false;
-  favorite = false;
-  
+  @property({ type: String }) favorite = false;
+   
 
   static styles = [
   sharedStyles, css`
@@ -148,16 +148,47 @@ export class CardComponent extends LitElement {
   right: 20px; 
 }
 
-.favorite {
-  background-color: black;
-  border: 1px solid black;
-}
-
 .not-favorite {
-  border: 1px solid black;
-}
+      margin: 50px 0;
+      position: relative;
+      display: block;
+      color: white;
+      width: 0px;
+      height: 0px;
+      border-right: 100px solid transparent;
+      border-bottom: 70px solid white;
+      border-left: 100px solid transparent;
+      transform: rotate(35deg);
+    }
+    .not-favorite:before {
+      border-bottom: 80px solid white;
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+      position: absolute;
+      height: 0;
+      width: 0;
+      top: -45px;
+      left: -65px;
+      display: block;
+      content: '';
+      transform: rotate(-35deg);
+    }
+    .not-favorite:after {
+      position: absolute;
+      display: block;
+      color: white;
+      top: 3px;
+      left: -105px;
+      width: 0px;
+      height: 0px;
+      border-right: 100px solid transparent;
+      border-bottom: 70px solid white;
+      border-left: 100px solid transparent;
+      transform: rotate(-70deg);
+      content: '';
+    }
 
-.star {
+.favorite {
       margin: 50px 0;
       position: relative;
       display: block;
@@ -169,7 +200,7 @@ export class CardComponent extends LitElement {
       border-left: 100px solid transparent;
       transform: rotate(35deg);
     }
-    .star:before {
+    .favorite:before {
       border-bottom: 80px solid black;
       border-left: 30px solid transparent;
       border-right: 30px solid transparent;
@@ -182,7 +213,7 @@ export class CardComponent extends LitElement {
       content: '';
       transform: rotate(-35deg);
     }
-    .star:after {
+    .favorite:after {
       position: absolute;
       display: block;
       color: black;
@@ -198,13 +229,15 @@ export class CardComponent extends LitElement {
     }
 `];
 
-  handleClickFavorite() {
+  handleClickFavorite(e:any) {
+    e.stopPropagation(); // blocca la propagazione del click
     this.favorite = !this.favorite;
     this.dispatchEvent(new CustomEvent('card-favorite', {
       detail: { id: this.id },
       bubbles: true,
       composed: true
     }));
+    this.requestUpdate();
   }
 
   applyAnimation(animation:String, cb?: () => void) {
@@ -232,7 +265,7 @@ export class CardComponent extends LitElement {
     return html`
     <div class="card ${this.backgroundColor} ${this.choosable ? 'choosable' : ''}" style="left: ${this.left}; z-index: ${this.zindex};">
       <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
-      ${this.hasFavorite() ? html`<div class="favorite-container"><div class="${this.getFavoriteClass()} star" @click="${this.handleClickFavorite}"></div></div>` : html``}
+      ${this.hasFavorite() ? html`<div class="favorite-container">${this.favorite}<div class="${this.getFavoriteClass()}" @click="${this.handleClickFavorite}"></div></div>` : html``}
     </div>
   `;
   } 

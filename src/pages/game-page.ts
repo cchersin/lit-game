@@ -464,7 +464,7 @@ export class GamePage extends LitElement {
     return html`<div class="container-cards">
          ${cards.map((card: any) => 
               new Card(card.id, card.content, card.color)).map((card: any) => { 
-                left += 10;
+                left += 100;
                 zindex += 1;
                 return this.renderCard(card, left, zindex, resolve, true);
           })}
