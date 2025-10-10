@@ -6,22 +6,25 @@ import { Router } from '@vaadin/router';
 
 
 import '../components/card-component';
-//import { CardComponent } from '../components/card-component';
 import { Card } from '../domain/card'
 import { Game } from '../domain/game';
 import { Round } from '../domain/round';
+import { Favorite } from '../domain/favorite';
 
 import { StoreService } from '../store-service';
 import { MediaConnection, Peer } from 'peerjs';
 import { query } from 'lit/decorators.js';
 
 import { sharedStyles } from '../shared-styles';
+import { Utils } from '../utils';
+
 
 @customElement('game-page')
 export class GamePage extends LitElement {
   currentCardId = '';
   currentGame = new Game('');
   calls : Array<MediaConnection> = []
+  favorites: Array<Favorite> = [];
 
   @query('#remote-audio') remoteAudioEl: any;
   
@@ -171,6 +174,7 @@ export class GamePage extends LitElement {
   constructor() {
     super();
     this.loadGame();
+    this.loadFavorites();
   }
 
 
@@ -221,7 +225,16 @@ export class GamePage extends LitElement {
         this.requestUpdate();
       }
     });
-}
+  }
+
+  loadFavorites() {
+    StoreService.onFavoritesUpdate((favorites) => {
+     if (favorites) {
+        this.favorites = favorites;
+        this.requestUpdate();
+      }
+    });
+  } 
 
   connectedCallback() {
     super.connectedCallback();
@@ -312,6 +325,8 @@ export class GamePage extends LitElement {
     });
 
     frontCard.applyAnimation("swap", cb);
+
+    // this.requestUpdate();
   }
 
   reverseSwap(cb?: () => void) {
@@ -329,6 +344,8 @@ export class GamePage extends LitElement {
         (card as any).applyAnimation("slide-right");
       }
     });
+
+    // this.requestUpdate();
   }
   
   findCurrentCardIndex() {
@@ -456,12 +473,46 @@ export class GamePage extends LitElement {
     return this.renderCards(this.getPlayerChoosableCards(), this.getRole() === 'master');
   }
 
+  handleFavoriteCard(e: any) {
+    const blackCardContent = e.detail.description;
+    const whiteCardContent = e.detail.value;
+    const favorite = e.detail.favorite;
+    const playerName = this.getPlayer()?.name || '';
+
+    if (blackCardContent === '' || whiteCardContent === '' || playerName === '') {
+      return;
+    }
+
+    if (favorite) {
+     this.addFavorite(blackCardContent, whiteCardContent, playerName);
+    } else {
+      this.removeFavorite(blackCardContent, whiteCardContent, playerName);
+    }
+  } 
+
+  addFavorite(blackCardContent: string, whiteCardContent: string, playerName: string) {
+    if (this.isFavorite(blackCardContent, whiteCardContent, playerName)) {
+      return;
+    }
+
+    this.favorites.push(new Favorite(blackCardContent, whiteCardContent, playerName));
+    StoreService.saveFavorites(this.favorites);
+  }
+
+  removeFavorite(blackCardContent: string, whiteCardContent: string, playerName: string) {
+    this.favorites = this.favorites.filter(fav => fav.blackCardContent !== blackCardContent || fav.whiteCardContent !== whiteCardContent || fav.playerName !== playerName);
+    StoreService.saveFavorites(this.favorites);
+  } 
+
+  isFavorite(blackCardContent: string, whiteCardContent: string, playerName: string) {
+    return this.favorites.find(fav => fav.blackCardContent === blackCardContent  && fav.whiteCardContent == whiteCardContent && fav.playerName === playerName) !== undefined;
+  }
 
   renderCards(cards: any, resolve: boolean) {
     let left = -30;
     let zindex = 11;
    
-    return html`<div class="container-cards">
+    return html`<div class="container-cards" @card-favorite="${this.handleFavoriteCard}">
          ${cards.map((card: any) => 
               new Card(card.id, card.content, card.color)).map((card: any) => { 
                 left += 100;
@@ -473,7 +524,10 @@ export class GamePage extends LitElement {
 
   renderCard(card: Card, left: number, zindex: number, resolve: boolean, choosable: boolean) {
     if(resolve) {
-       return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}" left="${left}px" zindex="${zindex}" choosable="${choosable}"></card-component>`;
+       return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" 
+                backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}" 
+                left="${left}px" zindex="${zindex}" choosable="${choosable}" 
+                favorite="${this.isFavorite(this.currentGame.blackCard?.content ?? '', this.findCardContent(card.id) ?? '', this.getPlayer()?.name ?? '')}"></card-component>`;
     } else {
       return html`
             <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" choosable="${choosable}"></card-component>
@@ -602,8 +656,5 @@ export class GamePage extends LitElement {
      </main>
     `;
   }
-}
-function cb(): any {
-  throw new Error('Function not implemented.');
 }
 

@@ -1,6 +1,7 @@
 import { db } from './firebase';
 import { setDoc, doc, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { Game } from './domain/game';
+import { Favorite } from './domain/favorite';
 
 type CallbackFunction = (game: Game | null) => void;
 
@@ -28,7 +29,32 @@ export class StoreService {
     	});
 	}
 
-	
+	static saveFavorites(f: Array<Favorite>) {
+		const docRef = doc(db, 'global', 'favorites');
+		const favorites = f.map(f => f.toJSON());
+    	setDoc(docRef, { favorites }).then(() => {
+				console.log(`Favorites saved successfully.`);
+			})
+			.catch((error) => {
+				console.error("Error saving favorites: ", error);
+			});
+	}
+
+	static onFavoritesUpdate(cb: (favorites: Favorite[] | null) => void) {
+  		const docRef = doc(db, 'global', 'favorites');
+  		onSnapshot(docRef, (docSnapshot) => {
+			if (docSnapshot.exists()) {
+				const data = docSnapshot.data();
+				// Assicurati che il campo sia un array di oggetti favorite
+				const favorites = (data.favorites ?? []).map((f: any) => Favorite.fromJSON(f));
+				cb(favorites);
+			} else {	
+				console.warn(`Favorites does not exist.`);
+				cb(null);
+			}
+  		});
+	}
+
 	/*static onGamesUpdate(cb: CallbackFunction) {
 		const docRef = doc(db, 'games', 'currentGame');
     	onSnapshot(docRef, (docSnapshot) => {

@@ -13,7 +13,7 @@ export class CardComponent extends LitElement {
   @property({ type: String }) left = '';
   @property({ type: String }) zindex = '';
   @property({ type: String }) choosable = false;
-  @property({ type: String }) favorite = false;
+  @property({ type: String }) favorite = '';
 
 
   static styles = [
@@ -231,9 +231,8 @@ export class CardComponent extends LitElement {
 
   handleClickFavorite(e: any) {
     e.stopPropagation(); // blocca la propagazione del click
-    this.favorite = !this.favorite;
     this.dispatchEvent(new CustomEvent('card-favorite', {
-      detail: { id: this.id },
+      detail: { description: this.description, value: this.value, favorite: (this.favorite === 'false') },
       bubbles: true,
       composed: true
     }));
@@ -258,14 +257,14 @@ export class CardComponent extends LitElement {
   }
 
   getFavoriteClass() {
-    return this.favorite ? 'favorite' : 'not-favorite';
+    return this.favorite === 'true'? 'favorite' : 'not-favorite';
   }
 
   render() {
     return html`
     <div class="card ${this.backgroundColor} ${this.choosable ? 'choosable' : ''}" style="left: ${this.left}; z-index: ${this.zindex};">
-      <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
-      ${this.hasFavorite() ? html`<div class="favorite-container">${this.favorite}<div class="${this.getFavoriteClass()}" @click="${this.handleClickFavorite}"></div></div>` : html``}
+     <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
+      ${this.hasFavorite() ? html`<div class="favorite-container"><div class="${this.getFavoriteClass()}" @click="${this.handleClickFavorite}"></div></div>` : html``}
     </div>
   `;
   }
