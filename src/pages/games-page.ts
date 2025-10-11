@@ -151,6 +151,10 @@ export class GamesPage extends LitElement {
     Router.go('/login'); 
   }
 
+  handleFavorite(event: any) {
+    Router.go('/favorites');  
+  }
+
   render() {
     return html`
       <main @game-join="${this.handleGameJoin}">
@@ -163,7 +167,7 @@ export class GamesPage extends LitElement {
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(",")}" winner="${game.getWinner()}"></game-component>
             </div>
           `)}
-           <div class="outer-circles-container"><div class="circles-container"><div class="archive-button" @click="${this.handleGoToArchive}"></div><div class="favourites-button"></div></div></div>
+           <div class="outer-circles-container" @click="${this.handleFavorite}"><div class="circles-container"><div class="archive-button" @click="${this.handleGoToArchive}"></div><div class="favourites-button"></div></div></div>
       </main>
     `;
   }

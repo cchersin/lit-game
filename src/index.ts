@@ -50,6 +50,13 @@ const routes = [
         },
       },
       {
+        path: 'favorites',
+        component: 'favorites-page',
+        action: async () => {
+          await import('./pages/favorites-page');
+        },
+      },
+      {
         path: 'chat',
         component: 'chat-page',
         action: async () => {

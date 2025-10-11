@@ -26,7 +26,6 @@ game-page:
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco
     -le carte alla fine sono dispari
-    -selezionare la prima carta di default
     -And the winner is... con turn around
     -sistema colori e bordi della stella
 winner-page:
