@@ -73,29 +73,29 @@ export class CardComponent extends LitElement {
 
 @keyframes swap {
   50% {
-     transform: translateX(310px) scale(0.85);
-     animation-timing-function: ease-in;
-     z-index: +1000;
+    transform: translateX(var(--swap-x, 310px)) scale(0.85);
+    animation-timing-function: ease-in;
+    z-index: +1000;
   }
   60% {
-     z-index: 0;
+    z-index: 0;
   }
   100% {
-     transform: translateX(-90px) translateY(13px) scale(1);
-     z-index: 0;
+    transform: translateX(var(--swap-end-x, -90px)) translateY(13px) scale(1);
+    z-index: 0;
   }
 }
 
 @keyframes reverse-swap {
   50% {
-     transform: translateX(400px) scale(0.85);
+     transform: translateX(var(--reverse-swap-x, 400px)) scale(0.85);
      z-index: 0;
   }  
   60% {
      z-index: +1000; 
   }
   100% {
-     transform: translateX(90px) translateY(-13px) scale(1);
+     transform: translateX(var(--reverse-swap-end-x, 90px)) translateY(-13px) scale(1);
      animation-timing-function: ease-in;
      z-index: +1000;
   }
@@ -239,16 +239,32 @@ export class CardComponent extends LitElement {
     this.requestUpdate();
   }
 
-  applyAnimation(animation: String, cb?: () => void) {
+  applyAnimation(animation: string, cb?: () => void) {
     const cardDiv = this.renderRoot.querySelector('.card') as HTMLElement;
     if (!cardDiv) return;
+
+    const container = this.closest('.container-cards') as HTMLElement;
+    const pageWidth = container ? container.offsetWidth : window.innerWidth;
+
+    if (animation === 'swap') {
+      const swapX = Math.round(pageWidth * 0.4) + 'px';
+      const swapEndX = Math.round(pageWidth * -0.12) + 'px';
+      cardDiv.style.setProperty('--swap-x', swapX);
+      cardDiv.style.setProperty('--swap-end-x', swapEndX);
+    }
+
+    if (animation === 'reverse-swap') {
+      const reverseSwapX = Math.round(pageWidth * 0.5) + 'px';
+      const reverseSwapEndX = Math.round(pageWidth * 0.18) + 'px';
+      cardDiv.style.setProperty('--reverse-swap-x', reverseSwapX);
+      cardDiv.style.setProperty('--reverse-swap-end-x', reverseSwapEndX);
+    }
 
     cardDiv.style.animation = animation + " 1s forwards";
 
     setTimeout(() => {
       cardDiv.style.animation = "";
-      if (cb)
-        cb();
+      if (cb) cb();
     }, 1000);
   }
 

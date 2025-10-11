@@ -10,8 +10,6 @@ FEATURES:
 -schermata di partenza con animazione del logo
 
 TO DO:
-generali:
-    -aggiungere avvisi "sei sicuro di voler lasciare/chiudere il gioco?"
 login-page: 
 games-page: 
     -sistemare grafica
@@ -22,11 +20,11 @@ game-page:
     -sistemare animazione swap quando ci sono meno di 10 carte
     -rotazione carte swap
     -sistemare widget in alto
-    -pagina preferiti
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco
     -le carte alla fine sono dispari
     -And the winner is... con turn around
     -sistema colori e bordi della stella
+    -non funziona bene il leave (eliminare?)
 winner-page:
     -sistemare grafica
