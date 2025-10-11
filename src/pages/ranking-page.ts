@@ -39,8 +39,8 @@ export class RankingPage extends LitElement {
   
   renderRanking() {
       return html`<div class="cards-container">
-        ${Utils.getRanking(this.games).map((r: any) =>   
-          html`<p>${r.playerName} - ${r.wins} vittorie</p>`
+        ${Utils.getRanking(this.games).map((r: any, idx:number) =>   
+          html`<p>${idx + 1} ${r.playerName} - ${r.wins} vittorie</p>`
         )}</div>`;
   }
 
@@ -57,4 +57,3 @@ export class RankingPage extends LitElement {
     `;
   }
 }
-    

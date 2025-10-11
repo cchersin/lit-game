@@ -27,7 +27,7 @@ game-page:
 winner-page:
     -sistemare grafica e contenuti
 classifica:
-    -farla
+    -sistemare grafica
 archivio:
     -farlo
 carte preferite:
