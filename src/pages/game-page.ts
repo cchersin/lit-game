@@ -23,6 +23,7 @@ export class GamePage extends LitElement {
   currentGame = new Game('');
   calls : Array<MediaConnection> = []
   favorites: Array<Favorite> = [];
+  showStopModal = false;
 
   @query('#remote-audio') remoteAudioEl: any;
   
@@ -167,6 +168,27 @@ export class GamePage extends LitElement {
     from { width: 0 }
     to { width: 100% }
     }
+
+     .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+    }
+    .modal {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .modal button {
+      margin: 12px;
+      font-size: 16px;
+    }
   `];
 
   constructor() {
@@ -191,9 +213,20 @@ export class GamePage extends LitElement {
   }
 
   handleStopGame(event: any) {
-    console.log('handleStopGame');
+    this.showStopModal = true;
+    this.requestUpdate();
+  }
+
+  // ...existing code...
+  confirmStopGame() {
     this.currentGame.stop();
     StoreService.saveGame(this.currentGame);
+    this.showStopModal = false;
+    this.requestUpdate();
+  }
+
+  cancelStopGame() {
+    this.showStopModal = false;
     this.requestUpdate();
   }
 
@@ -654,6 +687,15 @@ export class GamePage extends LitElement {
           <button class="action-button" @click="${this.handleCall}" style="display:none">call</button>
           <button class="action-button" @click="${this.handleCloseCall}" style="display:none">close call</button>
          </div>  
+         ${this.showStopModal ? html`
+        <div class="modal-overlay">
+          <div class="modal">
+            <div>Sei sicuro di voler fermare la partita?</div>
+            <button @click="${this.confirmStopGame}">Sì</button>
+            <button @click="${this.cancelStopGame}">No</button>
+          </div>
+        </div>
+      ` : ''}
      </main>
     `;
   }
