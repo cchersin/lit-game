@@ -221,20 +221,30 @@ export class GamePage extends LitElement {
     this.requestUpdate();
   }
 
-  // ...existing code...
   confirmStopGame() {
     this.currentGame.stop();
     StoreService.saveGame(this.currentGame);
+  }
+
+  confirmAction() {
+    this.modalAction?.();  
     this.showModal = false;
     this.requestUpdate();
   }
 
-  cancelStopGame() {
+  cancelAction() {
     this.showModal = false;
     this.requestUpdate();
   }
 
   handleLeaveGame() {
+    this.modalText = 'Sei sicuro di voler abbandonare la partita? Potrai rientrare se la partita non è stata terminata.';
+    this.showModal = true;
+    this.modalAction = this.confirmLeaveGame.bind(this);
+    this.requestUpdate();
+  }
+
+  confirmLeaveGame() {
     this.currentGame.leave(localStorage.userName);
     StoreService.saveGame(this.currentGame);
   }
@@ -695,8 +705,8 @@ export class GamePage extends LitElement {
         <div class="modal-overlay">
           <div class="modal">
             <div>${this.modalText}</div>
-            <button @click="${this.confirmStopGame}">Sì</button>
-            <button @click="${this.cancelStopGame}">No</button>
+            <button @click="${this.confirmAction}">Sì</button>
+            <button @click="${this.cancelAction}">No</button>
           </div>
         </div>
       ` : ''}
