@@ -4,6 +4,9 @@ import { customElement } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
 import { StoreService } from '../store-service';
 import { Favorite } from '../domain/favorite';
+import { Util } from 'peerjs';
+import { Utils } from '../utils';
+
 
 
 @customElement('favorites-page')
@@ -32,10 +35,9 @@ export class FavoritesPage extends LitElement {
   }
   
   renderFavorites() {
-        return html`<div>
+        return html`<div class="cards-container">
              ${this.favorites.map((f: Favorite) => 
-                html`<card-component description="${f.blackCardContent}" value="${f.whiteCardContent}" 
-                 backgroundColor="black" color="white"></card-component>`
+                html`<p>${Utils.buildSentence(f.blackCardContent, f.whiteCardContent)} Author: ${f.playerName}</p`
               )}
             </div>`;
  }
