@@ -16,6 +16,7 @@ import { MediaConnection, Peer } from 'peerjs';
 import { query } from 'lit/decorators.js';
 
 import { sharedStyles } from '../shared-styles';
+import { th } from 'date-fns/locale';
 
 @customElement('game-page')
 export class GamePage extends LitElement {
@@ -167,11 +168,11 @@ export class GamePage extends LitElement {
     }
 
     @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+      from { width: 0 }
+      to { width: 100% }
     }
 
-     .modal-overlay {
+    .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.5);
@@ -263,10 +264,12 @@ export class GamePage extends LitElement {
         }
 
         if (this.getPlayer()?.hasCards() && !this.getPlayer()?.hasCard(this.currentCardId)) {
-          //this.currentCardId = '';
-          this.currentCardId = this.getFrontCard()?.id;
+          this.currentCardId = '';
         }
 
+        if (this.currentCardId === '' && this.getPlayerChoosableCards().length > 0) {
+            this.currentCardId = this.getFrontCard().id;
+        }
    
         this.requestUpdate();
       }
@@ -563,7 +566,7 @@ export class GamePage extends LitElement {
     return html`<div class="container-cards" @card-favorite="${this.handleFavoriteCard}">
          ${cards.map((card: any) => 
               new Card(card.id, card.content, card.color)).map((card: any) => { 
-                left += 100;
+                left += 10;
                 zindex += 1;
                 return this.renderCard(card, left, zindex, resolve, true);
           })}
@@ -574,11 +577,11 @@ export class GamePage extends LitElement {
     if(resolve) {
        return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" 
                 backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}" 
-                left="${left}px" zindex="${zindex}" choosable="${choosable}" 
+                left="${left}" zindex="${zindex}" choosable="${choosable}" 
                 favorite="${this.isFavorite(new Favorite(this.currentGame.blackCard?.content ?? '', this.findCardContent(card.id) ?? '', this.currentGame.getPlayerOfCard(card.id)))}"></card-component>`;
     } else {
       return html`
-            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" choosable="${choosable}"></card-component>
+            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}" zindex="${zindex}" choosable="${choosable}"></card-component>
           `;
     } 
   }

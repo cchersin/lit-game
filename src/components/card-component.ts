@@ -239,25 +239,44 @@ export class CardComponent extends LitElement {
     this.requestUpdate();
   }
 
-  applyAnimation(animation: string, cb?: () => void) {
+  getLeftPosition() {
     const cardDiv = this.renderRoot.querySelector('.card') as HTMLElement;
+    if (cardDiv) {
+      const rect = cardDiv.getBoundingClientRect();
+      return rect.left;
+    }
+    return 0;
+  }
+
+  getWidth() {
+    const cardDiv = this.renderRoot.querySelector('.card') as HTMLElement;
+    if (cardDiv) {
+      const rect = cardDiv.getBoundingClientRect();
+      return rect.width;
+    }
+    return 0;
+  }
+
+  applyAnimation(animation: string, cb?: () => void) {
+    const cardDiv = this.renderRoot?.querySelector('.card') as HTMLElement;
     if (!cardDiv) return;
 
-    const container = this.closest('.container-cards') as HTMLElement;
-    const pageWidth = container ? container.offsetWidth : window.innerWidth;
+    const firstCardLeftPosition = (this.getLeftPosition() - Number(this.left));
 
     if (animation === 'swap') {
-      const swapX = Math.round(pageWidth * 0.4) + 'px';
-      const swapEndX = Math.round(pageWidth * -0.12) + 'px';
+      const swapX = this.getLeftPosition() + this.getWidth() + 'px'; //310 
+      const swapEndX = (firstCardLeftPosition - 100) + 'px'; //-90
+      
       cardDiv.style.setProperty('--swap-x', swapX);
       cardDiv.style.setProperty('--swap-end-x', swapEndX);
     }
 
     if (animation === 'reverse-swap') {
-      const reverseSwapX = Math.round(pageWidth * 0.5) + 'px';
-      const reverseSwapEndX = Math.round(pageWidth * 0.18) + 'px';
-      cardDiv.style.setProperty('--reverse-swap-x', reverseSwapX);
-      cardDiv.style.setProperty('--reverse-swap-end-x', reverseSwapEndX);
+      const swapX = (this.getLeftPosition() + 400) + 'px'; //400
+      const swapEndX = (firstCardLeftPosition) + 'px'; //90
+    
+      cardDiv.style.setProperty('--reverse-swap-x', swapX);
+      cardDiv.style.setProperty('--reverse-swap-end-x', swapEndX);
     }
 
     cardDiv.style.animation = animation + " 1s forwards";
@@ -278,7 +297,7 @@ export class CardComponent extends LitElement {
 
   render() {
     return html`
-    <div class="card ${this.backgroundColor} ${this.choosable ? 'choosable' : ''}" style="left: ${this.left}; z-index: ${this.zindex};">
+    <div class="card ${this.backgroundColor} ${this.choosable ? 'choosable' : ''}" style="left: ${this.left}px; z-index: ${this.zindex};">
      <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
       ${this.hasFavorite() ? html`<div class="favorite-container"><div class="${this.getFavoriteClass()}" @click="${this.handleClickFavorite}"></div></div>` : html``}
     </div>
