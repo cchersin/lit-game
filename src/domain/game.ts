@@ -265,7 +265,7 @@ const blackCards = [
 
 const minNumPlayers = 2; // Minimum players to start the game
 
-const numberOfCardsInHand = 3; // Number of white cards each player has in hand
+const numberOfCardsInHand = 10; // Number of white cards each player has in hand
 
 export class Game {
   name: string;

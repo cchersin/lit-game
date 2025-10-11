@@ -267,9 +267,9 @@ export class GamePage extends LitElement {
           this.currentCardId = '';
         }
 
-        /*if (this.currentCardId === '' && this.getPlayerChoosableCards().length > 0) {
+        if (this.getPlayer()?.currentCardId === '' && this.currentCardId === '' && this.getPlayerChoosableCards().length > 0) {
             this.currentCardId = this.getFrontCard().id;
-        }*/
+        }
    
         this.requestUpdate();
       }
@@ -560,7 +560,7 @@ export class GamePage extends LitElement {
   }
 
   renderCards(cards: any, resolve: boolean) {
-    let left = -30;
+    let left = 0;
     let zindex = 11;
    
     return html`<div class="container-cards" @card-favorite="${this.handleFavoriteCard}">
@@ -581,7 +581,7 @@ export class GamePage extends LitElement {
                 favorite="${this.isFavorite(new Favorite(this.currentGame.blackCard?.content ?? '', this.findCardContent(card.id) ?? '', this.currentGame.getPlayerOfCard(card.id)))}"></card-component>`;
     } else {
       return html`
-            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}" zindex="${zindex}" choosable="${choosable}"></card-component>
+            <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}" cardNumber="${this.getPlayerChoosableCards().length}" zindex="${zindex}" choosable="${choosable}"></card-component>
           `;
     } 
   }

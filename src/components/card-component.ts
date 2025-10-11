@@ -14,6 +14,7 @@ export class CardComponent extends LitElement {
   @property({ type: String }) zindex = '';
   @property({ type: String }) choosable = false;
   @property({ type: String }) favorite = '';
+  @property({ type: String }) cardNumber = '';
 
 
   static styles = [
@@ -81,7 +82,7 @@ export class CardComponent extends LitElement {
     z-index: 0;
   }
   100% {
-    transform: translateX(var(--swap-end-x, -90px)) translateY(13px) scale(1);
+    transform: translateX(var(--swap-end-x, -90px)) translateY(var(--swap-end-y, 13px)) scale(1);
     z-index: 0;
   }
 }
@@ -95,7 +96,7 @@ export class CardComponent extends LitElement {
      z-index: +1000; 
   }
   100% {
-     transform: translateX(var(--reverse-swap-end-x, 90px)) translateY(-13px) scale(1);
+     transform: translateX(var(--reverse-swap-end-x, 90px)) translateY(var(--swap-end-y, 13px)) scale(1);
      animation-timing-function: ease-in;
      z-index: +1000;
   }
@@ -261,22 +262,26 @@ export class CardComponent extends LitElement {
     const cardDiv = this.renderRoot?.querySelector('.card') as HTMLElement;
     if (!cardDiv) return;
 
-    const firstCardLeftPosition = (this.getLeftPosition() - Number(this.left));
+    //const firstCardLeftPosition = (this.getLeftPosition() - Number(this.left));
 
     if (animation === 'swap') {
-      const swapX = this.getLeftPosition() + this.getWidth() + 'px'; //310 
-      const swapEndX = (firstCardLeftPosition - 100) + 'px'; //-90
+      const swapX = '310px'; 
+      const swapEndX = (-Number(this.left) + 10) + 'px'; //-90
+      const swapEndY = (Number(this.cardNumber) + 3) + 'px'; 
       
       cardDiv.style.setProperty('--swap-x', swapX);
       cardDiv.style.setProperty('--swap-end-x', swapEndX);
+      cardDiv.style.setProperty('--swap-end-y', swapEndY);
     }
 
     if (animation === 'reverse-swap') {
-      const swapX = (this.getLeftPosition() + 400) + 'px'; //400
-      const swapEndX = (firstCardLeftPosition) + 'px'; //90
+      const swapX = (Number(this.cardNumber) * 10 + 310) + 'px'; 
+      const swapEndX = (Number(this.cardNumber) * 10 - 10) + 'px'; //90
+      const swapEndY = (-Number(this.cardNumber) - 3) + 'px'; 
     
       cardDiv.style.setProperty('--reverse-swap-x', swapX);
       cardDiv.style.setProperty('--reverse-swap-end-x', swapEndX);
+      cardDiv.style.setProperty('--swap-end-y', swapEndY);
     }
 
     cardDiv.style.animation = animation + " 1s forwards";
@@ -297,7 +302,7 @@ export class CardComponent extends LitElement {
 
   render() {
     return html`
-    <div class="card ${this.backgroundColor} ${this.choosable ? 'choosable' : ''}" style="left: ${this.left}px; z-index: ${this.zindex};">
+    <div class="card ${this.backgroundColor} ${this.choosable ? 'choosable' : ''}" style="left: ${(-30 + Number(this.left))}px; z-index: ${this.zindex};">
      <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
       ${this.hasFavorite() ? html`<div class="favorite-container"><div class="${this.getFavoriteClass()}" @click="${this.handleClickFavorite}"></div></div>` : html``}
     </div>
