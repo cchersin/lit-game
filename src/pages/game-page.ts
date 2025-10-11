@@ -477,35 +477,37 @@ export class GamePage extends LitElement {
     const blackCardContent = e.detail.description;
     const whiteCardContent = e.detail.value;
     const favorite = e.detail.favorite;
-    const playerName = this.getPlayer()?.name || '';
+    const playerName = this.currentGame.getPlayerOfCard(e.detail.id);
 
     if (blackCardContent === '' || whiteCardContent === '' || playerName === '') {
       return;
     }
 
+    const fav = new Favorite(blackCardContent, whiteCardContent, playerName);
+
     if (favorite) {
-     this.addFavorite(blackCardContent, whiteCardContent, playerName);
+     this.addFavorite(fav);
     } else {
-      this.removeFavorite(blackCardContent, whiteCardContent, playerName);
+      this.removeFavorite(fav);
     }
   } 
 
-  addFavorite(blackCardContent: string, whiteCardContent: string, playerName: string) {
-    if (this.isFavorite(blackCardContent, whiteCardContent, playerName)) {
+  addFavorite(favorite: Favorite) {
+    if (this.isFavorite(favorite)) {
       return;
     }
 
-    this.favorites.push(new Favorite(blackCardContent, whiteCardContent, playerName));
+    this.favorites.push(favorite);
     StoreService.saveFavorites(this.favorites);
   }
 
-  removeFavorite(blackCardContent: string, whiteCardContent: string, playerName: string) {
-    this.favorites = this.favorites.filter(fav => fav.blackCardContent !== blackCardContent || fav.whiteCardContent !== whiteCardContent || fav.playerName !== playerName);
+  removeFavorite(favorite: Favorite) {
+    this.favorites = this.favorites.filter(fav => !fav.equal(favorite));
     StoreService.saveFavorites(this.favorites);
   } 
 
-  isFavorite(blackCardContent: string, whiteCardContent: string, playerName: string) {
-    return this.favorites.find(fav => fav.blackCardContent === blackCardContent  && fav.whiteCardContent == whiteCardContent && fav.playerName === playerName) !== undefined;
+  isFavorite(favorite: Favorite) {
+    return this.favorites.find(fav => fav.equal(favorite)) !== undefined;
   }
 
   renderCards(cards: any, resolve: boolean) {
@@ -527,7 +529,7 @@ export class GamePage extends LitElement {
        return html`<card-component id="${card.id}" description="${this.currentGame.blackCard?.content}" value="${this.findCardContent(card.id)}" 
                 backgroundColor="${this.currentGame.blackCard?.color}" color="${this.currentGame.blackCard?.getOppositeColor()}" 
                 left="${left}px" zindex="${zindex}" choosable="${choosable}" 
-                favorite="${this.isFavorite(this.currentGame.blackCard?.content ?? '', this.findCardContent(card.id) ?? '', this.getPlayer()?.name ?? '')}"></card-component>`;
+                favorite="${this.isFavorite(new Favorite(this.currentGame.blackCard?.content ?? '', this.findCardContent(card.id) ?? '', this.currentGame.getPlayerOfCard(card.id)))}"></card-component>`;
     } else {
       return html`
             <card-component id="${card.id}" description="${card.content}" backgroundColor="${card.color}" color="${card.getOppositeColor()}" left="${left}px" zindex="${zindex}" choosable="${choosable}"></card-component>

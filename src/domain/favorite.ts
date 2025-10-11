@@ -17,6 +17,12 @@ export class Favorite {
     };
   }
 
+  equal(other: Favorite) {
+    return this.blackCardContent === other.blackCardContent &&
+           this.whiteCardContent === other.whiteCardContent &&
+           this.playerName === other.playerName;
+  }
+
   static fromJSON(json: any) {
     const r = new Favorite(json.blackCardContent, json.whiteCardContent, json.playerName);
     return r;

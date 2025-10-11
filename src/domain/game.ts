@@ -238,6 +238,11 @@ export class Game {
       }
     }
   }
+
+  getPlayerOfCard(cardId: string): string {
+    const player = this.findPlayers().find((p) => p.currentCardId === cardId);
+    return player ? player.name : '';
+  }
  
   nextRound() {
     console.log('nextRound');

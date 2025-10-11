@@ -232,7 +232,7 @@ export class CardComponent extends LitElement {
   handleClickFavorite(e: any) {
     e.stopPropagation(); // blocca la propagazione del click
     this.dispatchEvent(new CustomEvent('card-favorite', {
-      detail: { description: this.description, value: this.value, favorite: (this.favorite === 'false') },
+      detail: { id: this.id, description: this.description, value: this.value, favorite: (this.favorite === 'false') },
       bubbles: true,
       composed: true
     }));
