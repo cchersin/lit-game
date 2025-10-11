@@ -81,8 +81,7 @@ export class WinnerPage extends LitElement {
         <span>User: ${localStorage.userName}${this.currentGame.status}</span>
          <button @click="${this.handleOK}">OK</button>
          ${this.renderLeaderboard()}
-                ${this.renderRounds()} 
-  
+         ${this.renderRounds()} 
       </main>
     `;
   }

@@ -267,9 +267,9 @@ export class GamePage extends LitElement {
           this.currentCardId = '';
         }
 
-        if (this.currentCardId === '' && this.getPlayerChoosableCards().length > 0) {
+        /*if (this.currentCardId === '' && this.getPlayerChoosableCards().length > 0) {
             this.currentCardId = this.getFrontCard().id;
-        }
+        }*/
    
         this.requestUpdate();
       }
