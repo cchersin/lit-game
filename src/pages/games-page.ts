@@ -59,7 +59,8 @@ export class GamesPage extends LitElement {
   }
 
   .favourites-button, .ranking-button, .archive-button {
-    margin-left: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
     background-color: black;
     height: 70px;
     width: 70px;
@@ -68,16 +69,14 @@ export class GamesPage extends LitElement {
 
   .circles-container {
     display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+    justify-content: center;
     margin-bottom: 50px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .outer-circles-container {
     position: fixed;
     bottom: 0;
+    width: 100%;
   }
   
   .logout {
@@ -86,6 +85,7 @@ export class GamesPage extends LitElement {
     padding-right: 15px;
     font-family: "tablet-gothic", sans-serif;
     font-size: 12pt;
+  }
   `];
 
   games: Game[] = [];
@@ -159,7 +159,7 @@ export class GamesPage extends LitElement {
        <div class="logout">
           <a @click="${this.handleLogout}">logout</a>
          </div>
-         <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">new game</button></div>
+         <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">nuovo gioco</button></div>
          ${this.games.filter(game => game.status !== 'completed').map(game => html`
             <div class="game-component">
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(",")}" winner="${game.getWinner()}"></game-component>

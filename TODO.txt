@@ -16,19 +16,21 @@ games-page:
     -togliere giochi vuoti
 starting-page: 
 game-page:
-        -rotazione carte swap
-    -sistemare widget in alto
-    -sincronizzazione visione del master e dei giocatori quando legge le carte?
+            -animazione swap carte rosse
+            -sistemare dimensione font e interlinea
+            -rotazione carte swap?
+            -And the winner is... con turn around
+        -sistemare widget in alto
+        -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco
     -le carte alla fine sono dispari
-        -And the winner is... con turn around
-        -sistema colori e bordi della stella
     -non funziona bene il leave (eliminare?)
 winner-page:
     -sistemare grafica e contenuti
 classifica:
     -sistemare grafica
 archivio:
-    -farlo
+    -sistemare grafica e contenuti
+    -non si riesce a scrollare la pagina
 carte preferite:
     -sistemare grafica

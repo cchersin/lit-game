@@ -37,7 +37,7 @@ export class FavoritesPage extends LitElement {
   renderFavorites() {
         return html`<div class="cards-container">
              ${this.favorites.map((f: Favorite) => 
-                html`<p>${Utils.buildSentence(f.blackCardContent, f.whiteCardContent)} Author: ${f.playerName}</p`
+                html`<p>${Utils.buildSentence(f.blackCardContent, f.whiteCardContent)} Autore: ${f.playerName}</p`
               )}
             </div>`;
  }

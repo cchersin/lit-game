@@ -153,19 +153,19 @@ export class StartingPage extends LitElement {
     return html`
       <main class="game">
         <div class="information-container">
-         ${this.findMasterName()==localStorage.userName ? html`<p class="information">${this.findMasterName() !== '' ? 'You have created a new game.' : ''}</p>` : html`<p class="information">${this.findMasterName() !== '' ? this.findMasterName() + ' has created a new game.' : ''}</p>`}
+         ${this.findMasterName()==localStorage.userName ? html`<p class="information">${this.findMasterName() !== '' ? 'Hai creato un nuovo gioco.' : ''}</p>` : html`<p class="information">${this.findMasterName() !== '' ? this.findMasterName() + ' ha creato un nuovo gioco.' : ''}</p>`}
          ${this.findPlayers().map(player => html`
-            ${player.name==localStorage.userName ? html`<p class="information"> You have joined the game.</p>` 
-            : html`<p class="information">${player.name} has joined the game.</p>`}
+            ${player.name==localStorage.userName ? html`<p class="information"> Stai partecipando al gioco.</p>` 
+            : html`<p class="information">${player.name} sta partecipando al gioco.</p>`}
           `)}
-          ${this.isPlayer() ? html`<p class="information">${this.currentGame.isMinNumPlayersReached() ? 'Minimum number of players reached. Waiting for the master to start...' : 'Waiting for more players to join...'}</p>` : html``}
-          ${this.isMaster() ? html`<p class="information">${this.currentGame.isMinNumPlayersReached() ? 'Minimum number of players reached. You can start the game!' : 'Waiting for more players to join...'}</p>` : html``}
+          ${this.isPlayer() ? html`<p class="information">${this.currentGame.isMinNumPlayersReached() ? 'Numero minimo di giocatori raggiunti. Aspetta che il master cominci...' : 'Aspetta che partecipino altri giocatori...'}</p>` : html``}
+          ${this.isMaster() ? html`<p class="information">${this.currentGame.isMinNumPlayersReached() ? 'Numero minimo di giocatori raggiunti. Puoi iniziare il gioco!' : 'Aspetta che partecipino altri giocatori...'}</p>` : html``}
           </div>
         <div class="container-button">
-         ${this.isMaster() && this.currentGame.status === 'pending' && this.currentGame.isMinNumPlayersReached() ? html`<button class="action-button" @click="${this.handleStartGame}">start game</button>` : html``}
-         ${this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleStopGame}">stop game</button>` : html``}       
+         ${this.isMaster() && this.currentGame.status === 'pending' && this.currentGame.isMinNumPlayersReached() ? html`<button class="action-button" @click="${this.handleStartGame}">inizia il gioco</button>` : html``}
+         ${this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleStopGame}">ferma il gioco</button>` : html``}       
          ${!this.hasRole() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleJoin}">join</button>` : html``}
-         ${!this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleLeave}">leave</button>` : html``}
+         ${!this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleLeave}">abbandona</button>` : html``}
          </div>
       </main>
     `;

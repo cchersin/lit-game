@@ -197,6 +197,46 @@ export class GamePage extends LitElement {
       margin: 12px;
       font-size: 16px;
     }
+
+
+          .container {
+            width: 350px;
+            height: 500px;
+            perspective: 800px;
+          }
+
+          .container:hover > .card {
+            cursor: pointer;
+            transform: rotateY(180deg);
+          }
+
+          .card {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            transition: transform 1500ms;
+            transform-style: preserve-3d;
+          }
+
+          .front,
+          .back {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+          }
+
+          .front {
+            ... (la carta vincente)
+          }
+
+          .back {
+            background-color: red;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
   `];
 
   constructor() {
@@ -703,11 +743,11 @@ export class GamePage extends LitElement {
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}
          <div class="outer-container-widget-bottom">
           ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">stop</button>` : html``}
-          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && this.currentGame.hasNextRound() ? html`<button class="action-button" @click="${this.handleNextRound}">next round</button>` : html``}
-          <!--${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">confirm</button>` : html``}-->
-          <button class="action-button" @click="${this.handleLeaveGame}">leave</button>
-          <button class="action-button" @click="${this.handleCall}" style="display:none">call</button>
-          <button class="action-button" @click="${this.handleCloseCall}" style="display:none">close call</button>
+          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && this.currentGame.hasNextRound() ? html`<button class="action-button" @click="${this.handleNextRound}">prossimo round</button>` : html``}
+          <!--${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">conferma</button>` : html``}-->
+          <button class="action-button" @click="${this.handleLeaveGame}">abbandona</button>
+          <button class="action-button" @click="${this.handleCall}" style="display:none">chiama</button>
+          <button class="action-button" @click="${this.handleCloseCall}" style="display:none">chiudi chiamata</button>
          </div>  
          ${this.showModal ? html`
         <div class="modal-overlay">

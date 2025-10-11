@@ -112,7 +112,7 @@ export class GamesAchivePage extends LitElement {
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" winner="${game.getWinner()}"</game-component>
             </div>
           `)}
-          <div class="button-container"><button class="action-button" @click="${this.handleClose}">Close</button></div>
+          <div class="button-container"><button class="action-button" @click="${this.handleClose}">chiudi</button></div>
          
       </main>
     `;
