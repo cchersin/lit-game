@@ -172,6 +172,11 @@ export class GamePage extends LitElement {
       to { width: 100% }
     }
 
+    @keyframes opacity {
+    from { opacity: 0 }
+    to { opacity: 1 }
+    }
+
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -691,8 +696,8 @@ export class GamePage extends LitElement {
             </div>
           `)}
         </div>
-         ${this.isPlayer() && this.currentGame.turn != 'master' && this.getPlayer()?.currentCardId !== '' ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px;">(ora aspetta che gli altri</br>scelgano la loro...)</div>` : html ``}
-         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px;">(ora aspetta che il master</br>scelga la migliore...)</div>` : html ``}
+         ${this.isPlayer() && this.currentGame.turn != 'master' && this.getPlayer()?.currentCardId !== '' ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px; animation: opacity 0.5s ease-in-out;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px; animation: opacity 0.5s ease-in-out;">(ora aspetta che gli altri</br>scelgano la loro...)</div>` : html ``}
+         ${this.isPlayer() && this.currentGame.turn == 'master' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px; animation: opacity 0.5s ease-in-out;">Congratulazioni,</br>hai scelto la</br>tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px; animation: opacity 0.5s ease-in-out;">(ora aspetta che il master</br>scelga la migliore...)</div>` : html ``}
          ${this.renderLastRound()}
          ${this.renderBlackCard()}
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}
@@ -708,8 +713,8 @@ export class GamePage extends LitElement {
         <div class="modal-overlay">
           <div class="modal">
             <div>${this.modalText}</div>
-            <button @click="${this.confirmAction}">Sì</button>
-            <button @click="${this.cancelAction}">No</button>
+            <button @click="${this.confirmAction}">sì</button>
+            <button @click="${this.cancelAction}">no</button>
           </div>
         </div>
       ` : ''}

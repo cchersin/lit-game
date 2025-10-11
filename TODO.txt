@@ -17,13 +17,19 @@ games-page:
     -quando stoppi un gioco nella starting page compare ancora agli altri
 starting-page: 
 game-page:
-    -rotazione carte swap
+        -rotazione carte swap
     -sistemare widget in alto
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco
     -le carte alla fine sono dispari
-    -And the winner is... con turn around
-    -sistema colori e bordi della stella
+        -And the winner is... con turn around
+        -sistema colori e bordi della stella
     -non funziona bene il leave (eliminare?)
 winner-page:
+    -sistemare grafica e contenuti
+classifica:
+    -farla
+archivio:
+    -farlo
+carte preferite:
     -sistemare grafica
