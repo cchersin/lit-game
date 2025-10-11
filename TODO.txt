@@ -14,7 +14,6 @@ login-page:
 games-page: 
     -sistemare grafica
     -togliere giochi vuoti
-    -quando stoppi un gioco nella starting page compare ancora agli altri
 starting-page: 
 game-page:
         -rotazione carte swap

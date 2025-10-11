@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { Game } from './domain/game';
 
 const placeHolder = '______';
     
@@ -18,6 +19,22 @@ export class Utils {
         `;
       }
     return html`${blackCardContent}`;
+  }
+
+  static getRanking(games: Array<Game>) {
+    const ranking: Map<String, number> = new Map();
+    games.forEach((g) => {
+      const winner = g.getWinner();
+      if (winner) {
+        if (!ranking.get(winner)) {
+          ranking.set(winner, 0);
+        }
+        const points = ranking.get(winner) ?? 0;
+        ranking.set(winner, points + 1);
+      }
+    });
+    return Array.from(ranking, ([playerName, points]) => ({ playerName, points }))
+      .sort((a, b) => b.points - a.points).map((e) => ({ playerName: e.playerName, wins: e.points }));
   }
 }
                                       

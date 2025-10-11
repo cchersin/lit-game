@@ -332,23 +332,6 @@ export class Game {
       return this.rounds.filter(round => round.winnerName === playerName).length;
   }
 
-  getWinner(): string {
-    if (this.status !== 'completed') {
-      return '';
-    }
-    const playerWins = this.players.map(player => ({
-      playerName: player.name,
-      wins: this.getPlayerWins(player.name)
-    }));
-    const maxWins = Math.max(...playerWins.map(player => player.wins));
-    const winners = playerWins.filter(player => player.wins === maxWins);
-    if (winners.length === 1) {
-      return winners[0].playerName;
-    } else {
-      return winners.map(winner => winner.playerName).join(', ');
-    }
-  }
-
   getLastRoundWinner(): string {
     if (this.rounds.length === 0) {
       return '';
@@ -366,7 +349,15 @@ export class Game {
     }))
     .sort((a, b) => b.wins - a.wins); 
   }
- 
+
+  getWinner() :String {
+    const leaderboard = this.getLeaderboard();
+    if (leaderboard.length === 0) {
+      return '';
+    }
+    return leaderboard[0].playerName;
+  }
+    
   stop() {
     console.log('stop game');
  

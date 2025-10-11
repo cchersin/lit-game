@@ -58,15 +58,8 @@ export class GamesPage extends LitElement {
     align-content: center;
   }
 
-  .archive-button {
-    background-color: black;
-    height: 70px;
-    width: 70px;
-    border-radius: 35px;
-  }
-
-  .favourites-button {
-    margin-left: 50px;
+  .favourites-button, .ranking-button, .archive-button {
+    margin-left: 30px;
     background-color: black;
     height: 70px;
     width: 70px;
@@ -75,10 +68,11 @@ export class GamesPage extends LitElement {
 
   .circles-container {
     display: flex;
-    align-content: center;
     flex-wrap: wrap;
-    max-width: 100%;
+    width: 100%;
     margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .outer-circles-container {
@@ -155,6 +149,10 @@ export class GamesPage extends LitElement {
     Router.go('/favorites');  
   }
 
+  handleRanking(event: any) {
+  Router.go('/ranking');  
+  }
+
   render() {
     return html`
       <main @game-join="${this.handleGameJoin}">
@@ -167,7 +165,13 @@ export class GamesPage extends LitElement {
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(",")}" winner="${game.getWinner()}"></game-component>
             </div>
           `)}
-           <div class="outer-circles-container" @click="${this.handleFavorite}"><div class="circles-container"><div class="archive-button" @click="${this.handleGoToArchive}"></div><div class="favourites-button"></div></div></div>
+           <div class="outer-circles-container">
+                <div class="circles-container">
+                  <div class="archive-button" @click="${this.handleGoToArchive}"></div>
+                  <div class="favourites-button" @click="${this.handleFavorite}"></div>
+                  <div class="ranking-button" @click="${this.handleRanking}"></div>
+                </div>
+           </div>
       </main>
     `;
   }

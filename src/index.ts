@@ -57,6 +57,13 @@ const routes = [
         },
       },
       {
+        path: 'ranking',
+        component: 'ranking-page',
+        action: async () => {
+          await import('./pages/ranking-page');
+        },
+      },
+      {
         path: 'chat',
         component: 'chat-page',
         action: async () => {
