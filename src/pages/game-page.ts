@@ -16,8 +16,6 @@ import { MediaConnection, Peer } from 'peerjs';
 import { query } from 'lit/decorators.js';
 
 import { sharedStyles } from '../shared-styles';
-import { Utils } from '../utils';
-
 
 @customElement('game-page')
 export class GamePage extends LitElement {
@@ -218,7 +216,8 @@ export class GamePage extends LitElement {
         }
 
         if (this.getPlayer()?.hasCards() && !this.getPlayer()?.hasCard(this.currentCardId)) {
-          this.currentCardId = '';
+          //this.currentCardId = '';
+          this.currentCardId = this.getFrontCard()?.id;
         }
 
    

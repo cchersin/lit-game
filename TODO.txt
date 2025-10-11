@@ -22,9 +22,8 @@ game-page:
     -sistemare animazione swap quando ci sono meno di 10 carte
     -rotazione carte swap
     -sistemare widget in alto
-    -meccanica carte preferite
+    -pagina preferiti
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
-    -il favorito è sempre sulla carta in primo piano
     -non si stoppa automaticamente il gioco
     -le carte alla fine sono dispari
     -selezionare la prima carta di default
