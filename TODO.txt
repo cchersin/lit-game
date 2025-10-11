@@ -17,7 +17,6 @@ games-page:
     -quando stoppi un gioco nella starting page compare ancora agli altri
 starting-page: 
 game-page:
-    -sistemare animazione swap quando ci sono meno di 10 carte
     -rotazione carte swap
     -sistemare widget in alto
     -sincronizzazione visione del master e dei giocatori quando legge le carte?

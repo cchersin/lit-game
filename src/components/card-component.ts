@@ -262,8 +262,6 @@ export class CardComponent extends LitElement {
     const cardDiv = this.renderRoot?.querySelector('.card') as HTMLElement;
     if (!cardDiv) return;
 
-    //const firstCardLeftPosition = (this.getLeftPosition() - Number(this.left));
-
     if (animation === 'swap') {
       const swapX = '310px'; 
       const swapEndX = (-Number(this.left) + 10) + 'px'; //-90
