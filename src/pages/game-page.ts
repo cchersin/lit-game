@@ -238,7 +238,7 @@ export class GamePage extends LitElement {
   }
 
   handleLeaveGame() {
-    this.modalText = 'Sei sicuro di voler abbandonare la partita? Potrai rientrare se la partita non è stata terminata.';
+    this.modalText = 'Sei sicuro di voler abbandonare la partita?';
     this.showModal = true;
     this.modalAction = this.confirmLeaveGame.bind(this);
     this.requestUpdate();
