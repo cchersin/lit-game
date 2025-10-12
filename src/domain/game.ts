@@ -253,7 +253,7 @@ const blackCards = [
     new Card('45', '______ non è tradire.', 'black') ,
     // new Card('46', 'Dopo “Barbie” e “Oppenheimer” il nuovo duo cinematografico: ______ e ______.', 'black') ,
     new Card('47', '______, Thanks Obama.', 'black') ,
-    new Card('48', '“Say my name.” ______.” “You\'re goddamn right.”', 'black') ,
+    new Card('48', '“Say my name.” “______.” “You\'re goddamn right.”', 'black') ,
     new Card('49', 'C\'è un\'unica strada per superare il capitalismo ed è ______.', 'black') ,
     new Card('50', 'Ah sì, il terzo genere segreto: ______.', 'black') ,
     new Card('51', 'Nello schema del ”Funky, Swag, Slay e Chill” possiamo confermare che ______ è molto Slay.', 'black') ,
