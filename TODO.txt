@@ -10,18 +10,22 @@ FEATURES:
 -schermata di partenza con animazione del logo
 
 TO DO:
+inizio:
+    -animazione logo
 login-page: 
 games-page: 
     -sistemare grafica
 starting-page: 
 game-page:
-            -And the winner is... con turn around
-        -sistemare widget in alto
-        -sincronizzazione visione del master e dei giocatori quando legge le carte?
+    -scarto carte rosse non abbastanza in basso
+    -nome sulla winning card scompare dopo tot secondi
+    -sistemare typing animation
+    -sistemare widget in alto
+    -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco
     -le carte alla fine sono dispari
     -non funziona bene il leave (eliminare?)
-        -aggiungere scorrimento per mobile
+    -aggiungere scorrimento per mobile
 winner-page:
     -sistemare grafica e contenuti
 classifica:
@@ -31,3 +35,5 @@ archivio:
     -non si riesce a scrollare la pagina
 carte preferite:
     -sistemare grafica
+
+clickteam fusion 2.5

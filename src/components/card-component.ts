@@ -173,16 +173,14 @@ export class CardComponent extends LitElement {
   perspective: 800px;
 }
 
-/*outer-container > .card-container {
-  transform: rotateY(180deg);
-}*/
-
 .card-container {
   height: 100%;
   width: 100%;
   position: relative;
   transition: transform 1500ms;
   transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
 }
 
 .front,
@@ -194,14 +192,15 @@ export class CardComponent extends LitElement {
 }
 
 .back {
-  margin-top: 20px;
   rotate: -5deg;
   background-color: red;
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: 21px;
   padding-right: 21px;
   padding-bottom: 21px;
