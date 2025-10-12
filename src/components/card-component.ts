@@ -162,6 +162,9 @@ export class CardComponent extends LitElement {
   fill: black;
 }
 
+.flip-card {
+  transform: rotateY(180deg);
+}
 
           .outer-container {
             margin: auto;
@@ -170,10 +173,9 @@ export class CardComponent extends LitElement {
             perspective: 800px;
           }
 
-          .outer-container:hover > .card-container {
-            cursor: pointer;
+         /*outer-container > .card-container {
             transform: rotateY(180deg);
-          }
+          }*/
 
           .card-container {
             height: 100%;
@@ -193,6 +195,7 @@ export class CardComponent extends LitElement {
 
           .back {
             margin-top: 20px;
+            rotate: -5deg;
             background-color: red;
             transform: rotateY(180deg);
             display: flex;
@@ -288,6 +291,13 @@ export class CardComponent extends LitElement {
     return html``;
   }
 
+
+  updated() {
+    setTimeout(() => {
+      this.renderRoot.querySelector('.card-container')?.classList.remove('flip-card');
+    }, 1000);
+  }
+
   render() {
     if (this.choosable) 
       return html`<div class="card ${this.backgroundColor} choosable" style="left: ${(-30 + Number(this.left))}px; z-index: ${this.zindex};">
@@ -296,7 +306,7 @@ export class CardComponent extends LitElement {
       
     if (this.winning == 'true') 
       return html`<div class="outer-container">
-        <div class="card-container">  
+        <div class="card-container flip-card">  
           <div class="card ${this.backgroundColor} front"> 
             <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
           </div>

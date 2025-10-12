@@ -214,7 +214,7 @@ const blackCards = [
     new Card('6', 'Live, ______, love.', 'black') ,
     new Card('7', 'Che cosa ha finito la tua relazione: ______.', 'black') ,
     // new Card('8', 'No Montra, ______ e ______ non sono la stessa cosa.', 'black') ,
-    new Card('9', '“Io Andrea Perper, come prima azione per onorare la mia carica a presidente del Partito Socialista della Pizza, prometto di aumentare ________.” ', 'black') ,
+    new Card('9', '“Io Andrea Perper, come prima azione per onorare la mia carica a presidente del Partito Socialista della Pizza, prometto di aumentare ______.” ', 'black') ,
     new Card('10', 'Sono sopravvissuta a ______ e ho ricevuto solo questa maglietta.', 'black') ,
     new Card('11', 'In onore del Pride Month non mi farò tua madre, mi farò ______.', 'black') ,
     new Card('12', 'La colazione di Montra oggi consiste in ______.', 'black') ,
