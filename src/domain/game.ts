@@ -228,7 +228,7 @@ const blackCards = [
     new Card('20', 'Dopo l\'ultimo incidente Trenitalia proibisce il trasporto  di ______ a bordo dei treni.', 'black') ,
     new Card('21', 'Ultimamente Martina non riesce a smettere di parlare di ______. Sta diventando un problema.', 'black') ,
     new Card('22', 'Cancella ogni impegno, abbiamo un problema con ______ che bisogna assolutamente risolvere.', 'black') ,
-    new Card('23', 'Nuovo libro di Riccardo Falcinelli “Critica portatile a ______.”', 'black') ,
+    new Card('23', 'Nuovo libro di Riccardo Falcinelli “Critica portatile a ______”.', 'black') ,
     new Card('24', 'Sono sopravvissuto a ______ e ho solo guadagnato questa t-shirt.', 'black') ,
     new Card('25', 'Le opinioni di Bon riguardo a  ______ non penso dovrebbero essere divulgate.', 'black') ,
     new Card('26', 'Le uniche due cose di cui dobbiamo avere paura sono: la paura stessa e ______.', 'black') ,

@@ -15,7 +15,7 @@ export class Utils {
         return html`
           <span>${a[0]}</span>
           <span style="font-family: 'eskapade-fraktur', serif; font-weight: 400; font-size: 20.625pt; line-height: 22pt;">${whiteCardContent}</span>
-          <span style="margin-left: -6px">${a[1]}</span>
+          <span style="${a[1] === "." ? "margin-left: -6px" : ""}">${a[1]}</span>
         `;
       }
     return html`${blackCardContent}`;
