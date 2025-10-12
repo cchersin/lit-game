@@ -77,13 +77,14 @@ export class GameComponent extends LitElement {
      <div>
         <div class="game-information"> ${this.name} </div>
         ${this.status === 'pending' ? 
-          html` ${this.players.length == 0 ? html`<div class="game-information">${this.master} sta giocando.</div>` : html`<div class="game-information">${this.master}, ${this.players} stanno giocando.</div>`}
+          html` ${this.players.length == 0 ? html`<div class="game-information">${this.master} ha fatto partire un gioco, vuoi partecipare?</div>` : html`<div class="game-information">${this.master}, ${this.players} stanno giocando.</div>`}
                 <div class="button-container"> 
-                  <button class="action-button" @click="${this.handleJoin}">join</button> 
+                  <button class="action-button" @click="${this.handleJoin}">partecipa</button> 
                 </div>` 
           : html``}
         ${this.status === 'completed' ? html` Winner: ${this.winner} <div class="button-container"> <button class="action-button" @click="${this.handleDelete}">cancella</button> </div>` : html``}        
-      </div>
+        ${this.status === 'started' ? html`<div style="text-align: center; padding-bottom: 10px;"><span style="text-transform: capitalize;">${this.players}</span> e <span style="text-transform: capitalize;">${this.master}</span> stanno giocando e non ti hanno invitato...</div>` : html``}        
+        </div>
   `;
   }
 }

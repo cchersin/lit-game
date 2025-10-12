@@ -74,7 +74,7 @@ export class CardComponent extends LitElement {
 
 @keyframes swap {
   50% {
-    transform: translateX(var(--swap-x, 310px)) scale(0.85);
+    transform: translateX(var(--swap-x, 310px)) scale(0.85) rotate(-8deg);
     animation-timing-function: ease-in;
     z-index: +1000;
   }
@@ -82,21 +82,21 @@ export class CardComponent extends LitElement {
     z-index: 0;
   }
   100% {
-    transform: translateX(var(--swap-end-x, -90px)) translateY(var(--swap-end-y, 13px)) scale(1);
+    transform: translateX(var(--swap-end-x, -90px)) translateY(var(--swap-end-y, 13px)) scale(1) rotate(0deg);
     z-index: 0;
   }
 }
 
 @keyframes reverse-swap {
   50% {
-     transform: translateX(var(--reverse-swap-x, 400px)) scale(0.85);
+     transform: translateX(var(--reverse-swap-x, 400px)) scale(0.85) rotate(-8deg);
      z-index: 0;
   }  
   60% {
      z-index: +1000; 
   }
   100% {
-     transform: translateX(var(--reverse-swap-end-x, 90px)) translateY(var(--swap-end-y, 13px)) scale(1);
+     transform: translateX(var(--reverse-swap-end-x, 90px)) translateY(var(--swap-end-y, 13px)) scale(1) rotate(0deg);
      animation-timing-function: ease-in;
      z-index: +1000;
   }
