@@ -15,7 +15,6 @@ games-page:
     -sistemare grafica
 starting-page: 
 game-page:
-            -animazione swap carte rosse
             -And the winner is... con turn around
         -sistemare widget in alto
         -sincronizzazione visione del master e dei giocatori quando legge le carte?

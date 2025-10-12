@@ -197,46 +197,6 @@ export class GamePage extends LitElement {
       margin: 12px;
       font-size: 16px;
     }
-
-
-          .container {
-            width: 350px;
-            height: 500px;
-            perspective: 800px;
-          }
-
-          .container:hover > .card {
-            cursor: pointer;
-            transform: rotateY(180deg);
-          }
-
-          .card {
-            height: 100%;
-            width: 100%;
-            position: relative;
-            transition: transform 1500ms;
-            transform-style: preserve-3d;
-          }
-
-          .front,
-          .back {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            backface-visibility: hidden;
-          }
-
-          .front {
-            ... (la carta vincente)
-          }
-
-          .back {
-            background-color: red;
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
   `];
 
   constructor() {
@@ -638,7 +598,7 @@ export class GamePage extends LitElement {
       if (lastRound) {
         return html`<div>${this.renderLastRoundWinner(lastRound)}${this.renderLastRoundWinningCard(lastRound)}/div>`;
       }
-    } 
+    }
   }
 
   renderLastRoundWinner(lastRound: Round) {
