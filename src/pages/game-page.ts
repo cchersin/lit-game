@@ -607,7 +607,7 @@ export class GamePage extends LitElement {
 
   renderLastRoundWinningCard(lastRound: Round) {
      return html`
-            <card-component id="-1" description="${lastRound.blackCardContent}" value="${lastRound.whiteCardContent}" backgroundColor="black" color="white"></card-component>
+            <card-component id="-1" description="${lastRound.blackCardContent}" value="${lastRound.whiteCardContent}" winning="true" backgroundColor="black" color="white"></card-component>
           `;
   }
 
@@ -637,11 +637,12 @@ export class GamePage extends LitElement {
   };
 
   async setupListen() {
+    /*
       const peer = new Peer();
 
       console.log('Setup listen for peer connection');
 
-      peer.on('open', id => {
+      peer.on('open', id =>
           this.getPlayer()?.setPeerId(id);
           StoreService.saveGame(this.currentGame);
           console.log('My Peer ID:', id);
@@ -673,7 +674,7 @@ export class GamePage extends LitElement {
 
       peer.on('error', () => {
           console.log('Peer error:');
-      });
+      });*/
 
   };
 
