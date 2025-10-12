@@ -78,7 +78,7 @@ export class GamePage extends LitElement {
 
   .container-cards {
    margin-top: 20px;
-   margin-left: 60px;
+   margin-left: -5px;
    position: relative;
   }
 
@@ -154,9 +154,9 @@ export class GamePage extends LitElement {
     animation: typing 5s steps(40, end);
     width: 0;
     animation-delay: 3.5s;
-    }
+  }
 
-    .frase-typewriter {
+  .frase-typewriter {
     font-size: 20px; 
     font-weight: lighter;
     font-family: 'tablet-gothic', sans-serif; 
@@ -167,39 +167,41 @@ export class GamePage extends LitElement {
     overflow: hidden;
     white-space: nowrap;
     animation: typing 5s steps(40, end);
-    }
+  }
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
 
-    @keyframes opacity {
+  @keyframes opacity {
     from { opacity: 0 }
     to { opacity: 1 }
-    }
+  }
 
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-    }
-    .modal {
-      background: white;
-      padding: 32px;
-      border-radius: 12px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.2);
-      text-align: center;
-    }
-    .modal button {
-      margin: 12px;
-      font-size: 16px;
-    }
-  `];
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+  }
+
+  .modal {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+
+  .modal button {
+    margin: 12px;
+    font-size: 16px;
+  }
+`];
 
   constructor() {
     super();

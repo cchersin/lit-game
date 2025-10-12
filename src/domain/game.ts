@@ -181,7 +181,7 @@ const whiteCards = [
     new Card('176', 'mandare dick pics', 'white'),
     new Card('177', 'invadere la polonia', 'white'),
     new Card('178', 'police brutality', 'white'),
-    new Card('179', 'immigrati illegali', 'white'),
+    new Card('179', 'gli immigrati illegali', 'white'),
     new Card('180', 'Bruno, il cane della provvidenza', 'white'),     
     new Card('181', 'il sistema militare russo', 'white'),   
     new Card('182', 'Francesca Freschi', 'white'),

@@ -19,10 +19,7 @@ export class GameComponent extends LitElement {
     text-align: center;
     font-size: 12pt;
     line-height: 16pt;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
   
   .game-information:first-letter {
@@ -77,7 +74,7 @@ export class GameComponent extends LitElement {
      <div>
         <div class="game-information"> ${this.name} </div>
         ${this.status === 'pending' ? 
-          html` ${this.players.length == 0 ? html`<div class="game-information">${this.master} ha fatto partire un gioco, vuoi partecipare?</div>` : html`<div class="game-information">${this.players} e ${this.master} stanno giocando.</div>`}
+          html` ${this.players.length == 0 ? html`<div class="game-information"><span style="text-transform: capitalize;">${this.master}</span> ha fatto partire un gioco, vuoi partecipare?</div>` : html`<div class="game-information"><span style="text-transform: capitalize;">${this.players}</span> e <span style="text-transform: capitalize;">${this.master}</span> stanno giocando.</div>`}
                 <div class="button-container"> 
                   <button class="action-button" @click="${this.handleJoin}">partecipa</button> 
                 </div>` 

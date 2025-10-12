@@ -15,25 +15,27 @@ inizio:
 login-page: 
 games-page: 
     -sistemare grafica
+        -giochi in cui stai giocando in cui non puoi entrare
+        -cancellare giochi in sospeso?
 starting-page: 
 game-page:
-    -scarto carte rosse non abbastanza in basso
-    -nome sulla winning card scompare dopo tot secondi
-    -sistemare typing animation
-    -sistemare widget in alto
+        -nome sulla winning card scompare dopo tot secondi
+        -sistemare typing animation
+        -sistemare widget in alto
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco
     -le carte alla fine sono dispari
     -non funziona bene il leave (eliminare?)
-    -aggiungere scorrimento per mobile
+        -aggiungere scorrimento per mobile
 winner-page:
-    -sistemare grafica e contenuti
+        -sistemare grafica e contenuti
 classifica:
     -sistemare grafica
 archivio:
-    -sistemare grafica e contenuti
+-sistemare grafica e contenuti
     -non si riesce a scrollare la pagina
 carte preferite:
     -sistemare grafica
+    -non si riesce a scrollare la pagina
 
 clickteam fusion 2.5

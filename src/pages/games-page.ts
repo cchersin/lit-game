@@ -37,7 +37,6 @@ export class GamesPage extends LitElement {
     margin-left: auto;
     margin-right: auto;
     background-color: black;
-    margin-top: 15px;
     border: none;
     font-size: 14pt;
     color: red;
@@ -51,6 +50,7 @@ export class GamesPage extends LitElement {
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 10px;
+    padding: 20px;
   }
 
   div.button-container {

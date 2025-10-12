@@ -60,7 +60,7 @@ export class CardComponent extends LitElement {
     rotate: 8deg;
     border: 1px black solid;
     display: inline-block;
-    margin-top: -200px;
+    margin-top: -140px;
     font-family: "eskapade-fraktur", serif;
     font-weight: 400;
     line-height: 22pt;
@@ -133,14 +133,14 @@ export class CardComponent extends LitElement {
 @keyframes slide-more-down {
 100% {
      animation-timing-function: ease-in;
-     transform: translateY(+500px);
+     transform: translateY(+700px);
   }
 }
 
 @keyframes slide-down {
 100% {
      animation-timing-function: ease-in;
-     transform: translateY(+230px) translateX(-20px);
+     transform: translateY(+228px) translateX(-20px);
   }
 }
 
