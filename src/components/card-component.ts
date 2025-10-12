@@ -15,6 +15,8 @@ export class CardComponent extends LitElement {
   @property({ type: String }) choosable = false;
   @property({ type: String }) favorite = '';
   @property({ type: String }) cardNumber = '';
+  @property({ type: String }) winning = '';
+
 
 
   static styles = [
@@ -288,17 +290,21 @@ export class CardComponent extends LitElement {
 
   render() {
     if (this.choosable) 
-      return html`<div class="card ${this.backgroundColor} choosable" style="left: ${(-30 + Number(this.left))}px; z-index: ${this.zindex};"">
+      return html`<div class="card ${this.backgroundColor} choosable" style="left: ${(-30 + Number(this.left))}px; z-index: ${this.zindex};">
         <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
           ${this.renderFavorite()}</div>`;
       
-    return html`<div class="outer-container">
-      <div class="card-container">  
-        <div class="card ${this.backgroundColor} front"> 
-          <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
+    if (this.winning == 'true') 
+      return html`<div class="outer-container">
+        <div class="card-container">  
+          <div class="card ${this.backgroundColor} front"> 
+            <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
+          </div>
+          <div class="back">Back</div>
         </div>
-        <div class="back">Back</div>
-      </div>
-    </div>`;
+      </div>`;
+
+      return  html`<div class="card ${this.backgroundColor}">
+        <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p></div>`;
   }
 }
