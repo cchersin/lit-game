@@ -13,18 +13,16 @@ TO DO:
 login-page: 
 games-page: 
     -sistemare grafica
-    -togliere giochi vuoti
 starting-page: 
 game-page:
             -animazione swap carte rosse
-            -sistemare dimensione font e interlinea
-            -rotazione carte swap?
             -And the winner is... con turn around
         -sistemare widget in alto
         -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco
     -le carte alla fine sono dispari
     -non funziona bene il leave (eliminare?)
+        -aggiungere scorrimento per mobile
 winner-page:
     -sistemare grafica e contenuti
 classifica:

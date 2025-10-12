@@ -195,8 +195,10 @@ export class CardComponent extends LitElement {
 
     if (animation === 'swap') {
       const swapX = '310px'; 
-      const swapEndX = (-Number(this.left) + 10) + 'px'; //-90
-      const swapEndY = (Number(this.cardNumber) + 3) + 'px'; 
+      const deltaEndX = this.backgroundColor == "white" ? 10 : 20;
+      const swapEndX = (-Number(this.left) + deltaEndX) + 'px'; //-90
+      const deltaEndY = this.backgroundColor == "white" ? 3 : 0;
+      const swapEndY = (Number(this.cardNumber) + deltaEndY) + 'px'; 
       
       cardDiv.style.setProperty('--swap-x', swapX);
       cardDiv.style.setProperty('--swap-end-x', swapEndX);
@@ -205,8 +207,10 @@ export class CardComponent extends LitElement {
 
     if (animation === 'reverse-swap') {
       const swapX = (Number(this.cardNumber) * 10 + 310) + 'px'; 
-      const swapEndX = (Number(this.cardNumber) * 10 - 10) + 'px'; //90
-      const swapEndY = (-Number(this.cardNumber) - 3) + 'px'; 
+      const deltaEndX = this.backgroundColor == "white" ? -10 : 10;
+      const swapEndX = (Number(this.cardNumber) * 10 + deltaEndX) + 'px'; //90
+      const deltaEndY = this.backgroundColor == "white" ? -3 : 0;
+      const swapEndY = (-Number(this.cardNumber) + deltaEndY) + 'px'; 
     
       cardDiv.style.setProperty('--reverse-swap-x', swapX);
       cardDiv.style.setProperty('--reverse-swap-end-x', swapEndX);
