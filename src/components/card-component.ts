@@ -166,47 +166,48 @@ export class CardComponent extends LitElement {
   transform: rotateY(180deg);
 }
 
-          .outer-container {
-            margin: auto;
-            width: 233px;
-            height: 377px;
-            perspective: 800px;
-          }
+.outer-container {
+  margin: auto;
+  width: 233px;
+  height: 377px;
+  perspective: 800px;
+}
 
-         /*outer-container > .card-container {
-            transform: rotateY(180deg);
-          }*/
+/*outer-container > .card-container {
+  transform: rotateY(180deg);
+}*/
 
-          .card-container {
-            height: 100%;
-            width: 100%;
-            position: relative;
-            transition: transform 1500ms;
-            transform-style: preserve-3d;
-          }
+.card-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  transition: transform 1500ms;
+  transform-style: preserve-3d;
+}
 
-          .front,
-          .back {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            backface-visibility: hidden;
-          }
+.front,
+.back {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+}
 
-          .back {
-            margin-top: 20px;
-            rotate: -5deg;
-            background-color: red;
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-left: 21px;
-            padding-right: 21px;
-            padding-bottom: 21px;
-            padding-top: 17px;
-            border-radius: 13px;
-          }
+.back {
+  margin-top: 20px;
+  rotate: -5deg;
+  background-color: red;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding-left: 21px;
+  padding-right: 21px;
+  padding-bottom: 21px;
+  padding-top: 17px;
+  border-radius: 13px;
+}
 `];
 
   handleClickFavorite(e: any) {
@@ -295,7 +296,7 @@ export class CardComponent extends LitElement {
   updated() {
     setTimeout(() => {
       this.renderRoot.querySelector('.card-container')?.classList.remove('flip-card');
-    }, 1000);
+    }, 2000);
   }
 
   render() {

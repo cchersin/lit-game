@@ -152,6 +152,8 @@ export class GamePage extends LitElement {
     overflow: hidden;
     white-space: nowrap;
     animation: typing 5s steps(40, end);
+    width: 0;
+    animation-delay: 3.5s;
     }
 
     .frase-typewriter {
