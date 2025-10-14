@@ -107,13 +107,14 @@ export class GamesAchivePage extends LitElement {
   render() {
     return html`
       <main @game-delete=${this.handleGameDelete}>
-         ${this.games.filter(game => game.status === 'completed').map(game => html`
+        <div style="height: 100%; overflow-y: auto; overflow-x: hidden;"> 
+          ${this.games.filter(game => game.status === 'completed').map(game => html`
             <div class="game-component">
               <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" winner="${game.getWinner()}"</game-component>
             </div>
           `)}
-          <div class="button-container"><button class="action-button" @click="${this.handleClose}">chiudi</button></div>
-         
+        </div>
+        <div class="button-container"><button class="action-button" @click="${this.handleClose}">chiudi</button></div>
       </main>
     `;
   }

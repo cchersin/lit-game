@@ -16,7 +16,6 @@ login-page:
 games-page: 
     -sistemare grafica
         -giochi in cui stai giocando in cui non puoi entrare
-        -cancellare giochi in sospeso?
 starting-page: 
 game-page:
         -nome sulla winning card scompare dopo tot secondi
@@ -31,8 +30,8 @@ winner-page:
 classifica:
     -sistemare grafica
 archivio:
+        -visibile solo ad admin
 -sistemare grafica e contenuti
--non si riesce a scrollare la pagina
 carte preferite:
     -sistemare grafica
 

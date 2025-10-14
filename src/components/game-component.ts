@@ -80,7 +80,7 @@ export class GameComponent extends LitElement {
                 </div>` 
           : html``}
         ${this.status === 'completed' ? html` Winner: ${this.winner} <div class="button-container"> <button class="action-button" @click="${this.handleDelete}">cancella</button> </div>` : html``}        
-        ${this.status === 'started' ? html`<div style="text-align: center; padding-bottom: 10px;"><span style="text-transform: capitalize;">${this.players}</span> e <span style="text-transform: capitalize;">${this.master}</span> stanno giocando e non ti hanno invitato...</div>` : html``}        
+        ${this.status === 'started' ? html`<div style="text-align: center; padding-bottom: 10px;"><span style="text-transform: capitalize;">${this.players}</span> e <span style="text-transform: capitalize;">${this.master}</span> stanno giocando e non ti hanno invitato... <button class="action-button" @click="${this.handleDelete}">cancella</button></div>` : html``}        
         </div>
   `;
   }
