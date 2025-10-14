@@ -275,8 +275,12 @@ export class GamePage extends LitElement {
         // One of: ['horizontal', 'vertical', 'pre-horizontal', 'pre-vertical']
         gesture.swipingDirection;
         // To tell if the gesture is a left swipe, you can do something like this:
-        if (gesture.swipingDirection === 'horizontal' && gesture.touchMoveX && gesture.touchMoveX < 0) {
-          alert('You are currently swiping left.');
+        if (gesture.swipingDirection === 'horizontal' && gesture.touchMoveX) {
+          if (gesture.touchMoveX < 0) { this.goLeft() };
+          if (gesture.touchMoveX > 0) { this.goRight() };
+        }
+        if (gesture.swipingDirection === 'vertical' && gesture.touchMoveX) {
+          if (gesture.touchMoveY && gesture.touchMoveY < 0) { this.goUp() };
         }
     });
     }
@@ -376,51 +380,60 @@ export class GamePage extends LitElement {
     super.disconnectedCallback();
   }
 
+  goLeft() {
+    this.reverseSwap(() => {
+      this.moveBackCardToFront();
+      this.currentCardId = this.getFrontCard().id;
+      this.requestUpdate();
+    });
+  }
+
+  goRight() {
+    this.swap(() => {
+      this.moveCurrentCardToBack();
+      this.currentCardId = this.getFrontCard().id;
+      this.requestUpdate();
+    });
+  }
+
+  goUp() {
+    if (this.getPlayer()?.currentCardId === '' && this.currentCardId !== '') {
+      const containerCards = this.renderRoot.querySelector(".container-cards") as HTMLElement;
+      const blackContainerCards = this.renderRoot.querySelector(".black-card-container") as HTMLElement;
+      const frontCard = containerCards?.querySelector("card-component:last-child") as any;
+      const blackCard = blackContainerCards?.querySelector("card-component:first-child") as any;
+
+      if (frontCard) { 
+        frontCard.applyAnimation("slide-up", () => {
+          this.handlePlayCard();
+        });
+      }
+      if (blackCard) { 
+        blackCard.applyAnimation("slide-down", () => {
+        });
+      }
+      containerCards?.querySelectorAll(`card-component`).forEach((card, index, array) => {
+        if (card !== frontCard) {
+          (card as any).applyAnimation("slide-more-down");
+        }
+      });
+    }
+  }
+
   handleArrowKeys(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowUp':
-        if (this.getPlayer()?.currentCardId === '' && this.currentCardId !== '') {
-          const containerCards = this.renderRoot.querySelector(".container-cards") as HTMLElement;
-          const blackContainerCards = this.renderRoot.querySelector(".black-card-container") as HTMLElement;
-          const frontCard = containerCards?.querySelector("card-component:last-child") as any;
-          const blackCard = blackContainerCards?.querySelector("card-component:first-child") as any;
-   
-          if (frontCard) { 
-            frontCard.applyAnimation("slide-up", () => {
-              this.handlePlayCard();
-            });
-          }
-          if (blackCard) { 
-            blackCard.applyAnimation("slide-down", () => {
-            });
-          }
-          containerCards?.querySelectorAll(`card-component`).forEach((card, index, array) => {
-            if (card !== frontCard) {
-              (card as any).applyAnimation("slide-more-down");
-            }
-          });
-        }
+        this.goUp();
         break;
       case 'ArrowDown':
         // handle down arrow
         break;
       case 'ArrowLeft':
-          this.reverseSwap(() => {
-             this.moveBackCardToFront();
-             this.currentCardId = this.getFrontCard().id;
-             this.requestUpdate();
-          });
+        this.goLeft();
         break;
       case 'ArrowRight':
-        this.swap(() => {
-             this.moveCurrentCardToBack();
-             this.currentCardId = this.getFrontCard().id;
-             this.requestUpdate();
-          });
+        this.goRight()
         break
-      case 'Enter':
-        this.handlePlayCard();
-        break;
     }
   }
 
