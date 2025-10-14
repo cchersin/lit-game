@@ -25,17 +25,15 @@ game-page:
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco
     -le carte alla fine sono dispari
-    -non funziona bene il leave (eliminare?)
-        -aggiungere scorrimento per mobile
+-non funziona bene il leave (eliminare?)
 winner-page:
-        -sistemare grafica e contenuti
+    -sistemare grafica
 classifica:
     -sistemare grafica
 archivio:
 -sistemare grafica e contenuti
-    -non si riesce a scrollare la pagina
+-non si riesce a scrollare la pagina
 carte preferite:
     -sistemare grafica
-    -non si riesce a scrollare la pagina
 
 clickteam fusion 2.5

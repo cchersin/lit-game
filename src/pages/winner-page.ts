@@ -50,11 +50,11 @@ export class WinnerPage extends LitElement {
     return html`
       <div class="leaderboard">
         <h3>Classifica</h3>
-        <ul>
-          ${leaderboard.map(entry => html`
-            <li>${entry.playerName}: ${entry.wins} vittorie</li>
+        <div>
+          ${leaderboard.map((entry, idx) => html`
+            <p>${idx + 1}. ${entry.playerName}: ${entry.wins} vittorie</p>
           `)}
-        </ul>
+        </div>
       </div>
     `;
   }

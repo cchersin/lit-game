@@ -56,7 +56,7 @@ const whiteCards = [
     new Card('51', 'il Friuli', 'white'),   
     new Card('52', 'Trieste', 'white'),
     new Card('53', 'Udine', 'white'),
-    new Card('54', 'L\'irrefrenabile voglia di rifondare l\'Impero Austro-Ungarico', 'white'),
+    new Card('54', 'l\'irrefrenabile voglia di rifondare l\'Impero Austro-Ungarico', 'white'),
     new Card('55', 'una papera', 'white'),
     new Card('56', 'un enorme gay', 'white'),
     new Card('57', 'il mio amico Gesù di Nazareth', 'white'),

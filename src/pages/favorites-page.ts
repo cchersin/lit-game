@@ -37,7 +37,7 @@ export class FavoritesPage extends LitElement {
   renderFavorites() {
         return html`<div class="cards-container">
              ${this.favorites.map((f: Favorite) => 
-                html`<p>${Utils.buildSentence(f.blackCardContent, f.whiteCardContent)} Autore: ${f.playerName}</p`
+                html`<p>${Utils.buildSentence(f.blackCardContent, f.whiteCardContent)} Autore: <span style="text-transform: capitalize;">${f.playerName}</span></p>`
               )}
             </div>`;
  }
@@ -49,7 +49,9 @@ export class FavoritesPage extends LitElement {
   render() {
     return html`
       <main>
-        ${this.renderFavorites()}
+        <div style="height: 100%; overflow-y: auto; overflow-x: hidden;">  
+          ${this.renderFavorites()}
+        </div>
         <button @click="${this.handleOK}">OK</button>
       </main>
     `;

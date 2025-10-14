@@ -214,11 +214,7 @@ export class GamePage extends LitElement {
   }
 
   initGestures(){
-
-    // Options object is optional. These are the defaults.
-    const options = {
-      // Used to calculate the threshold to consider a movement a swipe. it is
-      // passed type of 'x' or 'y'.
+   const options = {
       threshold: (type:any, self:any) =>
         Math.max(
           25,
@@ -229,25 +225,12 @@ export class GamePage extends LitElement {
                 : window.innerHeight || document.body.clientHeight),
           ),
         ),
-      // Minimum velocity the gesture must be moving when the gesture ends to be
-      // considered a swipe.
       velocityThreshold: 10,
-      // Used to calculate the distance threshold to ignore the gestures velocity
-      // and always consider it a swipe.
       disregardVelocityThreshold: (type:any, self:any) =>
         Math.floor(0.5 * (type === 'x' ? self.element.clientWidth : self.element.clientHeight)),
-      // Point at which the pointer moved too much to consider it a tap or longpress
-      // gesture.
       pressThreshold: 8,
-      // If true, swiping in a diagonal direction will fire both a horizontal and a
-      // vertical swipe.
-      // If false, whichever direction the pointer moved more will be the only swipe
-      // fired.
       diagonalSwipes: false,
-      // The degree limit to consider a diagonal swipe when diagonalSwipes is true.
-      // It's calculated as 45deg±diagonalLimit.
       diagonalLimit: 15,
-      // Listen to mouse events in addition to touch events. (For desktop support.)
       mouseSupport: true,
     };
 
@@ -256,25 +239,6 @@ export class GamePage extends LitElement {
       const gesture = new TinyGesture(target, options);
 
       gesture.on('panend', (event) => {
-        // The amount the gesture has moved in the x direction.
-        gesture.touchMoveX;
-        // The amount the gesture has moved in the y direction.
-        gesture.touchMoveY;
-        // The instantaneous velocity in the x direction.
-        gesture.velocityX;
-        // The instantaneous velocity in the y direction.
-        gesture.velocityY;
-        // Boolean, whether the gesture has passed the swiping threshold in the x
-        // direction.
-        gesture.swipingHorizontal;
-        // Boolean, whether the gesture has passed the swiping threshold in the y
-        // direction.
-        gesture.swipingVertical;
-        // Which direction the gesture has moved most. Prefixed with 'pre-' if the
-        // gesture hasn't passed the corresponding threshold.
-        // One of: ['horizontal', 'vertical', 'pre-horizontal', 'pre-vertical']
-        gesture.swipingDirection;
-        // To tell if the gesture is a left swipe, you can do something like this:
         if (gesture.swipingHorizontal && gesture.swipingDirection === 'horizontal' && gesture.touchMoveX) {
           if (gesture.touchMoveX < 0) { this.goLeft() };
           if (gesture.touchMoveX > 0) { this.goRight() };
@@ -424,9 +388,6 @@ export class GamePage extends LitElement {
     switch (event.key) {
       case 'ArrowUp':
         this.goUp();
-        break;
-      case 'ArrowDown':
-        // handle down arrow
         break;
       case 'ArrowLeft':
         this.goLeft();
