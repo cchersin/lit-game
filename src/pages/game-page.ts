@@ -255,7 +255,7 @@ export class GamePage extends LitElement {
     if (target) {
       const gesture = new TinyGesture(target, options);
 
-      gesture.on('panmove', (event) => {
+      gesture.on('panend', (event) => {
         // The amount the gesture has moved in the x direction.
         gesture.touchMoveX;
         // The amount the gesture has moved in the y direction.
@@ -275,11 +275,11 @@ export class GamePage extends LitElement {
         // One of: ['horizontal', 'vertical', 'pre-horizontal', 'pre-vertical']
         gesture.swipingDirection;
         // To tell if the gesture is a left swipe, you can do something like this:
-        if (gesture.swipingDirection === 'horizontal' && gesture.touchMoveX) {
+        if (gesture.swipingHorizontal && gesture.swipingDirection === 'horizontal' && gesture.touchMoveX) {
           if (gesture.touchMoveX < 0) { this.goLeft() };
           if (gesture.touchMoveX > 0) { this.goRight() };
         }
-        if (gesture.swipingDirection === 'vertical' && gesture.touchMoveX) {
+        if (gesture.swipedVertical && gesture.swipingDirection === 'vertical' && gesture.touchMoveX) {
           if (gesture.touchMoveY && gesture.touchMoveY < 0) { this.goUp() };
         }
     });
