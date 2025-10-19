@@ -80,10 +80,15 @@ export class GamePage extends LitElement {
     font-size: 10pt;
   }
 
-  .container-cards {
-   margin-top: 20px;
-   margin-left: -5px;
+  .outer-container-cards {
    position: relative;
+  }
+   
+  .container-cards {
+   /*margin-top: 20px;
+   margin-left: 60px;*/
+   position: absolute;
+   left:10%;
   }
 
   .outer-container-widget {
@@ -638,14 +643,14 @@ export class GamePage extends LitElement {
     let left = 0;
     let zindex = 11;
    
-    return html`<div class="container-cards" @card-favorite="${this.handleFavoriteCard}">
+    return html`<div class="outer-container-cards"><div class="container-cards" @card-favorite="${this.handleFavoriteCard}">
          ${cards.map((card: any) => 
               new Card(card.id, card.content, card.color)).map((card: any) => { 
                 left += 10;
                 zindex += 1;
                 return this.renderCard(card, left, zindex, resolve, true);
           })}
-        </div>`;
+        </div></div>`;
   }
 
   renderCard(card: Card, left: number, zindex: number, resolve: boolean, choosable: boolean) {

@@ -15,11 +15,10 @@ inizio:
 login-page: 
 games-page: 
     -sistemare grafica
-        -giochi in cui stai giocando in cui non puoi entrare
+    -giochi in cui stai giocando in cui non puoi entrare
 starting-page: 
 game-page:
-        -nome sulla winning card scompare dopo tot secondi
-        -sistemare typing animation
+        -centrare carte dinamicamente in base al numero di carte
         -sistemare widget in alto
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco
@@ -31,7 +30,7 @@ classifica:
     -sistemare grafica
 archivio:
         -visibile solo ad admin
--sistemare grafica e contenuti
+    -sistemare grafica e contenuti
 carte preferite:
     -sistemare grafica
 
