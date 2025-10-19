@@ -17,6 +17,8 @@ import { query } from 'lit/decorators.js';
 
 import { sharedStyles } from '../shared-styles';
 import TinyGesture from 'tinygesture'
+import Typed from 'typed.js';
+import { set } from 'date-fns';
 
 @customElement('game-page')
 export class GamePage extends LitElement {
@@ -27,6 +29,8 @@ export class GamePage extends LitElement {
   showModal = false;
   modalAction: (() => void) | null = null;
   modalText = '';
+  nameTyped: Typed | null = null;
+  fraseTyped: Typed | null = null;
 
   @query('#remote-audio') remoteAudioEl: any;
   
@@ -149,11 +153,6 @@ export class GamePage extends LitElement {
     margin-left: 50%;
     margin-right: 40%;
     z-index: 10;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 5s steps(40, end);
-    width: 0;
-    animation-delay: 3.5s;
   }
 
   .frase-typewriter {
@@ -164,14 +163,6 @@ export class GamePage extends LitElement {
     margin: 0 auto;
     text-align: center;
     margin-bottom: 25px;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 5s steps(40, end);
-  }
-
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
   }
 
   @keyframes opacity {
@@ -210,8 +201,37 @@ export class GamePage extends LitElement {
   }
 
   updated() {
-    this.initGestures()
+    this.initGestures();
+    this.initTypeWriter();
   }
+
+  initTypeWriter() {
+    const fraseTrypewriter = this.renderRoot.querySelector('.frase-typewriter') as HTMLElement;
+    if (fraseTrypewriter) {
+      if (!this.fraseTyped) {
+        this.fraseTyped = new Typed(fraseTrypewriter, {
+          strings: ['E il vincitore è...'],
+          typeSpeed: 70,
+        });
+      }
+    }
+
+    setTimeout(() => {
+      const nameTypewriter = this.renderRoot.querySelector('.name-typewriter') as HTMLElement;
+      if (nameTypewriter && this.currentGame.getLastRound()) {
+        const winnerName = this.currentGame.getLastRound()?.winnerName;
+        if (winnerName && winnerName !== ''){
+          if (!this.nameTyped) {
+            this.nameTyped = new Typed(nameTypewriter, {
+              strings: [winnerName],
+              typeSpeed: 100,
+            });
+          }
+        }
+      }
+    }, 3500);
+  }
+  
 
   initGestures(){
    const options = {
@@ -652,7 +672,7 @@ export class GamePage extends LitElement {
   }
 
   renderLastRoundWinner(lastRound: Round) {
-      return html`<div><div id="last-round" class="frase-typewriter">E il vincitore è...</div><div id="last-round" class="name-typewriter">${lastRound.winnerName}</div></div>`;
+      return html`<div><div id="last-round" class="frase-typewriter"></div><div id="last-round" class="name-typewriter"></div></div>`;
   }
 
   renderLastRoundWinningCard(lastRound: Round) {
