@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { Game } from './domain/game';
 
 const placeHolder = '______';
@@ -13,10 +14,10 @@ export class Utils {
     const a = blackCardContent.split(placeHolder);
       if (whiteCardContent !== '') {
         return html`
-          <span>${a[0]}</span>
+          <span>${unsafeHTML(a[0])}</span>
           <span style="font-family: 'eskapade-fraktur', serif; font-weight: 400; font-size: 20.625pt; line-height: 22pt;">${whiteCardContent}</span>
-          <!--<span style="${a[1] === "." || a[1] === "?" ? "margin-left: -6px" : ""}">${a[1]}</span>-->
-          <span style="${a[1].startsWith(".") || a[1].startsWith("?") || a[1].startsWith(",") || a[1].startsWith("”") ? "margin-left: -6px" : ""}">${a[1]}</span>
+          <!--<span style="${a[1] === "." || a[1] === "?" ? "margin-left: -6px" : ""}">${unsafeHTML(a[1])}</span>-->
+          <span style="${a[1].startsWith(".") || a[1].startsWith("?") || a[1].startsWith(",") || a[1].startsWith("”") ? "margin-left: -6px" : ""}">${unsafeHTML(a[1])}</span>
         `;
       }
     return html`${blackCardContent}`;
