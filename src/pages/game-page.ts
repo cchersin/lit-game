@@ -80,15 +80,11 @@ export class GamePage extends LitElement {
     font-size: 10pt;
   }
 
-  .outer-container-cards {
-   position: relative;
-  }
-   
   .container-cards {
-   /*margin-top: 20px;
-   margin-left: 60px;*/
+   margin-top: 20px;
+   /*margin-left: 60px;*/
    position: absolute;
-   left:10%;
+   /*left:10%;*/
   }
 
   .outer-container-widget {
@@ -640,17 +636,27 @@ export class GamePage extends LitElement {
   }
 
   renderCards(cards: any, resolve: boolean) {
+    const width = window.innerWidth;
+    if (!width) return;
+
+    let leftContainer = (width - 233 - (cards.length -1) * 10) / 2;
+    
+    if (resolve === false) {
+      leftContainer = leftContainer - 55;
+    }
+
     let left = 0;
     let zindex = 11;
    
-    return html`<div class="outer-container-cards"><div class="container-cards" @card-favorite="${this.handleFavoriteCard}">
+    return html`<div class="container-cards" @card-favorite="${this.handleFavoriteCard}" style="left:${leftContainer}px">
          ${cards.map((card: any) => 
               new Card(card.id, card.content, card.color)).map((card: any) => { 
-                left += 10;
                 zindex += 1;
-                return this.renderCard(card, left, zindex, resolve, true);
+                const c = this.renderCard(card, left, zindex, resolve, true);
+                left += 10;
+                return c;
           })}
-        </div></div>`;
+        </div>`;
   }
 
   renderCard(card: Card, left: number, zindex: number, resolve: boolean, choosable: boolean) {

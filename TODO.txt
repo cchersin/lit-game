@@ -18,7 +18,7 @@ games-page:
     -giochi in cui stai giocando in cui non puoi entrare
 starting-page: 
 game-page:
-        -centrare carte dinamicamente in base al numero di carte
+        -centrare carte nere resolved
         -sistemare widget in alto
     -sincronizzazione visione del master e dei giocatori quando legge le carte?
     -non si stoppa automaticamente il gioco

@@ -300,7 +300,7 @@ export class CardComponent extends LitElement {
 
   render() {
     if (this.choosable) 
-      return html`<div class="card ${this.backgroundColor} choosable" style="left: ${(-30 + Number(this.left))}px; z-index: ${this.zindex};">
+      return html`<div class="card ${this.backgroundColor} choosable" style="left: ${(Number(this.left))}px; z-index: ${this.zindex};">
         <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
           ${this.renderFavorite()}</div>`;
       

@@ -52,7 +52,7 @@ export class FavoritesPage extends LitElement {
         <div style="height: 100%; overflow-y: auto; overflow-x: hidden;">  
           ${this.renderFavorites()}
         </div>
-        <button @click="${this.handleOK}">OK</button>
+        <!--<button @click="${this.handleOK}">OK</button>-->
       </main>
     `;
   }
