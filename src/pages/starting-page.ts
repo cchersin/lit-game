@@ -164,7 +164,7 @@ export class StartingPage extends LitElement {
         <div class="container-button">
          ${this.isMaster() && this.currentGame.status === 'pending' && this.currentGame.isMinNumPlayersReached() ? html`<button class="action-button" @click="${this.handleStartGame}">inizia il gioco</button>` : html``}
          ${this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleStopGame}">ferma il gioco</button>` : html``}       
-         ${!this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleJoin}">join</button>` : html``}
+         ${!this.hasRole() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleJoin}">join</button>` : html``}
          ${!this.isMaster() && this.currentGame.status === 'pending' ? html`<button class="action-button" @click="${this.handleLeave}">abbandona</button>` : html``}
          </div>
       </main>
