@@ -2,36 +2,41 @@ FUNZIONAMENTO GIOCO:
 Una persona viene scelta a caso per cominciare (il master). Questa persona pesca una carta nera, contenente un frase da completare. Gli altri giocatori hanno in mano dieci carte bianche (che solo loro possono vedere). Devono selezionare la carta bianca che completa meglio quella nera (quando l'avranno usata la carta verrà rimpiazzata da una nuova). Quando tutti avranno scelto il master potrà leggere tutte le frasi complete (senza sapere chi le ha scritte) e decidere quale è la più divertente. Solo quando ha scelto verrà rivelato il vincitore. La persona che vince riceve un punto e diventa il prossimo master. La carta nera viene scartata e rimpiazzata. Il gioco finisce quando ci si stufa.
 
 FEATURES:
--mentre il master sceglie i player vedono la stessa cosa 
--classifica di tutti i giochi vinti
--archivio dei giochi
--archivio delle carte preferite
 -voice chat :)
 -schermata di partenza con animazione del logo
 
 TO DO:
+gen:
+    -pulsanti più grandi e che danno feedback
+    -link/pulsanti sono blu su mobile
+    -retro carta
 inizio:
     -animazione logo
 login-page: 
+    -placeholder sfasato in verticale su mobile
 games-page: 
-    -sistemare grafica
-    -giochi in cui stai giocando in cui non puoi entrare
-starting-page: 
+    -togliere cancella da giochi in cui stai giocando in cui non puoi entrare?
+    starting-page: 
 game-page:
-        -centrare carte nere resolved
-        -sistemare widget in alto
-    -sincronizzazione visione del master e dei giocatori quando legge le carte?
-    -non si stoppa automaticamente il gioco
-    -le carte alla fine sono dispari
--non funziona bene il leave (eliminare?)
+    -centrare carte nere resolved
+    -sistemare widget in alto
+    -sincronizzazione visione del master e dei giocatori quando legge le carte
+    -suono e pop up per avvertire il master che deve scegliere le carte
+    -punteggio sballato in widget
+    -scroll non funziona su mobile
+    -il punto sul widget compare prima dell'animazione
+    -il pulsante prossimo round deve comparire dopo l'animazione
+    -carte resolved si moltiplicano e se si sceglie una di nessuno il turno dopo non c'è un master
+    -la carta appena pescata viene messa per prima?
+    -a volte viene uno spazio prima della carta bianca non inserita
+    -a volte manca una maiuscola alla carta bianca
+        -non si stoppa automaticamente il gioco
+        -le carte alla fine sono dispari
+        -non funziona bene il leave (eliminare?)
 winner-page:
-    -sistemare grafica
 classifica:
-    -sistemare grafica
 archivio:
         -visibile solo ad admin
-    -sistemare grafica e contenuti
 carte preferite:
-    -sistemare grafica
 
 clickteam fusion 2.5

@@ -200,9 +200,12 @@ const whiteCards = [
     new Card('195', 'venire investiti dalla Smart di Croatto', 'white'),
     new Card('196', 'non invitare Montra al suo addio al nubilato', 'white'),
     new Card('197', 'Riccardo', 'white'),
-    new Card('198', 'vendere Riccardo a 3.90 €', 'white'),
+    new Card('198', 'vendere Riccardo a 3.90€', 'white'),
     new Card('199', 'avere i risultati dell\'esame dell\'HIV e scoprire che sei passato con il massimo dei voti', 'white'),
     new Card('200', '*colpo di pistola* “hmmm... what ya saaayyy... uuh that you only meant well...”', 'white'),
+    new Card('201', 'cagare dal culo', 'white'),
+    new Card('202', 'volersi sedere su due careghe', 'white'),
+    new Card('203', 'uno stormo di germani reali', 'white'),
   ];
 
 const blackCards = [
