@@ -437,13 +437,14 @@ export class GamePage extends LitElement {
   moveCurrentCardToFront() {
     let frontCard = this.getFrontCard();
 
-    if (frontCard && this.currentCardId !== '' && this.getPlayer()?.hasCard(this.currentCardId)) {
-      while(frontCard.id !== this.currentCardId) {
+    if(this.isPlayer()) {
+      while(frontCard 
+          && this.currentCardId !== '' 
+          && this.getPlayer()?.hasCard(this.currentCardId)
+          && frontCard.id !== this.currentCardId) {
         this.getPlayerChoosableCards().pop();
         this.getPlayerChoosableCards().unshift(frontCard);
-
         frontCard = this.getFrontCard();
-
       }
     }
   }
