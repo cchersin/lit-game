@@ -9,7 +9,7 @@ import { sharedStyles } from '../shared-styles';
 
 @customElement('starting-page')
 export class StartingPage extends LitElement {
-  currentGame = new Game('');
+  currentGame = new Game('', '');
   
   static styles = [
     sharedStyles, css`

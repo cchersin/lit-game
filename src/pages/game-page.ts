@@ -22,7 +22,7 @@ import Typed from 'typed.js';
 @customElement('game-page')
 export class GamePage extends LitElement {
   currentCardId = '';
-  currentGame = new Game('');
+  currentGame = new Game('', '');
   calls : Array<MediaConnection> = []
   favorites: Array<Favorite> = [];
   showModal = false;

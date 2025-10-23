@@ -11,7 +11,7 @@ import { sharedStyles } from '../shared-styles';
 
 @customElement('winner-page')
 export class WinnerPage extends LitElement {
-  currentGame = new Game('');
+  currentGame = new Game('', '');
   
   static styles = [
     sharedStyles, css`

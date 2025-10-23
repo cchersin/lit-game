@@ -269,6 +269,7 @@ const numberOfCardsInHand = 10; // Number of white cards each player has in hand
 
 export class Game {
   name: string;
+  description: string;
   status: string; 
   whiteDeck: Array<Card>;
   blackDeck: Array<Card>;
@@ -278,8 +279,9 @@ export class Game {
   rounds: Array<Round>;
   turn: string;
   
-  constructor(name: string) {
+  constructor(name: string, description: string) {
     this.name = name;
+    this.description = description;
     this.status = 'completed';
     this.whiteDeck = [];
     this.blackDeck = [];
@@ -569,6 +571,7 @@ export class Game {
   toJSON() {
     return {
       name: this.name,
+      description: this.description,
       status: this.status,
       whiteDeck: this.whiteDeck.map(c => c.toJSON()),
       blackDeck: this.blackDeck.map(c => c.toJSON()),
@@ -581,7 +584,7 @@ export class Game {
   }
 
   static fromJSON(json: any) {
-    const g = new Game(json.name);
+    const g = new Game(json.name, json.description);
     g.status = json.status;
     g.whiteDeck = json.whiteDeck.map((c: any) => Card.fromJSON(c));
     g.blackDeck = json.blackDeck.map((c: any) => Card.fromJSON(c));

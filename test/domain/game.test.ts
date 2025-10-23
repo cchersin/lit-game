@@ -5,7 +5,7 @@ describe('Game', () => {
   let game: Game;
 
   beforeEach(() => {
-    game = new Game('TestGame');
+    game = new Game('TestGame', 'Desc');
     game.init('Master');
   });
 

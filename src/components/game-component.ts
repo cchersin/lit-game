@@ -6,6 +6,7 @@ import { Player } from '../domain/player';
 @customElement('game-component')
 export class GameComponent extends LitElement {
   @property({ type: String }) name = '';
+  @property({ type: String }) description = '';
   @property({ type: String }) status = '';
   @property({ type: String }) master = '';
   @property({ type: String }) winner = '';
@@ -72,7 +73,7 @@ export class GameComponent extends LitElement {
   render() {
     return html`
      <div>
-        <div class="game-information"> ${this.name} </div>
+        <div class="game-information"> ${this.description} </div>
         ${this.status === 'pending' ? 
           html` ${this.players.length == 0 ? html`<div class="game-information"><span style="text-transform: capitalize;">${this.master}</span> ha fatto partire un gioco, vuoi partecipare?</div>` : html`<div class="game-information"><span style="text-transform: capitalize;">${this.players}</span> e <span style="text-transform: capitalize;">${this.master}</span> stanno giocando.</div>`}
                 <div class="button-container"> 

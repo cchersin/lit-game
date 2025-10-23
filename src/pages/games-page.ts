@@ -109,9 +109,10 @@ export class GamesPage extends LitElement {
   handleNewGame(event: any) {
     const date = new Date();     
     
-    const gameName = format(date, "dd MMMM yyyy, HH:mm", { locale: it });
+    const gameName = date.getTime().toString();
+    const gameDescription = format(date, "dd MMMM yyyy, HH:mm", { locale: it });
  
-    const game = new Game(gameName);
+    const game = new Game(gameName, gameDescription);
 
     game.init(localStorage.userName);
 
@@ -162,7 +163,7 @@ export class GamesPage extends LitElement {
          <div class="button-container"><button class="action-button" @click="${this.handleNewGame}">nuovo gioco</button></div>
          ${this.games.filter(game => game.status !== 'completed').map(game => html`
             <div class="game-component">
-              <game-component name="${game.name}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(", ")}" winner="${game.getWinner()}"></game-component>
+              <game-component name="${game.name}" description="${game.description}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(", ")}" winner="${game.getWinner()}"></game-component>
             </div>
           `)}
            <div class="outer-circles-container">
