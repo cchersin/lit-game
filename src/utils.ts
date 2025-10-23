@@ -16,11 +16,10 @@ export class Utils {
         return html`
           <span>${unsafeHTML(a[0])}</span>
           <span style="font-family: 'eskapade-fraktur', serif; font-weight: 400; font-size: 20.625pt; line-height: 22pt;">${unsafeHTML(whiteCardContent)}</span>
-          <!--<span style="${a[1] === "." || a[1] === "?" ? "margin-left: -6px" : ""}">${unsafeHTML(a[1])}</span>-->
           <span style="${a[1].startsWith(".") || a[1].startsWith("?") || a[1].startsWith(",") || a[1].startsWith("”") ? "margin-left: -6px" : ""}">${unsafeHTML(a[1])}</span>
         `;
       }
-    return html`${blackCardContent}`;
+    return html`${unsafeHTML(blackCardContent)}`;
   }
 
   static getRanking(games: Array<Game>) {
@@ -39,5 +38,3 @@ export class Utils {
       .sort((a, b) => b.points - a.points).map((e) => ({ playerName: e.playerName, wins: e.points }));
   }
 }
-                                      
-                                      
