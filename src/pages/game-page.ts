@@ -18,7 +18,6 @@ import { query } from 'lit/decorators.js';
 import { sharedStyles } from '../shared-styles';
 import TinyGesture from 'tinygesture'
 import Typed from 'typed.js';
-import { set } from 'date-fns';
 
 @customElement('game-page')
 export class GamePage extends LitElement {
@@ -82,9 +81,7 @@ export class GamePage extends LitElement {
 
   .container-cards {
    margin-top: 20px;
-   /*margin-left: 60px;*/
    position: absolute;
-   /*left:10%;*/
   }
 
   .outer-container-widget {
@@ -340,6 +337,8 @@ export class GamePage extends LitElement {
         if (this.getPlayer()?.currentCardId === '' && this.currentCardId === '' && this.getPlayerChoosableCards().length > 0) {
             this.currentCardId = this.getFrontCard().id;
         }
+
+        this.moveCurrentCardToFront();
    
         this.requestUpdate();
       }
@@ -433,6 +432,20 @@ export class GamePage extends LitElement {
     const backCard = this.getPlayerChoosableCards()[0];
     this.getPlayerChoosableCards().shift();
     this.getPlayerChoosableCards().push(backCard);
+  }
+
+  moveCurrentCardToFront() {
+    let frontCard = this.getFrontCard();
+
+    if (frontCard && this.currentCardId !== '' && this.getPlayer()?.hasCard(this.currentCardId)) {
+      while(frontCard.id !== this.currentCardId) {
+        this.getPlayerChoosableCards().pop();
+        this.getPlayerChoosableCards().unshift(frontCard);
+
+        frontCard = this.getFrontCard();
+
+      }
+    }
   }
 
   swap(cb?: () => void) {
