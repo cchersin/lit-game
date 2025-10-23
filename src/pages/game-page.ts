@@ -320,6 +320,8 @@ export class GamePage extends LitElement {
   loadGame() {
     StoreService.onGameUpdate(localStorage.currentGame, (game) => {
      if (game) {
+        this.fraseTyped = null;
+        this.nameTyped = null;
         this.currentGame = game;
 
         if (this.currentGame.status !== 'started' || !this.hasRole()) {
