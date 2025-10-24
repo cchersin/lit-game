@@ -226,7 +226,7 @@ const blackCards = [
     new Card('15', '“______ contro gli alieni” il musical.', 'black') ,
     new Card('16', 'I Fink Ployd annunciano il loro nuovo album: ______.', 'black') ,
     new Card('17', 'Dopo scavi approfonditi si è scoperto cosa nascondono i muri del Nordio: ______.', 'black') ,
-    new Card('18', 'No, Inès, non c\'è nessuna R nella parola ______.', 'black') ,
+    new Card('18', 'No, Inès, non c\'è nessuna R nella parola “______”.', 'black') ,
     new Card('19', 'A mezzanotte, guardo dentro lo specchio e nel riflesso ______ guarda me.', 'black') ,
     new Card('20', 'Dopo l\'ultimo incidente Trenitalia proibisce il trasporto  di ______ a bordo dei treni.', 'black') ,
     new Card('21', 'Ultimamente Martina non riesce a smettere di parlare di ______. Sta diventando un problema.', 'black') ,

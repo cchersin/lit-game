@@ -28,7 +28,6 @@ export class GamePage extends LitElement {
   showModal = false;
   modalAction: (() => void) | null = null;
   modalText = '';
-  nameTyped: Typed | null = null;
   fraseTyped: Typed | null = null;
   gestureInited = false;
 
@@ -124,19 +123,6 @@ export class GamePage extends LitElement {
     justify-content: center;
   }
 
-  .name-typewriter {
-    text-transform: capitalize;
-    font-size: 48px; 
-    font-family: 'eskapade-fraktur', serif; 
-    color: black; 
-    text-align: left; 
-    position: fixed; 
-    top: 460px; 
-    margin-left: 50%;
-    margin-right: 40%;
-    z-index: 10;
-  }
-
   .frase-typewriter {
     font-size: 20px; 
     font-weight: lighter;
@@ -144,7 +130,6 @@ export class GamePage extends LitElement {
     color: red; 
     margin: 0 auto;
     text-align: center;
-    margin-bottom: 15px;
   }
 
   @keyframes opacity {
@@ -197,21 +182,6 @@ export class GamePage extends LitElement {
         });
       }
     }
-
-    setTimeout(() => {
-      const nameTypewriter = this.renderRoot.querySelector('.name-typewriter') as HTMLElement;
-      if (nameTypewriter && this.currentGame.getLastRound()) {
-        const winnerName = this.currentGame.getLastRound()?.winnerName;
-        if (winnerName && winnerName !== ''){
-          if (!this.nameTyped) {
-            this.nameTyped = new Typed(nameTypewriter, {
-              strings: [winnerName],
-              typeSpeed: 100,
-            });
-          }
-        }
-      }
-    }, 3500);
   }
   
 
@@ -309,7 +279,6 @@ export class GamePage extends LitElement {
     StoreService.onGameUpdate(localStorage.currentGame, (game) => {
      if (game) {
         this.fraseTyped = null;
-        this.nameTyped = null;
         this.currentGame = game;
 
         if (this.currentGame.status !== 'started' || !this.hasRole()) {
@@ -687,12 +656,12 @@ export class GamePage extends LitElement {
   }
 
   renderLastRoundWinner(lastRound: Round) {
-      return html`<div><div id="last-round" class="frase-typewriter"></div><div id="last-round" class="name-typewriter"></div></div>`;
+      return html`<div><div id="last-round" class="frase-typewriter"></div></div>`;
   }
 
   renderLastRoundWinningCard(lastRound: Round) {
      return html`
-            <card-component id="-1" description="${lastRound.blackCardContent}" value="${lastRound.whiteCardContent}" winning="true" backgroundColor="black" color="white"></card-component>
+            <card-component id="-1" description="${lastRound.blackCardContent}" value="${lastRound.whiteCardContent}" winning="true" winner="${this.currentGame.getLastRound()?.winnerName}" backgroundColor="black" color="white"></card-component>
           `;
   }
 

@@ -2,6 +2,8 @@ import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { Utils } from '../utils';
 import { sharedStyles } from '../shared-styles';
+import Typed from 'typed.js';
+
 
 @customElement('card-component')
 export class CardComponent extends LitElement {
@@ -16,6 +18,10 @@ export class CardComponent extends LitElement {
   @property({ type: String }) favorite = '';
   @property({ type: String }) cardNumber = '';
   @property({ type: String }) winning = '';
+  @property({ type: String }) winner = '';
+
+  nameTyped: Typed | null = null;
+  
 
 
 
@@ -207,7 +213,35 @@ export class CardComponent extends LitElement {
   padding-top: 17px;
   border-radius: 13px;
 }
+
+.name-typewriter {
+    text-transform: capitalize;
+    font-size: 48px; 
+    font-family: 'eskapade-fraktur', serif; 
+    color: black; 
+    text-align: left; 
+    position: absolute;
+    bottom: 60px;
+    left: 130px;
+    rotate: -5deg;
+  }
 `];
+
+  
+  initTypeWriter() {
+      const nameTypewriter = this.renderRoot.querySelector('.name-typewriter') as HTMLElement;
+      if (nameTypewriter && this.winner && this.winner !== '') {
+          if (!this.nameTyped) {
+            this.nameTyped = new Typed(nameTypewriter, {
+              startDelay: 3500,
+              strings: [this.winner],
+              typeSpeed: 70,
+              showCursor: false,
+            });
+        }
+      }
+  }
+  
 
   handleClickFavorite(e: any) {
     e.stopPropagation(); // blocca la propagazione del click
@@ -296,6 +330,7 @@ export class CardComponent extends LitElement {
     setTimeout(() => {
       this.renderRoot.querySelector('.card-container')?.classList.remove('flip-card');
     }, 2000);
+    this.initTypeWriter();
   }
 
   render() {
@@ -309,6 +344,7 @@ export class CardComponent extends LitElement {
         <div class="card-container flip-card">  
           <div class="card ${this.backgroundColor} front"> 
             <p>${Utils.buildHtlmSentence(this.description, this.value)}<span class="point">.</span></p>
+            <div class="name-typewriter"></div>
           </div>
           <div class="back">Back</div>
         </div>
