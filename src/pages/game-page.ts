@@ -30,6 +30,7 @@ export class GamePage extends LitElement {
   modalText = '';
   nameTyped: Typed | null = null;
   fraseTyped: Typed | null = null;
+  gestureInited = false;
 
   @query('#remote-audio') remoteAudioEl: any;
   
@@ -215,6 +216,8 @@ export class GamePage extends LitElement {
   
 
   initGestures(){
+   if (this.gestureInited) return;
+
    const options = {
       threshold: (type:any, self:any) =>
         Math.max(
@@ -247,7 +250,9 @@ export class GamePage extends LitElement {
         if (gesture.swipedVertical && gesture.swipingDirection === 'vertical' && gesture.touchMoveX) {
           if (gesture.touchMoveY && gesture.touchMoveY < 0) { this.goUp() };
         }
-    });
+      });
+
+      this.gestureInited = true;
     }
   }
 
