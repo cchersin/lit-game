@@ -22,12 +22,11 @@ game-page:
     -sincronizzazione visione del master e dei giocatori quando legge le carte
     -suono e pop up per avvertire il master che deve scegliere le carte
     -il punto sul widget compare prima dell'animazione
-    -il pulsante prossimo round deve comparire dopo l'animazione
+    -sistemare bottoni sotto
     ?-punteggio sballato in widget
     ?-carte resolved si moltiplicano e se si sceglie una di nessuno il turno dopo non c'è un master
-    -la carta appena pescata viene messa per prima?
-    -a volte viene uno spazio prima della carta bianca non inserita
-    -a volte manca una maiuscola alla carta bianca
+    ?-a volte viene uno spazio prima della carta bianca non inserita
+    ?-a volte manca una maiuscola alla carta bianca
         -non si stoppa automaticamente il gioco
         -le carte alla fine sono dispari
         -non funziona bene il leave (eliminare?)

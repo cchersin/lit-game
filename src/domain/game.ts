@@ -251,7 +251,7 @@ const blackCards = [
     new Card('40', 'Tutto risolto, per restaurare la femminilità di Martina consigliamo ______ per due volte al giorno.', 'black') ,
     // new Card('41', 'L\'aggressività di Inès per ______ è imparagonabile all\'aggressività che provo per ______.', 'black') ,
     new Card('42', 'Sono Giorgia.<br/>Sono una donna.<br/>Sono una madre.<br/>Sono ______.', 'black') ,
-    new Card('43', 'La grigliata di domenica è stata completamente rovinata dall\'introduzione di ______, grazie mille Perpo.', 'black') ,
+    new Card('43', 'La grigliata di domenica è stata completamente rovinata dall\'introduzione de ______, grazie mille Perpo.', 'black') ,
     new Card('44', 'Il nuovo manifesto per la pace di Israele recita “abbiamo eliminato ______, e ha portato la pace nel mondo.”', 'black') ,
     new Card('45', '______ non è tradire.', 'black') ,
     // new Card('46', 'Dopo “Barbie” e “Oppenheimer” il nuovo duo cinematografico: ______ e ______.', 'black') ,

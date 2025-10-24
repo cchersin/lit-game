@@ -159,6 +159,10 @@ export class GamePage extends LitElement {
     margin: 12px;
     font-size: 16px;
   }
+
+  .next-round-button {
+    display: none;
+  }
 `];
 
   constructor() {
@@ -170,6 +174,12 @@ export class GamePage extends LitElement {
   updated() {
     this.initGestures();
     this.initTypeWriter();
+    setTimeout(()=>{
+      const nextRoundButton = this.renderRoot.querySelector(".next-round-button") as HTMLElement;
+      if (nextRoundButton){
+        nextRoundButton.style.display = "inline";
+      }
+    }, 4000)
   }
 
   initTypeWriter() {
@@ -184,7 +194,6 @@ export class GamePage extends LitElement {
     }
   }
   
-
   initGestures(){
    if (this.gestureInited) return;
 
@@ -758,7 +767,7 @@ export class GamePage extends LitElement {
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}
          <div class="outer-container-widget-bottom">
           ${this.currentGame.status === 'started' ? html`<button class="action-button-red" @click="${this.handleStopGame}">stop</button>` : html``}
-          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && this.currentGame.hasNextRound() ? html`<button class="action-button-red" @click="${this.handleNextRound}">prossimo round</button>` : html``}
+          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && this.currentGame.hasNextRound() ? html`<button class="action-button-red next-round-button" @click="${this.handleNextRound}">prossimo round</button>` : html``}
           <!--${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button-red" @click="${this.handlePlayCard}">conferma</button>` : html``}-->
           <!--<button class="action-button-red" @click="${this.handleLeaveGame}">abbandona</button>-->
           <button class="action-button-red" @click="${this.handleCall}" style="display:none">chiama</button>

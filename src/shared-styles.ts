@@ -17,7 +17,13 @@ export const sharedStyles = css`
     margin-top: 15px;
     border: none;
   }
-    
+
+  .action-button:active {
+    transform: scale(0.9);
+    background-color: #8b1a0c;
+    transition: background-color 100ms linear;
+  }
+
   .action-button-red {
     background-color: red;
     color: black;
@@ -34,5 +40,11 @@ export const sharedStyles = css`
     font-family: "tablet-gothic", sans-serif;
     border-radius: 18px;
     margin-top: 15px;
+  }
+  
+  .action-button-red:active {
+    transform: scale(0.9);
+    background-color: #8b1a0c;
+    transition: background-color 100ms linear;
   }
 `;
