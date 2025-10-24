@@ -22,11 +22,11 @@ game-page:
     -sistemare widget in alto
     -sincronizzazione visione del master e dei giocatori quando legge le carte
     -suono e pop up per avvertire il master che deve scegliere le carte
-    -punteggio sballato in widget
+    ?-punteggio sballato in widget
     -scroll non funziona su mobile
     -il punto sul widget compare prima dell'animazione
     -il pulsante prossimo round deve comparire dopo l'animazione
-    -carte resolved si moltiplicano e se si sceglie una di nessuno il turno dopo non c'è un master
+    ?-carte resolved si moltiplicano e se si sceglie una di nessuno il turno dopo non c'è un master
     -la carta appena pescata viene messa per prima?
     -a volte viene uno spazio prima della carta bianca non inserita
     -a volte manca una maiuscola alla carta bianca

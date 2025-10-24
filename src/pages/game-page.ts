@@ -54,8 +54,8 @@ export class GamePage extends LitElement {
     padding-left: 12px;
     padding-right: 12px;
     border-radius: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 5px;
     margin-bottom: 7px;
     text-transform: capitalize;
@@ -70,8 +70,8 @@ export class GamePage extends LitElement {
     padding-left: 12px;
     padding-right: 12px;
     border-radius: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 5px;
     margin-bottom: 7px;
     text-transform: capitalize;
@@ -109,23 +109,6 @@ export class GamePage extends LitElement {
     bottom: 20px;
   }
   
-  .action-button {
-    background-color: red;
-    border: 1px solid black;
-    z-index: 1000;
-    position: relative;
-    padding-top: 5px;
-    padding-bottom: 7px;
-    padding-right: 20px;
-    padding-left: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 14pt;
-    font-family: "tablet-gothic", sans-serif;
-    border-radius: 18px;
-    margin-top: 15px;
-  }
-  
   .has-choosen {
     background-color: red;
     width: 10px;
@@ -160,7 +143,7 @@ export class GamePage extends LitElement {
     color: red; 
     margin: 0 auto;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
   }
 
   @keyframes opacity {
@@ -800,12 +783,12 @@ export class GamePage extends LitElement {
          ${this.renderBlackCard()}
          ${this.getPlayer()?.currentCardId === '' ? this.renderChoosableCards() : html ``}
          <div class="outer-container-widget-bottom">
-          ${this.currentGame.status === 'started' ? html`<button class="action-button" @click="${this.handleStopGame}">stop</button>` : html``}
-          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && this.currentGame.hasNextRound() ? html`<button class="action-button" @click="${this.handleNextRound}">prossimo round</button>` : html``}
-          <!--${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button" @click="${this.handlePlayCard}">conferma</button>` : html``}-->
-          <!--<button class="action-button" @click="${this.handleLeaveGame}">abbandona</button>-->
-          <button class="action-button" @click="${this.handleCall}" style="display:none">chiama</button>
-          <button class="action-button" @click="${this.handleCloseCall}" style="display:none">chiudi chiamata</button>
+          ${this.currentGame.status === 'started' ? html`<button class="action-button-red" @click="${this.handleStopGame}">stop</button>` : html``}
+          ${this.isMaster() && this.currentGame.hasMasterChoosenCard() && this.currentGame.hasNextRound() ? html`<button class="action-button-red" @click="${this.handleNextRound}">prossimo round</button>` : html``}
+          <!--${this.getPlayer()?.currentCardId === '' && this.currentCardId !== '' ? html`<button class="action-button-red" @click="${this.handlePlayCard}">conferma</button>` : html``}-->
+          <!--<button class="action-button-red" @click="${this.handleLeaveGame}">abbandona</button>-->
+          <button class="action-button-red" @click="${this.handleCall}" style="display:none">chiama</button>
+          <button class="action-button-red" @click="${this.handleCloseCall}" style="display:none">chiudi chiamata</button>
          </div>  
          ${this.showModal ? html`
         <div class="modal-overlay">

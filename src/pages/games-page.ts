@@ -28,22 +28,6 @@ export class GamesPage extends LitElement {
     height: 100%;
   }
 
-  .action-button {
-    text-align: center;
-    padding-top: 5px;
-    padding-bottom: 7px;
-    padding-right: 20px;
-    padding-left: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: black;
-    border: none;
-    font-size: 14pt;
-    color: red;
-    font-family: "tablet-gothic", sans-serif;
-    border-radius: 18px;
-  }
-
   .game-component {
     border: 1px solid black;
     border-radius: 20px;
@@ -151,7 +135,7 @@ export class GamesPage extends LitElement {
   }
 
   handleRanking(event: any) {
-  Router.go('/ranking');  
+    Router.go('/ranking');  
   }
 
   render() {

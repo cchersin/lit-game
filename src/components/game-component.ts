@@ -28,22 +28,8 @@ export class GameComponent extends LitElement {
   }
 
   .action-button {
-    background-color: red;
     z-index: 1000;
     position: relative;
-    border: 1px solid black;
-    text-align: center;
-    padding-top: 5px;
-    padding-bottom: 7px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 14pt;
-    font-family: "tablet-gothic", sans-serif;
-    border-radius: 18px;
   }
 
   .button-container {
@@ -77,11 +63,11 @@ export class GameComponent extends LitElement {
         ${this.status === 'pending' ? 
           html` ${this.players.length == 0 ? html`<div class="game-information"><span style="text-transform: capitalize;">${this.master}</span> ha fatto partire un gioco, vuoi partecipare?</div>` : html`<div class="game-information"><span style="text-transform: capitalize;">${this.players}</span> e <span style="text-transform: capitalize;">${this.master}</span> stanno giocando.</div>`}
                 <div class="button-container"> 
-                  <button class="action-button" @click="${this.handleJoin}">partecipa</button> 
+                  <button class="action-button-red" @click="${this.handleJoin}">partecipa</button> 
                 </div>` 
           : html``}
         ${this.status === 'completed' ? html` Winner: ${this.winner} <div class="button-container"> <button class="action-button" @click="${this.handleDelete}">cancella</button> </div>` : html``}        
-        ${this.status === 'started' ? html`<div style="text-align: center; padding-bottom: 10px;"><span style="text-transform: capitalize;">${this.players}</span> e <span style="text-transform: capitalize;">${this.master}</span> stanno giocando e non ti hanno invitato... <button class="action-button" @click="${this.handleDelete}">cancella</button></div>` : html``}        
+        ${this.status === 'started' ? html`<div style="text-align: center; padding-bottom: 10px;"><span style="text-transform: capitalize;">${this.players}</span> e <span style="text-transform: capitalize;">${this.master}</span> stanno giocando e non ti hanno invitato...</div><div><button class="action-button-red" @click="${this.handleDelete}">cancella</button></div>` : html``}        
         </div>
   `;
   }

@@ -21,20 +21,6 @@ export class GamesAchivePage extends LitElement {
     height: 100%;
   }
 
-  .action-button {
-    font-size: 16pt;
-    color: red;
-    font-family: "eskapade-fraktur", sans-serif;
-    padding-top: 5px;
-    padding-bottom: 6px;
-    padding-left: 30px;
-    padding-right: 30px;
-    border-radius: 15px;
-    background-color: black;
-    margin-top: 15px;
-    border: none;
-  }
-
   .game-component {
     border: 1px solid black;
     border-radius: 20px;

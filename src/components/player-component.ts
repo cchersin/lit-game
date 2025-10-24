@@ -27,7 +27,7 @@ export class PlayerComponent extends LitElement {
     <p class="player">
       <span>${this.name}</span>
       <span>${this.lastOnline}</span>
-      <button @click="${this.handleDelete}">Delete</button>
+      <button @click="${this.handleDelete}">delete</button>
     </p>
   `;
   }
