@@ -150,7 +150,7 @@ export class GamesPage extends LitElement {
               <game-component name="${game.name}" description="${game.description}" status="${game.status}" master="${game.findMaster()?.name}" players="${game.findPlayers()?.map(p=>p.name).join(", ")}" winner="${game.getWinner()}"></game-component>
             </div>
           `)}
-          <div class="action-button">marameo</div>
+          <div class="action-button" style="width: 50px;">marameo</div>
                     <div class="action-button">bottone sotto</div>
            <div class="outer-circles-container">
                 <div class="circles-container">

@@ -21,7 +21,7 @@ export const sharedStyles = css`
   .action-button:active {
     transform: scale(0.9);
     background-color: #8b1a0c;
-    transition: background-color 100ms linear;
+    transition: background-color 200ms linear;
   }
 
   .action-button-red {
@@ -43,8 +43,8 @@ export const sharedStyles = css`
   }
   
   .action-button-red:active {
+    animation: bounce 4500ms;
     transform: scale(0.9);
-    background-color: #8b1a0c;
     transition: background-color 100ms linear;
   }
 `;
