@@ -32,6 +32,8 @@ export class GamePage extends LitElement {
   modalText = '';
   fraseTyped: Typed | null = null;
   gestureInited = false;
+  everyBodyHasChoosenSoundPlayed = false;
+  winnerSoundPlayed = false;
 
   @query('#remote-audio') remoteAudioEl: any;
   
@@ -190,14 +192,24 @@ export class GamePage extends LitElement {
         span.style.display = "inline";
       });
 
-      if (this.currentGame.isRoundComplete()) {    
-        this.playSound('/sounds/winner.mp3');  
+      if (this.currentGame.isRoundComplete()) {  
+        if (!this.winnerSoundPlayed) {   
+          this.playSound('/sounds/winner.mp3');  
+          this.winnerSoundPlayed = true;
+        }
+      } else {  
+        this.winnerSoundPlayed = false; 
       }
   
     }, 4000)
 
     if (this.currentGame.hasAllPlayersChoosenCards() && this.isMaster() && !this.currentGame.hasMasterChoosenCard()) {
-      this.playSound('/sounds/everybody_has_choosen.mp3');  
+      if (!this.everyBodyHasChoosenSoundPlayed) { 
+          this.playSound('/sounds/everybody_has_choosen.mp3'); 
+          this.everyBodyHasChoosenSoundPlayed = true;
+      } 
+    } else {    
+      this.everyBodyHasChoosenSoundPlayed = false;
     }
   }
 
