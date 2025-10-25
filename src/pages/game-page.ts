@@ -8,6 +8,7 @@ import { Router } from '@vaadin/router';
 import '../components/card-component';
 import { Card } from '../domain/card'
 import { Game } from '../domain/game';
+import { Player } from '../domain/player';
 import { Round } from '../domain/round';
 import { Favorite } from '../domain/favorite';
 
@@ -18,6 +19,7 @@ import { query } from 'lit/decorators.js';
 import { sharedStyles } from '../shared-styles';
 import TinyGesture from 'tinygesture'
 import Typed from 'typed.js';
+import { set } from 'date-fns';
 
 @customElement('game-page')
 export class GamePage extends LitElement {
@@ -179,6 +181,15 @@ export class GamePage extends LitElement {
       if (nextRoundButton){
         nextRoundButton.style.display = "inline";
       }
+      const oldWinsSpans = this.renderRoot.querySelectorAll(".old-wins") as NodeListOf<HTMLElement>;
+      const newWinsSpans = this.renderRoot.querySelectorAll(".new-wins") as NodeListOf<HTMLElement>;
+      oldWinsSpans.forEach((span) => {
+        span.style.display = "none";
+      });
+      newWinsSpans.forEach((span) => {
+        span.style.display = "inline";
+      });
+  
     }, 4000)
   }
 
@@ -656,7 +667,7 @@ export class GamePage extends LitElement {
 
 
   renderLastRound() {
-    if(this.currentGame.turn == 'master' && this.currentGame.hasMasterChoosenCard()) {
+    if(this.currentGame.isRoundComplete()) {
       const lastRound = this.currentGame.getLastRound();
       if (lastRound) {
         return html`<div>${this.renderLastRoundWinner(lastRound)}${this.renderLastRoundWinningCard(lastRound)}/div>`;
@@ -741,25 +752,33 @@ export class GamePage extends LitElement {
 
   };
 
+  renderPlayerWidget(player: Player) {
+    return html`<div class="container-widget">
+            <div class="${player.role}-widget" style="${player.name === localStorage.userName ? 'font-weight: light;' : ''}">
+              ${player.name} <span class="old-wins" style="${this.currentGame.isRoundComplete() ? '' : 'display:none'}">${this.currentGame.getLastRound()?.winnerName == player.name ? this.currentGame.getPlayerWins(player.name) - 1 : this.currentGame.getPlayerWins(player.name)}</span><span class="new-wins" style="${this.currentGame.isRoundComplete() ? 'display:none' : ''}">${this.currentGame.getPlayerWins(player.name)}
+            </div>
+            <div class="has-choosen-container">
+              <div class="has-choosen" style="opacity: ${player.currentCardId !== '' ? '1' : '0'}"/>
+            </div>
+          </div>`;
+  }
+
+  renderPlayersWidgets() {
+    return html`
+      <div class="outer-container-widget">
+        ${this.currentGame.players.map(player => html`
+          ${this.renderPlayerWidget(player)}
+        `)}
+      </div>
+    `;
+  }
 
   render() {
      return html`
       <main class="game">
         <span>User: ${localStorage.userName}(${this.getRole()}) - ${this.currentGame.status}</span>
          <audio id="remote-audio" autoplay controls style="display:none"></audio>
-
-        <div class="outer-container-widget">
-          ${this.currentGame.players.map(player => html`
-            <div class="container-widget">
-              <div class="${player.role}-widget" style="${player.name === localStorage.userName ? 'font-weight: light;' : ''}">
-                ${player.name}  ${this.currentGame.getPlayerWins(player.name)}
-              </div>
-              <div class="has-choosen-container">
-                <div class="has-choosen" style="opacity: ${player.currentCardId !== '' ? '1' : '0'}"/>
-              </div>
-            </div>
-          `)}
-        </div>
+         ${this.renderPlayersWidgets()}
          <!--${this.isPlayer() && this.currentGame.turn != 'master' && this.getPlayer()?.currentCardId !== '' ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px; animation: opacity 0.5s ease-in-out;">Congratulazioni,<br/>hai scelto<br/>la tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px; animation: opacity 0.5s ease-in-out;">Ora aspetta che gli altri<br/>scelgano la loro...</div>` : html ``}-->
          ${this.isPlayer() && this.getPlayer()?.currentCardId !== '' && !this.currentGame.hasMasterChoosenCard() ? html `<div style="font-size: 48px; font-family: 'eskapade-fraktur', serif; color:red; text-align: center; rotate: 2deg; line-height: 0.9; margin-bottom: 12px; margin-top: 15px; animation: opacity 0.5s ease-in-out;">Congratulazioni,<br/>hai scelto<br/>la tua carta!</div><div style="font-size: 20px; font-family: 'tablet-gothic', sans-serif; color:red; text-align: center; rotate: 2deg; font-weight: lighter; margin-bottom:40px; animation: opacity 0.5s ease-in-out;">Ora aspetta che il master<br/>scelga la migliore...</div>` : html ``}
          ${this.renderLastRound()}

@@ -502,6 +502,10 @@ export class Game {
     return master ? master.hasCurrentCard() : false;
   }
 
+  isRoundComplete() {
+    return this.turn == 'master' && this.hasMasterChoosenCard();
+  }
+ 
   findMaster() {
     return this.players.find(p => p.role === 'master');
   }
