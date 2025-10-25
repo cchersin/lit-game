@@ -34,6 +34,7 @@ export class GamePage extends LitElement {
   gestureInited = false;
   everyBodyHasChoosenSoundPlayed = false;
   winnerSoundPlayed = false;
+  winnerTimeout: any = null;
 
   @query('#remote-audio') remoteAudioEl: any;
   
@@ -178,7 +179,7 @@ export class GamePage extends LitElement {
   updated() {
     this.initGestures();
     this.initTypeWriter();
-    setTimeout(()=>{
+    this.winnerTimeout = setTimeout(()=>{
       const nextRoundButton = this.renderRoot.querySelector(".next-round-button") as HTMLElement;
       if (nextRoundButton){
         nextRoundButton.style.display = "inline";
@@ -319,6 +320,8 @@ export class GamePage extends LitElement {
     StoreService.onGameUpdate(localStorage.currentGame, (game) => {
      if (game) {
         this.fraseTyped = null;
+        clearTimeout(this.winnerTimeout);
+        this.winnerTimeout = null;
         this.currentGame = game;
 
         if (this.currentGame.status !== 'started' || !this.hasRole()) {
