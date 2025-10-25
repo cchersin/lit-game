@@ -21,7 +21,6 @@ game-page:
     -sistemare widget in alto
     -sincronizzazione visione del master e dei giocatori quando legge le carte
     -suono e pop up per avvertire il master che deve scegliere le carte
-    -il punto sul widget compare prima dell'animazione
     -sistemare bottoni sotto
     ?-punteggio sballato in widget
     ?-carte resolved si moltiplicano e se si sceglie una di nessuno il turno dopo non c'è un master

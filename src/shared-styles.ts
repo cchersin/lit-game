@@ -43,8 +43,6 @@ export const sharedStyles = css`
   }
   
   .action-button-red:active {
-    animation: bounce 4500ms;
     transform: scale(0.9);
-    transition: background-color 100ms linear;
   }
 `;

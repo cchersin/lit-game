@@ -26,7 +26,9 @@ module.exports = {
     }),
   ],
   devServer: {
-    static: './docs',
+    static: [
+    path.resolve(__dirname, 'public'),
+    ],
     historyApiFallback: true,
     hot: true,
   },

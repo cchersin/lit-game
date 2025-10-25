@@ -191,6 +191,10 @@ export class GamePage extends LitElement {
       });
   
     }, 4000)
+
+    if (this.currentGame.hasAllPlayersChoosenCards() && this.isMaster() && !this.currentGame.hasMasterChoosenCard()) {
+      this.playSound('/sounds/everybody_has_choosen.mp3');  
+    }
   }
 
   initTypeWriter() {
@@ -751,6 +755,13 @@ export class GamePage extends LitElement {
       });*/
 
   };
+
+  playSound(url: string) {
+    const audio = new Audio(url);
+    audio.play().catch((err) => {
+      console.warn('Audio play() failed:', err);
+   });
+  }
 
   renderPlayerWidget(player: Player) {
     return html`<div class="container-widget">
