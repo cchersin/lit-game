@@ -189,6 +189,10 @@ export class GamePage extends LitElement {
       newWinsSpans.forEach((span) => {
         span.style.display = "inline";
       });
+
+      if (this.currentGame.isRoundComplete()) {    
+        this.playSound('/sounds/winner.mp3');  
+      }
   
     }, 4000)
 
