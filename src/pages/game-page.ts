@@ -36,6 +36,9 @@ export class GamePage extends LitElement {
   winnerSoundPlayed = false;
   winnerTimeout: any = null;
 
+  everyBodyHasChoosenSound = new Audio("sounds/everybody_has_choosen.mp3");
+  winnerSound = new Audio("sounds/winner.mp3");
+
   @query('#remote-audio') remoteAudioEl: any;
   
   
@@ -195,22 +198,24 @@ export class GamePage extends LitElement {
 
       if (this.currentGame.isRoundComplete()) {  
         if (!this.winnerSoundPlayed) {   
-          this.playSound('/sounds/winner.mp3');  
+          this.playWinner(); 
           this.winnerSoundPlayed = true;
         }
       } else {  
         this.winnerSoundPlayed = false; 
+        console.log('Resetting winnerSoundPlayed');
       }
   
     }, 4000)
 
     if (this.currentGame.hasAllPlayersChoosenCards() && this.isMaster() && !this.currentGame.hasMasterChoosenCard()) {
       if (!this.everyBodyHasChoosenSoundPlayed) { 
-          this.playSound('/sounds/everybody_has_choosen.mp3'); 
+          this.playEverybodyHasChoosen();
           this.everyBodyHasChoosenSoundPlayed = true;
       } 
     } else {    
       this.everyBodyHasChoosenSoundPlayed = false;
+      console.log('Resetting everyBodyHasChoosenSoundPlayed');
     }
   }
 
@@ -775,11 +780,18 @@ export class GamePage extends LitElement {
 
   };
 
-  playSound(url: string) {
-    const audio = new Audio(url);
-    audio.play().catch((err) => {
+  playEverybodyHasChoosen() {
+    this.everyBodyHasChoosenSound.play().catch((err) => {
       console.warn('Audio play() failed:', err);
-   });
+    });
+    console.log('Playing sound eveeribody');
+  }
+
+  playWinner() {
+    this.winnerSound.play().catch((err) => {
+      console.warn('Audio play() failed:', err);
+    });
+    console.log('Playing sound winner');
   }
 
   renderPlayerWidget(player: Player) {
